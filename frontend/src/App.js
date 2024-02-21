@@ -1,10 +1,13 @@
-import Dashboard from "./Patinet_UI/Dashboard.js";
+import React from "react";
+import LoginPage from './components/LoginPage.js';
 
 
 function App() {
+  
+
   return (
-    <div>
-      <Dashboard/>
+    <div className="App">
+      <LoginPage />
     </div>
   );
 }
