@@ -1,6 +1,9 @@
 package com.example.backend.controller;
 
 import java.util.Collection;
+import java.util.HashSet;
+import java.util.Set;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -65,23 +68,24 @@ public class Authcontroller {
     }
 
     @PostMapping("/signin")
-    public ResponseEntity<AuthResponse> signInUserHandler(@RequestBody LoginRequest loginRequest) throws Exception {
+    public ResponseEntity<AuthResponse> signInUserHandler(@RequestBody UserDTO userDTO) throws Exception {
 
-        String username = loginRequest.getUsername();
-        String password = loginRequest.getPassword();
-        Authentication authentication = authenticate(username, password);
+        String username = userDTO.getUsername();
+        String password = userDTO.getPassword();
+        String role = userDTO.getRole().toString();
+        Authentication authentication = authenticate(username, password, role);
         Collection<? extends GrantedAuthority> authorities = authentication.getAuthorities();
-        String role = authorities.isEmpty() ? null : authorities.iterator().next().getAuthority();
+        String actualRole = authorities.isEmpty() ? null : authorities.iterator().next().getAuthority();
         String jwt = jwtService.generateToken(authentication);
         AuthResponse authResponse = new AuthResponse();
         authResponse.setJwt(jwt);
         authResponse.setMessage("Login Success");
-        authResponse.setRole(USER_ROLE.valueOf(role));
+        authResponse.setRole(USER_ROLE.valueOf(actualRole));
         return (new ResponseEntity<>(authResponse, HttpStatus.OK));
 
     }
 
-    private Authentication authenticate(String username, String password) throws Exception {
+    private Authentication authenticate(String username, String password, String role) throws Exception {
         UserDetails userDetails = customUserDetailsService.loadUserByUsername(username);
         if (userDetails == null) {
             throw new BadCredentialsException("Invalid username");
@@ -89,6 +93,17 @@ public class Authcontroller {
         if (!passwordEncoder.matches(password, userDetails.getPassword())) {
             throw new BadCredentialsException("Invalid password");
         }
+        if (!role.equals(populateAuthorities(userDetails.getAuthorities()))) {
+            throw new BadCredentialsException("Incorrect Role");
+        }
         return (new UsernamePasswordAuthenticationToken(username, null, userDetails.getAuthorities()));
+    }
+
+    private String populateAuthorities(Collection<? extends GrantedAuthority> authorities) {
+        Set<String> auth = new HashSet<>();
+        for (GrantedAuthority authority : authorities) {
+            auth.add(authority.getAuthority());
+        }
+        return (String.join(",", auth));
     }
 }
