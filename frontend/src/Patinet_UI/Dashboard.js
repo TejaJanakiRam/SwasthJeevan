@@ -1,6 +1,7 @@
 import { Fragment } from 'react'
 import { Disclosure, Menu, Transition } from '@headlessui/react'
 import { Bars3Icon, BellIcon, XMarkIcon } from '@heroicons/react/24/outline'
+import axios from "axios";
 
 const user = {
   name: 'Tom Cook',
@@ -15,7 +16,7 @@ const navigation = [
 ]
 const userNavigation = [
   { name: 'Your Profile', href: '#' },
-  { name: 'Sign out', href: '#' },
+  { name: 'Sign out', href: '/' },
 ]
 
 const people = [
@@ -38,7 +39,24 @@ function classNames(...classes) {
   return classes.filter(Boolean).join(' ')
 }
 
-export default function Dashboard() {
+export default function Dashboard(props) {
+
+  const getDetails = async () => {
+    try {
+        const response = await axios.get('http://localhost:4000/user/details', {
+            headers: {
+                Authorization: `Bearer ${props.token}` // Assuming props.token contains the JWT token
+            }
+        });
+        // Handle the response data here, for example:
+        console.log("User Data:")
+        console.log(response.data);
+    } catch (error) {
+        console.error("Failed to fetch user details:", error);
+    }
+};
+
+
   return (
     <>
       {/*
@@ -48,7 +66,10 @@ export default function Dashboard() {
         <html class="h-full bg-gray-100">
         <body class="h-full">
         ```
-      */}
+      */
+     
+      // getDetails();
+      }
       <div className="min-h-full">
         <Disclosure as="nav" className="bg-gray-800">
           {({ open }) => (

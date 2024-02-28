@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import axios from "axios";
 import SignupPage from "./SignUpPage.js"
 
-function LoginPage() {
+function LoginPage(props) {
     const [role, setRole] = useState('patient');
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
@@ -22,11 +22,13 @@ function LoginPage() {
                 password,
                 role: role.toUpperCase()
             });
-            console.log(response.data);
-            
+            console.log(response.data.jwt);
+            const token = String(response.data.jwt);
+            props.onLogin(token);
         } catch (error) {
             alert("Wrong credentials!")
         }
+        
     };
 
     const handleForgotPassword = () => {
