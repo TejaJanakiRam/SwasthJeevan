@@ -7,7 +7,7 @@ const user = {
   name: 'Tom Cook',
   email: 'tom@example.com',
   imageUrl:
-    'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80',
+    'https://th.bing.com/th/id/OIP.tvaMwK3QuFxhTYg4PSNNVAHaHa?w=217&h=218&c=7&r=0&o=5&dpr=1.3&pid=1.7'
 }
 const navigation = [
   { name: 'Home', href: '#', current: true },
@@ -22,13 +22,13 @@ const userNavigation = [
 const people = [
   {
     name: 'Leslie Alexander',
-    role: 'Co-Founder / CEO',
+    role: 'M.D. Medicine',
     imageUrl:
-      'https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80',
+      'https://th.bing.com/th/id/OIP.f_xTjeYbEhaQr4ABcdS8HQHaHa?w=199&h=199&c=7&r=0&o=5&dpr=1.3&pid=1.7'
   },
   {
-    name: 'Leslie Alexander',
-    role: 'Co-Founder / CEO',
+    name: 'Leslie Alexander 2',
+    role: 'Surgeon',
     imageUrl:
       'https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80',
   },
@@ -50,8 +50,8 @@ export default function Dashboard(props) {
             }
         });
         // Handle the response data here, for example:
-        console.log("User Data:")
-        console.log(response.data);
+        // console.log("User Data:")
+        // console.log(response.data);
         setUsername(response.data.username)
     } catch (error) {
         console.error("Failed to fetch user details:", error);
@@ -242,7 +242,7 @@ useEffect(() => {
 
           </div>
           <div className='max-w-full'>
-          <h1 className='text-center text-neutral-500 text-xl mt-3 p-8'>Top Specialties</h1>
+          <h1 className='text-center text-neutral-500 text-xl mt-3 p-14'>Top Specialties</h1>
             <ul role="list" className="px-4 grid gap-x-8 gap-y-12 sm:grid-cols-2 sm:gap-y-16 xl:col-span-2">
             {people.map((person) => (
               <li key={person.name}>
@@ -272,7 +272,7 @@ useEffect(() => {
 		<div class="py-5">
 			<details class="group">
 				<summary class="flex justify-between items-center font-medium cursor-pointer list-none">
-					<span> What is a SAAS platform?</span>
+					<span> What is this platform ?</span>
 					<span class="transition group-open:rotate-180">
                 <svg fill="none" height="24" shape-rendering="geometricPrecision" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" viewBox="0 0 24 24" width="24"><path d="M6 9l6 6 6-6"></path>
 </svg>

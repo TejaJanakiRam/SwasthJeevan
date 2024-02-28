@@ -24,7 +24,7 @@ function LoginPage(props) {
             });
             console.log(response.data.jwt);
             const token = String(response.data.jwt);
-            props.onLogin(token);
+            props.onLogin(token,role.toUpperCase());
         } catch (error) {
             alert("Wrong credentials!")
         }
