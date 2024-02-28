@@ -1,4 +1,4 @@
-import { Fragment } from 'react'
+import { Fragment, useState,useEffect } from 'react'
 import { Disclosure, Menu, Transition } from '@headlessui/react'
 import { Bars3Icon, BellIcon, XMarkIcon } from '@heroicons/react/24/outline'
 import axios from "axios";
@@ -40,10 +40,11 @@ function classNames(...classes) {
 }
 
 export default function Dashboard(props) {
-
+  const [username, setUsername] = useState('');
+  
   const getDetails = async () => {
     try {
-        const response = await axios.get('http://localhost:4000/user/details', {
+        const response = await axios.get('http://localhost:4000/api/patient/profile', {
             headers: {
                 Authorization: `Bearer ${props.token}` // Assuming props.token contains the JWT token
             }
@@ -51,11 +52,14 @@ export default function Dashboard(props) {
         // Handle the response data here, for example:
         console.log("User Data:")
         console.log(response.data);
+        setUsername(response.data.username)
     } catch (error) {
         console.error("Failed to fetch user details:", error);
     }
 };
-
+useEffect(() => {
+  getDetails();
+}, []);
 
   return (
     <>
@@ -68,7 +72,6 @@ export default function Dashboard(props) {
         ```
       */
      
-      // getDetails();
       }
       <div className="min-h-full">
         <Disclosure as="nav" className="bg-gray-800">
@@ -229,6 +232,7 @@ export default function Dashboard(props) {
         </header> */}
         <main >
           <div className="mx-auto max-w-full py-6 sm:px-6 lg:px-8">
+          <h1 className="text-center">Welcome {username}</h1><br/>
           <button
                 type="submit"
                 className="mx-auto flex w-1/2 justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
