@@ -1,6 +1,26 @@
 import React, { useState } from 'react';
 import axios from "axios";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { library } from '@fortawesome/fontawesome-svg-core'
+import { faUser, faUserDoctor, faHospitalUser, faUserGear, faCircleArrowRight } from '@fortawesome/free-solid-svg-icons'
 import SignupPage from "./SignUpPage.js"
+
+library.add(faUser, faUserDoctor, faHospitalUser, faUserGear, faCircleArrowRight)
+
+function getRoleString(role) {
+    switch (role) {
+        case "patient":
+            return ("Patient");
+        case "doctor":
+            return ("Doctor");
+        case "orgadmin":
+            return ("Organisation Admin");
+        case "sysadmin":
+            return ("System Admin");
+        default:
+            return ("");
+    }
+}
 
 function LoginPage(props) {
     const [role, setRole] = useState('patient');
@@ -24,11 +44,11 @@ function LoginPage(props) {
             });
             console.log(response.data.jwt);
             const token = String(response.data.jwt);
-            props.onLogin(token,role.toUpperCase());
+            props.onLogin(token, role.toUpperCase());
         } catch (error) {
             alert("Wrong credentials!")
         }
-        
+
     };
 
     const handleForgotPassword = () => {
@@ -40,43 +60,85 @@ function LoginPage(props) {
     };
 
     return (
-        <div className="flex h-screen ">
-            <div className="flex-1 flex items-center justify-center bg-blue-100">
-                <div className="flex flex-col items-center">
-                    <h2 className="text-2xl text-blue-800 mb-4">Sign In As</h2>
-                    <div className="flex flex-col space-y-5">
-                        <button type="button" className="px-6 py-3.5 w-80 text-2xl text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 rounded-lg text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800" onClick={() => handleRoleSelection('patient')}>Patient</button>
-                        <button type="button" className="px-6 py-3.5 w-80 text-2xl text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 rounded-lg text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800" onClick={() => handleRoleSelection('doctor')}>Doctor</button>
-                        <button type="button" className="px-6 py-3.5 w-80 text-2xl text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 rounded-lg text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800" onClick={() => handleRoleSelection('organization-admin')}>Hospital Admin</button>
-                        <button type="button" className="px-6 py-3.5 w-80 text-2xl text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 rounded-lg text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800" onClick={() => handleRoleSelection('system-admin')}>System Admin</button>
+        <div className="grid grid-cols-12 min-h-screen">
+            <div className="col-span-12 lg:col-span-4  bg-white flex flex-col lg:shadow-inner lg:shadow-slate-800">
+                <div className="flex flex-col items-center text-blue-500 font-bold ">
+                    <h1 className='font-blackOps my-20 flex items-center px-2'>
+                        <span className='text-4xl sm:text-5xl lg:text-4xl 2xl:text-5xl'>SwasthJeevan</span>
+                        <img src="../../img/logo.png" className='w-16 sm:w-24 lg:w-16 2xl:w-24' /></h1>
+                    <h2 className="text-3xl sm:text-4xl lg:text-3xl xl:text-4xl mb-8 w-1/2 text-center">Sign In As</h2>
+                    <div className="flex flex-col space-y-8 w-3/4 md:w-1/2 lg:w-3/4">
+                        <button type="button" className="bg-white border-2 border-blue-500 rounded-xl p-4 flex justify-between hover:bg-blue-500 hover:text-white transition-all duration-300" onClick={() => handleRoleSelection('patient')}>
+                            <div>
+                                <span className='xl:text-2xl lg:text-xl'>
+                                    <FontAwesomeIcon className="mr-4" icon="fa-solid fa-user" />
+                                </span>
+                                <span className='sm:text-lg xl:text-xl'>Patient</span>
+                            </div>
+                            <div className='xl:text-2xl lg:text-xl'><FontAwesomeIcon icon="fa-solid fa-circle-arrow-right" /></div>
+                        </button>
+                        <button type="button" className="bg-white border-2 border-blue-500 rounded-xl p-4 flex justify-between hover:bg-blue-500 hover:text-white transition-all duration-300" onClick={() => handleRoleSelection('doctor')}>
+                            <div>
+                                <span className='xl:text-2xl lg:text-xl'>
+                                    <FontAwesomeIcon className="mr-4" icon="fa-solid fa-user-doctor" />
+                                </span>
+                                <span className='sm:text-lg xl:text-xl'>Doctor</span>
+                            </div>
+                            <div className='xl:text-2xl lg:text-xl'><FontAwesomeIcon icon="fa-solid fa-circle-arrow-right" /></div>
+                        </button>
+                        <button type="button" className="bg-white border-2 border-blue-500 rounded-xl p-4 flex justify-between hover:bg-blue-500 hover:text-white transition-all duration-300" onClick={() => handleRoleSelection('orgadmin')}>
+                            <div>
+                                <span className='xl:text-2xl lg:text-xl'>
+                                    <FontAwesomeIcon className="mr-4" icon="fa-solid fa-hospital-user" />
+                                </span>
+                                <span className='sm:text-lg xl:text-xl'>Organisation Admin</span>
+                            </div>
+                            <div className='xl:text-2xl lg:text-xl'><FontAwesomeIcon icon="fa-solid fa-circle-arrow-right" /></div>
+                        </button>
+                        <button type="button" className="bg-white border-2 border-blue-500 rounded-xl p-4 flex justify-between hover:bg-blue-500 hover:text-white transition-all duration-300" onClick={() => handleRoleSelection('sysadmin')}>
+                            <div>
+                                <span className='xl:text-2xl lg:text-xl'>
+                                    <FontAwesomeIcon className="mr-4" icon="fa-solid fa-user-gear" />
+                                </span>
+                                <span className='sm:text-lg xl:text-xl'>System Admin</span>
+                            </div>
+                            <div className='xl:text-2xl lg:text-xl'><FontAwesomeIcon icon="fa-solid fa-circle-arrow-right" /></div>
+                        </button>
+
                     </div>
                 </div>
             </div>
-            <div className="lg:p-36 md:p-52 sm:20 p-8 w-full lg:w-1/2 flex flex-col justify-center items-center">
-                <h1 className="text-2xl font-semibold mb-4">{`Login as ${role}`.toUpperCase()}</h1>
-                {showSignup ? (
-                    <SignupPage role={role} showSignUpTrigger={showSignupTrigger} />
-                ) : (
-                    <form onSubmit={handleLogin}>
-                        <div className="mb-4">
-                            <label htmlFor="username" className="block text-gray-600">Username</label>
-                            <input type="text" id="username" name="username" className="w-full border border-gray-300 rounded-md py-2 px-3 focus:outline-none focus:border-blue-500" autoComplete="off" onChange={(e) => setUsername(e.target.value)} />
-                        </div>
-                        <div className="mb-4">
-                            <label htmlFor="password" className="block text-gray-600">Password</label>
-                            <input type="password" id="password" name="password" className="w-full border border-gray-300 rounded-md py-2 px-3 focus:outline-none focus:border-blue-500" autoComplete="off" onChange={(e) => setPassword(e.target.value)} />
-                        </div>
-                        <div className="mb-6 text-blue-500">
-                            <a href="#" className="hover:underline" onClick={handleForgotPassword}>Forgot Password?</a>
-                        </div>
-                        <button type="submit" className="bg-blue-500 hover:bg-blue-600 text-white font-semibold rounded-md py-2 px-4 w-full">Login</button>
-                    </form>
-                )}
-                {role === 'patient' && !showSignup && (
-                    <div className="mt-6 text-blue-500 text-center">
-                        <a href="#" className="hover:underline" onClick={showSignupTrigger}>Sign up Here</a>
-                    </div>
-                )}
+            <div className="hidden lg:shadow-xl lg:shadow-slate-600 lg:col-span-8  lg:flex flex-col justify-center items-center bg-gradient-to-r from-blue-200  to-blue-500">
+                <div className='w-1/2 xl:w-1/3 max-w-screen-sm bg-white text-blue-500 py-6 px-10 rounded-xl shadow-2xl shadow-slate-800 '>
+                    <h1 className="text-3xl sm:text-4xl lg:text-3xl xl:text-4xl font-bold mb-16 w-full text-center">{`${getRoleString(role)} Login`}</h1>
+                    {showSignup ? (
+                        <SignupPage role={role} showSignUpTrigger={showSignupTrigger} />
+                    ) : (
+                        <form onSubmit={handleLogin} className='flex flex-col items-center space-y-5 w-full'>
+                            <div className="w-full">
+                                <label htmlFor="username" className="block sm:text-lg xl:text-xl py-1 font-semibold">Username</label>
+                                <input type="text" id="username" name="username" placeholder='Enter Username' className="w-full border-2 border-blue-500 rounded-xl py-2 px-3 focus:outline-none  focus:border-blue-800 sm:text-sm xl:text-lg text-blue-800" autoComplete="off" onChange={(e) => setUsername(e.target.value)} />
+                            </div>
+                            <div className="w-full">
+                                <label htmlFor="password" className="block sm:text-lg xl:text-xl py-1 font-semibold">Password</label>
+                                <input type="password" id="password" name="password" placeholder="Enter Password" className="w-full border-2 border-blue-500 rounded-xl py-2 px-3 focus:outline-none focus:border-blue-800 sm:text-sm xl:text-lg text-blue-800" autoComplete="off" onChange={(e) => setPassword(e.target.value)} />
+                            </div>
+
+
+                            <div className='self-end'>
+                                <a href="#" className="underline text-blue-500 sm:text-sm xl:text-lg" onClick={handleForgotPassword}>Forgot Password?</a>
+                            </div>
+                            <button type="submit" className=" border-2 sm:text-lg xl:text-xl border-blue-500 text-blue-500 font-bold rounded-xl p-1 xl:p-2 w-1/2 hover:bg-blue-500 hover:text-white transition-all duration-300">Login</button>
+                            {role === 'patient' && !showSignup && (
+                                <div className="self-start text-blue-500 sm:text-sm xl:text-lg">
+                                    Don't have an account? <a href="#" className="underline " onClick={showSignupTrigger}>Sign up Here</a>
+                                </div>
+                            )}
+                        </form>
+
+
+                    )}
+                </div>
             </div>
         </div>
     );
