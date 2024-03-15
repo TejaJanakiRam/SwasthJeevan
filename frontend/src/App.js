@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import { BrowserRouter , Routes, Route, Navigate } from "react-router-dom";
 
-import Dashboard from './Patient_UI/Dashboard.js';
-import AuthenticationPage from "./components/AuthenticationPage.js";
+import Dashboard from './Patient-UI/Dashboard.js';
+import AuthenticationPage from "./Login-UI/AuthenticationPage.js";
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(0);
