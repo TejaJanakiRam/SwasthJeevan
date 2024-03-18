@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react'
 import MenuButton from './MenuButton.js';
 
 
-export default function Navbar() {
+export default function Navbar(props) {
   const [isActivated, setIsActivated] = useState(true);
 
   return (
@@ -21,7 +21,7 @@ export default function Navbar() {
           <MenuButton text={"EHR"} />
           <MenuButton text={"Profile"} />
         </ul>
-        <button type="submit" className=" font-semibold border-2 border-blue-400 bg-blue-900 text-blue-400 rounded-xl px-10 py-2 hover:bg-blue-400 hover:text-blue-900 transition-all duration-300 mb-2 sm:mb-0">Logout</button>
+        <button type="submit" className=" font-semibold border-2 border-blue-400 bg-blue-900 text-blue-400 rounded-xl px-10 py-2 hover:bg-blue-400 hover:text-blue-900 transition-all duration-300 mb-2 sm:mb-0" onClick={()=>{props.onLogout()}}>Logout</button>
       </div>
       <div className="hamburger absolute top-0 right-0 p-4 sm:hidden cursor-pointer" onClick={() => { setIsActivated(!isActivated) }}>
         <span className={`bar bg-blue-500 block h-0.5 w-6 m-1.5 ${isActivated ? "transform translate-y-2 rotate-45" : ""} transition-all duration-500`}></span>

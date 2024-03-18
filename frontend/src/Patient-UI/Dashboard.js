@@ -104,28 +104,28 @@ function classNames(...classes) {
 export default function Dashboard(props) {
   const [username, setUsername] = useState('');
 
-  // const getDetails = async () => {
-  //   try {
-  //     const response = await axios.get('http://localhost:4000/api/patient/profile', {
-  //       headers: {
-  //         Authorization: `Bearer ${props.token}` // Assuming props.token contains the JWT token
-  //       }
-  //     });
-  //     setUsername(response.data.username)
-  //   } catch (error) {
-  //     console.error("Failed to fetch user details:", error);
-  //   }
-  // };
-  // useEffect(() => {
-  //   getDetails();
-  // }, []);
+  const getDetails = async () => {
+    try {
+      const response = await axios.get('http://localhost:4000/api/patient/profile', {
+        headers: {
+          Authorization: `Bearer ${props.token}` // Assuming props.token contains the JWT token
+        }
+      });
+      setUsername(response.data.username)
+    } catch (error) {
+      console.error("Failed to fetch user details:", error);
+    }
+  };
+  useEffect(() => {
+    getDetails();
+  }, []);
 
   return (
     <div>
-      <Navbar />
-      <BookNow />
-      <Specialities data={specialities} />
-      <FAQ data={faqs} />
+      <Navbar username={username} onLogout={props.onLogout} />
+      <BookNow username={username}/>
+      <Specialities username={username} data={specialities} />
+      <FAQ username={username} data={faqs} />
     </div>
   )
 

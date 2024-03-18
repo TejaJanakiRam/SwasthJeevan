@@ -20,17 +20,13 @@ function App() {
   };
   return (
     <div className="App">
-      {/* <BrowserRouter>
+      <BrowserRouter>
         <Routes>
           <Route path="/" element={isLoggedIn ? <Navigate to="/patient/dashboard" /> : <AuthenticationPage onLogin={handleLogin} />} />
           <Route path="/patient/dashboard" element={isLoggedIn === 1 ? <Dashboard token={token} onLogout={handleLogout} /> : <Navigate to="/" />} />
         </Routes>
-      </BrowserRouter> */}
-      <BrowserRouter>
-        <Routes>
-          <Route path="/" element=<Dashboard token={"LOL"} onLogout={handleLogout} /> />
-        </Routes>
-      </BrowserRouter> 
+      </BrowserRouter>
+      
       
     </div>
   );
