@@ -6,10 +6,19 @@ module.exports = {
   theme: {
     extend: {
       fontFamily: {
-        blackOps: ["Black Ops One"]
+        blackOps: ["Black Ops One"],
+        roboto: ["Roboto"]
       },
+      width: {
+        "112": "28rem"
+      },
+      minHeight: {
+        "128": "32rem"
+      }
     },
   },
-  plugins: [],
+  plugins: [
+    require('tailwind-scrollbar-hide')
+  ],
 }
 
