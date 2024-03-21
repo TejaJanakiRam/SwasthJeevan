@@ -122,7 +122,7 @@ export default function Dashboard(props) {
 
   return (
     <div>
-      <Navbar username={username} onLogout={props.onLogout} />
+      <Navbar onLogout={props.onLogout} />
       <BookNow username={username}/>
       <Specialities username={username} data={specialities} />
       <FAQ username={username} data={faqs} />

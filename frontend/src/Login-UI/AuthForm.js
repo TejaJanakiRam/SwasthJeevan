@@ -12,7 +12,7 @@ export default function AuthForm(props) {
         {props.formType === "login" && <div className='self-end'>
             <a href="#" className="hover:underline text-blue-500 pr-8 font-semibold" onClick={props.handleForgotPassword}>Forgot Password?</a>
         </div>}
-        <button type="submit" className=" border-2 text-lg border-blue-500 font-semibold text-white bg-blue-500 rounded-xl my-6 p-2 w-1/2 hover:bg-blue-600 hover:border-blue-600 transition-all duration-300">{props.formType === "login" ? "Login" : "Signup"}</button>
+        <button type="submit" className=" border-2 text-lg border-blue-500 font-semibold text-white bg-blue-500 rounded-xl my-6 p-2 w-1/2 hover:bg-blue-600 hover:border-blue-600 transition-all duration-300 shadow shadow-slate-800">{props.formType === "login" ? "Login" : "Signup"}</button>
         {props.role === 'patient' && (!props.showSignup ? (
             <div className="self-start text-blue-500 text-lg pl-6">
                 New User? <a href="#" className="hover:underline font-semibold " onClick={props.showSignupTrigger}>Sign up Here</a>

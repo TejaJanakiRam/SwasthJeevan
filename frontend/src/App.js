@@ -3,7 +3,8 @@ import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 
 import Dashboard from './Patient-UI/Dashboard.js';
 import AuthenticationPage from "./Login-UI/AuthenticationPage.js";
-
+import Navbar from "./Patient-UI/Navbar/Navbar.js";
+import Booking from "./Patient-UI/Booking.js";
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(0);
   const [token, setToken] = useState('');
@@ -24,6 +25,7 @@ function App() {
         <Routes>
           <Route path="/" element={isLoggedIn ? <Navigate to="/patient/dashboard" /> : <AuthenticationPage onLogin={handleLogin} />} />
           <Route path="/patient/dashboard" element={isLoggedIn === 1 ? <Dashboard token={token} onLogout={handleLogout} /> : <Navigate to="/" />} />
+          <Route path="/patient/booking" element={isLoggedIn === 1 ? <Booking token={token} onLogout={handleLogout} /> : <Navigate to="/" />} />
         </Routes>
       </BrowserRouter>
       
