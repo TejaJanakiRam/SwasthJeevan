@@ -23,23 +23,21 @@ export default function LoginPage(props) {
                 password,
                 role: props.role.toUpperCase()
             });
-            console.log(response.data.jwt);
             const token = String(response.data.jwt);
-            props.onLogin(token, props.role.toUpperCase());
+            props.onLogin(token, props.role);
         } catch (error) {
             alert("Wrong credentials!")
         }
-
     };
     const authFormProps = {
-        ...props, 
+        ...props,
         formType: "login",
         setUsername: setUsername,
         setPassword: setPassword,
         handleForgotPassword: handleForgotPassword,
         handleSubmit: handleLogin
     };
-    
+
 
     return (
         <AuthForm {...authFormProps} />

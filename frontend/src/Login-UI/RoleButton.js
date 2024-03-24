@@ -7,8 +7,8 @@ export default function RoleButton({ role, handleRoleSelection, getRoleString })
     const roleIcons = {
         'user': FaUser,
         'doctor': FaUserDoctor,
-        'orgadmin': FaHospitalUser,
-        'sysadmin': FaUserGear
+        'org_admin': FaHospitalUser,
+        'sys_admin': FaUserGear
     };
 
     const RoleIcon = roleIcons[role] || FaUser;

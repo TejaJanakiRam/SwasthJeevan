@@ -10,9 +10,9 @@ function getRoleString(role) {
             return ("Patient");
         case "doctor":
             return ("Doctor");
-        case "orgadmin":
+        case "org_admin":
             return ("Organisation Admin");
-        case "sysadmin":
+        case "sys_admin":
             return ("System Admin");
         default:
             return ("");
@@ -54,8 +54,8 @@ export default function AuthenticationPage(props) {
                     <div className="flex flex-col space-y-8 w-3/4 md:w-1/2 lg:w-3/4">
                         <RoleButton role={"patient"} handleRoleSelection={handleRoleSelection} getRoleString={getRoleString} />
                         <RoleButton role={"doctor"} handleRoleSelection={handleRoleSelection} getRoleString={getRoleString} />
-                        <RoleButton role={"orgadmin"} handleRoleSelection={handleRoleSelection} getRoleString={getRoleString} />
-                        <RoleButton role={"sysadmin"} handleRoleSelection={handleRoleSelection} getRoleString={getRoleString} />
+                        <RoleButton role={"org_admin"} handleRoleSelection={handleRoleSelection} getRoleString={getRoleString} />
+                        <RoleButton role={"sys_admin"} handleRoleSelection={handleRoleSelection} getRoleString={getRoleString} />
                     </div>
                 </div>
             </div>

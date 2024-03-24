@@ -1,9 +1,9 @@
 import { useState, useEffect } from 'react'
-import Navbar from './Navbar/Navbar.js';
+import axios from "axios";
+import Navbar from '../Common-UI/Navbar/Navbar.js';
 import Specialities from './Specialities-Section/Specialities.js';
 import FAQ from './FAQ-Section/FAQ.js';
 import BookNow from './BookNow-Section/BookNow.js';
-import axios from "axios";
 import Footer from './Footer/Footer.js';
 
 const user = {
@@ -102,9 +102,8 @@ function classNames(...classes) {
   return classes.filter(Boolean).join(' ')
 }
 
-export default function Dashboard(props) {
+export default function PatientDashboard(props) {
   const [username, setUsername] = useState('');
-
   const getDetails = async () => {
     try {
       const response = await axios.get('http://localhost:4000/api/patient/profile', {
@@ -123,8 +122,8 @@ export default function Dashboard(props) {
 
   return (
     <div>
-      <Navbar onLogout={props.onLogout} />
-      <BookNow username={username}/>
+      <Navbar role={"patient"} onLogout={props.onLogout} />
+      <BookNow username={username} />
       <Specialities username={username} data={specialities} />
       <FAQ username={username} data={faqs} />
       <Footer />
