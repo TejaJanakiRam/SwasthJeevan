@@ -4,6 +4,7 @@ import Specialities from './Specialities-Section/Specialities.js';
 import FAQ from './FAQ-Section/FAQ.js';
 import BookNow from './BookNow-Section/BookNow.js';
 import axios from "axios";
+import Footer from './Footer/Footer.js';
 
 const user = {
   name: 'Tom Cook',
@@ -126,6 +127,7 @@ export default function Dashboard(props) {
       <BookNow username={username}/>
       <Specialities username={username} data={specialities} />
       <FAQ username={username} data={faqs} />
+      <Footer />
     </div>
   )
 

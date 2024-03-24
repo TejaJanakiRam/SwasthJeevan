@@ -26,8 +26,8 @@ export default function Navbar(props) {
       link: "/patient/dashboard"
     },
   ]
-  return (
-    <nav className='z-10 sticky top-0 w-full sm:flex justify-between items-center bg-white sm:shadow sm:shadow-slate-800'>
+  return (<header className='z-10 sticky top-0'>
+    <nav className='w-full sm:flex justify-between items-center bg-white sm:shadow sm:shadow-slate-800'>
       <div className='logo px-4 py-3 bg-white'>
         <a href='#' className='flex items-center'>
           <img src="../../img/logo.png" className=' w-10 mx-2' />
@@ -46,6 +46,7 @@ export default function Navbar(props) {
         <span className={`bar bg-blue-500 block h-0.5 w-6 m-1.5 ${isActivated ? "transform -translate-y-2 -rotate-45" : ""} transition-all duration-500`}></span>
       </div>
     </nav>
+  </header>
 
 
   )
