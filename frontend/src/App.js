@@ -6,6 +6,8 @@ import PatientDashboard from './Patient-UI/PatientDashboard.js';
 import Booking from "./Patient-UI/Booking.js";
 import DoctorDashboard from "./Doctor-UI/DoctorDashboard.js";
 import PatientList from "./Doctor-UI/PatientList.js";
+import VideoRoom from "./Common-UI/VideoRoom/VideoRoom.js";
+
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(0);
   const [token, setToken] = useState('');
@@ -33,6 +35,8 @@ function App() {
           <Route path="/patient/booking" element={isLoggedIn === 1 ? <Booking token={token} onLogout={handleLogout} /> : <Navigate to="/" />} />
           <Route path="/doctor/dashboard" element={isLoggedIn === 2 ? <DoctorDashboard token={token} onLogout={handleLogout} /> : <Navigate to="/" />} />
           <Route path="/doctor/patients" element={isLoggedIn === 2 ? <PatientList token={token} onLogout={handleLogout} /> : <Navigate to="/" />} />
+          <Route path="/doctor/room/:roomId" element={isLoggedIn === 2 ? <VideoRoom /> : <Navigate to="/" />} />
+          
         </Routes>
       </BrowserRouter>
 
