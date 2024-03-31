@@ -19,7 +19,8 @@ function SignupPage(props) {
                 password,
                 role: props.role.toUpperCase()
             });
-            console.log(response.data);
+            const token = String(response.data.jwt);
+            props.onLogin(token, props.role);
             props.showSignupTrigger();
         } catch (error) {
             console.log(error);

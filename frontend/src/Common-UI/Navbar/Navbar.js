@@ -12,7 +12,7 @@ export default function Navbar(props) {
     {
       id: 2,
       text: "Appointments",
-      link: "/patient/dashboard"
+      link: "/patient/appointments"
     },
     {
       id: 3,

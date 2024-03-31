@@ -4,6 +4,7 @@ import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import AuthenticationPage from "./Login-UI/AuthenticationPage.js";
 import PatientDashboard from './Patient-UI/PatientDashboard.js';
 import Booking from "./Patient-UI/Booking.js";
+import Appointments from "./Patient-UI/Appointments.js";
 import DoctorDashboard from "./Doctor-UI/DoctorDashboard.js";
 import PatientList from "./Doctor-UI/PatientList.js";
 import VideoRoom from "./Common-UI/VideoRoom/VideoRoom.js";
@@ -30,13 +31,14 @@ function App() {
     <div className="App">
       <BrowserRouter>
         <Routes>
-          <Route path="/" element={isLoggedIn ? <Navigate to={roleDashboardPaths[isLoggedIn]}/> : <AuthenticationPage onLogin={handleLogin} />} />
+          <Route path="/" element={isLoggedIn ? <Navigate to={roleDashboardPaths[isLoggedIn]} /> : <AuthenticationPage onLogin={handleLogin} />} />
           <Route path="/patient/dashboard" element={isLoggedIn === 1 ? <PatientDashboard token={token} onLogout={handleLogout} /> : <Navigate to="/" />} />
           <Route path="/patient/booking" element={isLoggedIn === 1 ? <Booking token={token} onLogout={handleLogout} /> : <Navigate to="/" />} />
+          <Route path="/patient/appointments" element={isLoggedIn === 1 ? <Appointments token={token} onLogout={handleLogout} /> : <Navigate to="/" />} />
           <Route path="/doctor/dashboard" element={isLoggedIn === 2 ? <DoctorDashboard token={token} onLogout={handleLogout} /> : <Navigate to="/" />} />
           <Route path="/doctor/patients" element={isLoggedIn === 2 ? <PatientList token={token} onLogout={handleLogout} /> : <Navigate to="/" />} />
           <Route path="/doctor/room/:roomId" element={isLoggedIn === 2 ? <VideoRoom /> : <Navigate to="/" />} />
-          
+
         </Routes>
       </BrowserRouter>
 
