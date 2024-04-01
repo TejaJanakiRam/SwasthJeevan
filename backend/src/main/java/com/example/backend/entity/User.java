@@ -1,5 +1,7 @@
 package com.example.backend.entity;
 
+import java.sql.Date;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -22,5 +24,5 @@ public class User {
     private Long id;
     private String username;
     private String password;
-    private USER_ROLE role = USER_ROLE.PATIENT;
+    private USER_TYPE type = USER_TYPE.PATIENT;
 }

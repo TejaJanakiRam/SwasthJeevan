@@ -1,6 +1,6 @@
 package com.example.backend.request;
 
-import com.example.backend.entity.USER_ROLE;
+import com.example.backend.entity.USER_TYPE;
 
 import lombok.Data;
 
@@ -8,5 +8,5 @@ import lombok.Data;
 public class LoginRequest {
     private String username;
     private String password;
-    private USER_ROLE role;
+    private USER_TYPE type;
 }

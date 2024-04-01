@@ -10,7 +10,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
-import com.example.backend.entity.USER_ROLE;
+import com.example.backend.entity.USER_TYPE;
 import com.example.backend.entity.User;
 import com.example.backend.repository.UserRepository;
 
@@ -26,8 +26,8 @@ public class CustomUserDetailsService implements UserDetailsService {
         if (user == null) {
             throw new UsernameNotFoundException("user not found!");
         }
-        USER_ROLE role = user.getRole();
-        List<GrantedAuthority> authorities = Collections.singletonList(new SimpleGrantedAuthority(role.toString()));
+        USER_TYPE type = user.getType();
+        List<GrantedAuthority> authorities = Collections.singletonList(new SimpleGrantedAuthority(type.toString()));
 
         // AuthenticationManager, and Authentication Provider call this
         return (new org.springframework.security.core.userdetails.User(user.getUsername(), user.getPassword(),

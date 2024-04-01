@@ -1,6 +1,6 @@
 package com.example.backend.entity;
 
-public enum USER_ROLE{
+public enum USER_TYPE{
     PATIENT,
     DOCTOR
 }

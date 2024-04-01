@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 
 import AuthenticationPage from "./Login-UI/AuthenticationPage.js";
@@ -12,6 +12,24 @@ import VideoRoom from "./Common-UI/VideoRoom/VideoRoom.js";
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(0);
   const [token, setToken] = useState('');
+
+  const runEffect = useRef(false);
+  useEffect(() => {
+    if (runEffect.current === false) {
+      const data = window.localStorage.getItem('loggedInState');
+      console.log("data=" + data);
+      if (data) {
+        setIsLoggedIn(JSON.parse(data));
+      }
+    }
+    return (() => { runEffect.current = true; })
+  }, []);
+  
+  useEffect(() => {
+    window.localStorage.setItem('loggedInState', JSON.stringify(isLoggedIn));
+  }, [isLoggedIn]);
+
+
 
   const handleLogin = (jwtToken, role) => {
     setToken(jwtToken);

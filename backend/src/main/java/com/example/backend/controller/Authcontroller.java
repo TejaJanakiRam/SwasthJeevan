@@ -22,7 +22,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.example.backend.config.JwtService;
 import com.example.backend.dto.UserDTO;
-import com.example.backend.entity.USER_ROLE;
+import com.example.backend.entity.USER_TYPE;
 import com.example.backend.entity.User;
 import com.example.backend.mapper.UserMapper;
 import com.example.backend.repository.UserRepository;
@@ -52,7 +52,7 @@ public class Authcontroller {
         User createdUser = new User();
         createdUser.setUsername(user.getUsername());
         createdUser.setPassword(passwordEncoder.encode(user.getPassword()));
-        createdUser.setRole(user.getRole());
+        createdUser.setType(user.getType());
         User savedUser = userRepository.save(createdUser);
         UserDetails userDetails = customUserDetailsService.loadUserByUsername(savedUser.getUsername());
         Authentication authentication = new UsernamePasswordAuthenticationToken(savedUser.getUsername(),
@@ -62,7 +62,7 @@ public class Authcontroller {
         AuthResponse authResponse = new AuthResponse();
         authResponse.setJwt(jwt);
         authResponse.setMessage("Register Success");
-        authResponse.setRole(user.getRole());
+        authResponse.setType(user.getType());
 
         return (new ResponseEntity<>(authResponse, HttpStatus.CREATED));
     }
@@ -72,20 +72,20 @@ public class Authcontroller {
 
         String username = userDTO.getUsername();
         String password = userDTO.getPassword();
-        String role = userDTO.getRole().toString();
-        Authentication authentication = authenticate(username, password, role);
+        String type = userDTO.getType().toString();
+        Authentication authentication = authenticate(username, password, type);
         Collection<? extends GrantedAuthority> authorities = authentication.getAuthorities();
-        String actualRole = authorities.isEmpty() ? null : authorities.iterator().next().getAuthority();
+        String actualType = authorities.isEmpty() ? null : authorities.iterator().next().getAuthority();
         String jwt = jwtService.generateToken(authentication);
         AuthResponse authResponse = new AuthResponse();
         authResponse.setJwt(jwt);
         authResponse.setMessage("Login Success");
-        authResponse.setRole(USER_ROLE.valueOf(actualRole));
+        authResponse.setType(USER_TYPE.valueOf(actualType));
         return (new ResponseEntity<>(authResponse, HttpStatus.OK));
 
     }
 
-    private Authentication authenticate(String username, String password, String role) throws Exception {
+    private Authentication authenticate(String username, String password, String type) throws Exception {
         UserDetails userDetails = customUserDetailsService.loadUserByUsername(username);
         if (userDetails == null) {
             throw new BadCredentialsException("Invalid username");
@@ -93,8 +93,8 @@ public class Authcontroller {
         if (!passwordEncoder.matches(password, userDetails.getPassword())) {
             throw new BadCredentialsException("Invalid password");
         }
-        if (!role.equals(populateAuthorities(userDetails.getAuthorities()))) {
-            throw new BadCredentialsException("Incorrect Role");
+        if (!type.equals(populateAuthorities(userDetails.getAuthorities()))) {
+            throw new BadCredentialsException("Incorrect type");
         }
         return (new UsernamePasswordAuthenticationToken(username, null, userDetails.getAuthorities()));
     }
