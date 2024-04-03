@@ -21,10 +21,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.backend.config.JwtService;
+import com.example.backend.dto.PatientDTO;
 import com.example.backend.dto.UserDTO;
+import com.example.backend.entity.Patient;
 import com.example.backend.entity.USER_TYPE;
 import com.example.backend.entity.User;
+import com.example.backend.mapper.PatientMapper;
 import com.example.backend.mapper.UserMapper;
+import com.example.backend.repository.PatientRepository;
 import com.example.backend.repository.UserRepository;
 import com.example.backend.request.LoginRequest;
 import com.example.backend.response.AuthResponse;
@@ -35,12 +39,23 @@ import com.example.backend.service.CustomUserDetailsService;
 public class Authcontroller {
     @Autowired
     private UserRepository userRepository;
+
+    @Autowired
+    private PatientRepository patientRepository;
     @Autowired
     private PasswordEncoder passwordEncoder;
     @Autowired
     private JwtService jwtService;
     @Autowired
     private CustomUserDetailsService customUserDetailsService;
+
+    @PostMapping("/add")
+    public ResponseEntity<PatientDTO> addPatient(@RequestBody PatientDTO patientDTO) throws Exception {
+        Patient patient = PatientMapper.mapToPatient(patientDTO);
+        patient.setPassword(passwordEncoder.encode(patient.getPassword()));
+        PatientDTO savedPatient =  PatientMapper.mapToPatientDTO(patientRepository.save(patient));
+        return (new ResponseEntity<>(savedPatient, HttpStatus.OK));
+    }
 
     @PostMapping("/signup")
     public ResponseEntity<AuthResponse> signUpUserHandler(@RequestBody UserDTO userDTO) throws Exception {
