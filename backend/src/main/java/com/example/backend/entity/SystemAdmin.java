@@ -6,11 +6,10 @@ import lombok.Getter;
 import lombok.Setter;
 
 @Entity
-@Table(name = "Sys-admin")
+@Table(name = "SystemAdmin")
 @Getter
 @Setter
 
-
-public class Sys_admin extends User{
+public class SystemAdmin extends User{
     
 }
