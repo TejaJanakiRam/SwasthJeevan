@@ -15,21 +15,22 @@ function App() {
 
   const runEffect = useRef(false);
   useEffect(() => {
+    console.log("mounted");
     if (runEffect.current === false) {
-      const data = window.localStorage.getItem('loggedInState');
-      console.log("data=" + data);
+      const data = JSON.parse(window.localStorage.getItem('loggedInState'));
       if (data) {
-        setIsLoggedIn(JSON.parse(data));
+        setIsLoggedIn(data.isLoggedIn);
+        setToken(data.token)
       }
     }
     return (() => { runEffect.current = true; })
   }, []);
-  
+
   useEffect(() => {
-    window.localStorage.setItem('loggedInState', JSON.stringify(isLoggedIn));
+    window.localStorage.setItem('loggedInState', JSON.stringify({ "token": token, "isLoggedIn": isLoggedIn }));
   }, [isLoggedIn]);
 
-
+  
 
   const handleLogin = (jwtToken, role) => {
     setToken(jwtToken);
@@ -39,6 +40,7 @@ function App() {
 
   const handleLogout = () => {
     setIsLoggedIn(0);
+    setToken('');
   };
 
   const roleDashboardPaths = {
