@@ -2,8 +2,6 @@ package com.example.backend.entity;
 
 import java.sql.Date;
 
-import javax.print.DocFlavor.STRING;
-
 import jakarta.persistence.Entity;
 import jakarta.persistence.Table;
 import lombok.Getter;
