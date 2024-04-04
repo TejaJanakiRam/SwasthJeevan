@@ -2,6 +2,7 @@ package com.example.backend.controller;
 
 import java.util.Collection;
 import java.util.HashSet;
+import java.util.Map;
 import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -49,35 +50,34 @@ public class Authcontroller {
     @Autowired
     private CustomUserDetailsService customUserDetailsService;
 
-    @PostMapping("/add")
-    public ResponseEntity<PatientDTO> addPatient(@RequestBody PatientDTO patientDTO) throws Exception {
-        Patient patient = PatientMapper.mapToPatient(patientDTO);
-        patient.setPassword(passwordEncoder.encode(patient.getPassword()));
-        PatientDTO savedPatient =  PatientMapper.mapToPatientDTO(patientRepository.save(patient));
-        return (new ResponseEntity<>(savedPatient, HttpStatus.OK));
-    }
-
     @PostMapping("/signup")
-    public ResponseEntity<AuthResponse> signUpUserHandler(@RequestBody UserDTO userDTO) throws Exception {
-        User user = UserMapper.mapToUser(userDTO);
-        User userExist = userRepository.findByUsername(user.getUsername());
-        if (userExist != null) {
-            throw new Exception("User exists");
+    public ResponseEntity<AuthResponse> signUpUserHandler(@RequestBody Map<String, Object> request) throws Exception {
+        String role = (String) request.get("type");
+        if (role == null) {
+            throw new Exception("Role not present");
         }
-        User createdUser = new User();
-        createdUser.setUsername(user.getUsername());
-        createdUser.setPassword(passwordEncoder.encode(user.getPassword()));
-        createdUser.setType(user.getType());
-        User savedUser = userRepository.save(createdUser);
-        UserDetails userDetails = customUserDetailsService.loadUserByUsername(savedUser.getUsername());
-        Authentication authentication = new UsernamePasswordAuthenticationToken(savedUser.getUsername(),
-                savedUser.getPassword(), userDetails.getAuthorities());
+        USER_TYPE type = USER_TYPE.valueOf(role);
+        UserDetails userDetails = null;
+        if (type == USER_TYPE.PATIENT) {
+            Patient patient = PatientMapper.mapToPatient(request);
+            User patientExist = patientRepository.findByUsername(patient.getUsername());
+            if (patientExist != null) {
+                throw new Exception("Patient exists");
+            }
+            patient.setPassword(passwordEncoder.encode(patient.getPassword()));
+            Patient savedPatient = patientRepository.save(patient);
+            userDetails = customUserDetailsService.loadUserByUsername(savedPatient.getUsername());
+        }
+        Authentication authentication = new UsernamePasswordAuthenticationToken(userDetails.getUsername(),
+                userDetails.getPassword(), userDetails.getAuthorities());
         SecurityContextHolder.getContext().setAuthentication(authentication);
         String jwt = jwtService.generateToken(authentication);
         AuthResponse authResponse = new AuthResponse();
         authResponse.setJwt(jwt);
         authResponse.setMessage("Register Success");
-        authResponse.setType(user.getType());
+        String savedRole = userDetails.getAuthorities().isEmpty() ? ""
+                : userDetails.getAuthorities().iterator().next().getAuthority();
+        authResponse.setType(USER_TYPE.valueOf(savedRole));
 
         return (new ResponseEntity<>(authResponse, HttpStatus.CREATED));
     }
