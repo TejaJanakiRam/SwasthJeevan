@@ -46,8 +46,16 @@ public class Authcontroller {
 
     @Autowired
     private PatientRepository patientRepository;
+
     @Autowired
     private DoctorRepository doctorRepository;
+
+    @Autowired
+    private PatientMapper patientMapper;
+
+    @Autowired
+    private DoctorMapper doctorMapper;
+
     @Autowired
     private PasswordEncoder passwordEncoder;
     @Autowired
@@ -64,8 +72,8 @@ public class Authcontroller {
         USER_TYPE type = USER_TYPE.valueOf(role);
         UserDetails userDetails = null;
         if (type == USER_TYPE.PATIENT) {
-            Patient patient = PatientMapper.mapToPatient(request);
-            User patientExist = patientRepository.findByUsername(patient.getUsername());
+            Patient patient = patientMapper.mapToPatient(request);
+            Patient patientExist = patientRepository.findByUsername(patient.getUsername());
             if (patientExist != null) {
                 throw new Exception("Patient exists");
             }
@@ -75,12 +83,11 @@ public class Authcontroller {
         }
 
         else if(type == USER_TYPE.DOCTOR) {
-            Doctor doctor = DoctorMapper.mapToDoctor(request);
-            User doctorExist = doctorRepository.findByUsername(doctor.getUsername());
+            Doctor doctor = doctorMapper.mapToDoctor(request);
+            Doctor doctorExist = doctorRepository.findByUsername(doctor.getUsername());
             if(doctorExist != null) {
                 throw new Exception("Doctor exists");
             }
-            System.out.println(doctor.getPassword());
             doctor.setPassword(passwordEncoder.encode(doctor.getPassword()));
             Doctor savedDoctor = doctorRepository.save(doctor);
             userDetails = customUserDetailsService.loadUserByUsername(savedDoctor.getUsername());
@@ -101,7 +108,6 @@ public class Authcontroller {
 
     @PostMapping("/signin")
     public ResponseEntity<AuthResponse> signInUserHandler(@RequestBody UserDTO userDTO) throws Exception {
-
         String username = userDTO.getUsername();
         String password = userDTO.getPassword();
         String type = userDTO.getType().toString();

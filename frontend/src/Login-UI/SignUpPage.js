@@ -59,26 +59,30 @@ function SignupPage(props) {
                 <InputField type={"number"} fieldName={"phone"} displayFieldName={"Phone"} setFunction={setPhone} />
             </div>
             <div className='w-full flex justify-between'>
-                <div className="my-2 pl-4">
-                    <label htmlFor="dob" className="block text-lg font-semibold">Date of Birth</label>
-                    <input type="date" id="dob" name="dob" className="w-full text-blue-500 border-2 border-blue-500 rounded-xl py-2 px-3 focus:outline-none  focus:border-blue-800 focus:text-blue-800 sm:text-sm lg:text-lg" autoComplete="off" onChange={(e) => setDob(e.target.value)} />
+                <div className='w-1/2 flex justify-between'>
+                    <div className="my-2 pl-4">
+                        <label htmlFor="dob" className="block text-lg font-semibold">Date of Birth</label>
+                        <input type="date" id="dob" name="dob" className="w-full text-blue-500 border-2 border-blue-500 rounded-xl py-2 px-3 focus:outline-none  focus:border-blue-800 focus:text-blue-800 sm:text-sm lg:text-lg" autoComplete="off" onChange={(e) => setDob(e.target.value)} />
+                    </div>
+                    <div className="my-2 pr-4">
+                        <label for="gender" className="block text-lg font-semibold">Gender</label>
+                        <select defaultValue="other" name="gender" id="gender" className="w-full text-blue-500 border-2 border-blue-500 rounded-xl py-3 px-3 focus:outline-none  focus:border-blue-800 focus:text-blue-800 sm:text-sm lg:text-lg" onChange={(e) => { setGender(e.target.value) }}>
+                            <option value="male">Male</option>
+                            <option value="female">Female</option>
+                            <option value="other">Other</option>
+                        </select>
+                    </div>
                 </div>
-                <div className="my-2 pr-4">
-                    <label for="gender" className="block text-lg font-semibold">Gender</label>
-                    <select name="gender" id="gender" className="w-full text-blue-500 border-2 border-blue-500 rounded-xl py-3 px-3 focus:outline-none  focus:border-blue-800 focus:text-blue-800 sm:text-sm lg:text-lg" onChange={(e) => { setGender(e.target.value) }}>
-                        <option value="male">Male</option>
-                        <option value="female">Female</option>
-                        <option selected value="other">Other</option>
-                    </select>
+                <div className="my-2 pl-4 w-1/2">
+                    <label htmlFor="dob" className="block text-lg font-semibold">Username</label>
+                    <input type="text" id="username" name="username" className="w-full text-blue-500 border-2 border-blue-500 rounded-xl py-2 px-3 focus:outline-none  focus:border-blue-800 focus:text-blue-800 sm:text-sm lg:text-lg" autoComplete="off" onChange={(e) => setUsername(e.target.value)} />
                 </div>
-
             </div>
-            <InputField type={"text"} fieldName={"username"} displayFieldName={"Username"} setFunction={setUsername} />
             <div className='w-full flex justify-between'>
                 <InputField type={"password"} fieldName={"password"} displayFieldName={"Password"} setFunction={setPassword} />
                 <InputField type={"password"} fieldName={"confirmPassword"} displayFieldName={"Confirm Password"} setFunction={setConfirmPassword} />
             </div>
-            <InputField type={"address"} fieldName={"address"} displayFieldName={"Address"} setFunction={setAddress} />
+            <InputField type={"text"} fieldName={"address"} displayFieldName={"Address"} setFunction={setAddress} />
 
             {<div className="text-red-500 mb-4">{signupError ? signupError : " "}</div>}
 

@@ -19,8 +19,7 @@ import lombok.Setter;
 public class Organization {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
-
+    private Long id;
     private String name;
     private String registration_number;
     private String phone;

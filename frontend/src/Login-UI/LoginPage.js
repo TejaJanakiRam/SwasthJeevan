@@ -17,12 +17,12 @@ export default function LoginPage(props) {
     const handleLogin = async (e) => {
         e.preventDefault();
         try {
-
-            const response = await axios.post('http://localhost:4000/auth/signin', {
-                username,
-                password,
-                role: props.role.toUpperCase()
-            });
+            const body = {
+                username: username,
+                password: password,
+                type: props.role.toUpperCase()
+            }
+            const response = await axios.post('http://localhost:4000/auth/signin', body);
             const token = String(response.data.jwt);
             props.onLogin(token, props.role);
         } catch (error) {
@@ -35,7 +35,7 @@ export default function LoginPage(props) {
         <form onSubmit={handleLogin} className='flex flex-col items-center w-full p-4'>
             <InputField type={"text"} fieldName={"username"} displayFieldName={"Username"} setFunction={setUsername} />
             <InputField type={"password"} fieldName={"password"} displayFieldName={"Password"} setFunction={setPassword} />
-            
+
             <div className='self-end'>
                 <a href="#" className="hover:underline text-blue-500 pr-8 font-semibold" onClick={handleForgotPassword}>Forgot Password?</a>
             </div>

@@ -14,13 +14,13 @@ import lombok.Setter;
 @Getter
 @Setter
 public class Doctor extends User{
-    // private Long PatientId;
-    @OneToOne
-   @JoinColumn(name="Org_ID", referencedColumnName = "id")
+    
+   @OneToOne
+   @JoinColumn(name="org_Id", referencedColumnName = "id")
    private Organization organization;
 
    @OneToOne
-   @JoinColumn(name="Spec_ID", referencedColumnName = "id")
+   @JoinColumn(name="spec_Id", referencedColumnName = "id")
    private Speciality speciality;
    
     private USER_GENDER gender = USER_GENDER.OTHER;
