@@ -5,6 +5,7 @@ import java.util.Collections;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
@@ -31,6 +32,8 @@ public class SecurityConfig {
                 .authorizeHttpRequests(authorise -> authorise
                         .requestMatchers("/api/patient/**").hasAnyAuthority("PATIENT")
                         .requestMatchers("/api/doctor/**").hasAnyAuthority("DOCTOR")
+                        .requestMatchers(HttpMethod.GET, "/api/ehr/**").hasAnyAuthority("PATIENT","DOCTOR")
+                        .requestMatchers("/api/ehr/**").hasAnyAuthority("PATIENT")
                         .requestMatchers("/api/**").authenticated()
                         .anyRequest().permitAll())
                 .addFilterBefore(jwtTokenValidator, BasicAuthenticationFilter.class)
