@@ -4,6 +4,7 @@ import java.sql.Date;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import lombok.Getter;
@@ -15,11 +16,11 @@ import lombok.Setter;
 @Setter
 public class Doctor extends User{
     
-   @OneToOne
+   @ManyToOne
    @JoinColumn(name="org_Id", referencedColumnName = "id")
    private Organization organization;
 
-   @OneToOne
+   @ManyToOne
    @JoinColumn(name="spec_Id", referencedColumnName = "id")
    private Speciality speciality;
    
