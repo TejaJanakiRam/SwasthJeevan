@@ -24,11 +24,14 @@ import org.springframework.web.bind.annotation.RestController;
 import com.example.backend.config.JwtService;
 import com.example.backend.dto.PatientDTO;
 import com.example.backend.dto.UserDTO;
+import com.example.backend.entity.Doctor;
 import com.example.backend.entity.Patient;
 import com.example.backend.entity.USER_TYPE;
 import com.example.backend.entity.User;
+import com.example.backend.mapper.DoctorMapper;
 import com.example.backend.mapper.PatientMapper;
 import com.example.backend.mapper.UserMapper;
+import com.example.backend.repository.DoctorRepository;
 import com.example.backend.repository.PatientRepository;
 import com.example.backend.repository.UserRepository;
 import com.example.backend.request.LoginRequest;
@@ -43,6 +46,8 @@ public class Authcontroller {
 
     @Autowired
     private PatientRepository patientRepository;
+    @Autowired
+    private DoctorRepository doctorRepository;
     @Autowired
     private PasswordEncoder passwordEncoder;
     @Autowired
@@ -67,6 +72,18 @@ public class Authcontroller {
             patient.setPassword(passwordEncoder.encode(patient.getPassword()));
             Patient savedPatient = patientRepository.save(patient);
             userDetails = customUserDetailsService.loadUserByUsername(savedPatient.getUsername());
+        }
+
+        else if(type == USER_TYPE.DOCTOR) {
+            Doctor doctor = DoctorMapper.mapToDoctor(request);
+            User doctorExist = doctorRepository.findByUsername(doctor.getUsername());
+            if(doctorExist != null) {
+                throw new Exception("Doctor exists");
+            }
+            System.out.println(doctor.getPassword());
+            doctor.setPassword(passwordEncoder.encode(doctor.getPassword()));
+            Doctor savedDoctor = doctorRepository.save(doctor);
+            userDetails = customUserDetailsService.loadUserByUsername(savedDoctor.getUsername());
         }
         Authentication authentication = new UsernamePasswordAuthenticationToken(userDetails.getUsername(),
                 userDetails.getPassword(), userDetails.getAuthorities());
