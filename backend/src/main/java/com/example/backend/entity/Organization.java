@@ -21,7 +21,7 @@ public class Organization {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String name;
-    private String registration_number;
+    private String registrationNum;
     private String phone;
     private String email;
     private String address;

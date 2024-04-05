@@ -26,5 +26,5 @@ public class Doctor extends User{
    
     private USER_GENDER gender = USER_GENDER.OTHER;
 
-    private String registrationNo;
+    private String registrationNum;
 }

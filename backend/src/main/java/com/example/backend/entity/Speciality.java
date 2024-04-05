@@ -20,7 +20,7 @@ public class Speciality {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
+    private String specialityCode;
     private String name;
 }
 

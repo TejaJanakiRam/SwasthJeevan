@@ -10,5 +10,5 @@ import com.example.backend.entity.Speciality;
 public interface SpecialityRepository extends JpaRepository<Speciality, Long> {
     // custom find method
     // name function according to field name
-    public Speciality findByName(String name);
+    public Speciality findBySpecialityCode(String specialityCode);
 }

@@ -10,5 +10,5 @@ import com.example.backend.entity.Organization;
 public interface OrganizationRepository extends JpaRepository<Organization, Long> {
     // custom find method
     // name function according to field name
-    public Organization findByName(String name);
+    public Organization findByRegistrationNum(String registrationNum);
 }
