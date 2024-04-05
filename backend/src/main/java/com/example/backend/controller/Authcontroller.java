@@ -22,16 +22,20 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.backend.config.JwtService;
+import com.example.backend.dto.OrganizationDTO;
 import com.example.backend.dto.PatientDTO;
 import com.example.backend.dto.UserDTO;
 import com.example.backend.entity.Doctor;
+import com.example.backend.entity.Organization;
 import com.example.backend.entity.Patient;
 import com.example.backend.entity.USER_TYPE;
 import com.example.backend.entity.User;
 import com.example.backend.mapper.DoctorMapper;
+import com.example.backend.mapper.OrganizationMapper;
 import com.example.backend.mapper.PatientMapper;
 import com.example.backend.mapper.UserMapper;
 import com.example.backend.repository.DoctorRepository;
+import com.example.backend.repository.OrganizationRepository;
 import com.example.backend.repository.PatientRepository;
 import com.example.backend.repository.UserRepository;
 import com.example.backend.request.LoginRequest;
@@ -51,11 +55,16 @@ public class Authcontroller {
     private DoctorRepository doctorRepository;
 
     @Autowired
+    private OrganizationRepository organizationRepository;
+
+    @Autowired
     private PatientMapper patientMapper;
 
     @Autowired
     private DoctorMapper doctorMapper;
 
+    @Autowired
+    private OrganizationMapper organizationMapper;
     @Autowired
     private PasswordEncoder passwordEncoder;
     @Autowired
@@ -63,6 +72,18 @@ public class Authcontroller {
     @Autowired
     private CustomUserDetailsService customUserDetailsService;
 
+
+    @PostMapping("/add_org")
+    public ResponseEntity<AuthResponse> addOrganization(@RequestBody Map<String,Object> request) throws Exception {
+        Organization organization = organizationMapper.mapToOrganization(request);
+        Organization organizationexist = organizationRepository.findByRegistrationNum(organization.getRegistrationNum());
+        if(organizationexist != null){
+            throw new Exception("Organization exits");
+        }
+        Organization savedOrganization = organizationRepository.save(organization);
+        return (new ResponseEntity<>(HttpStatus.CREATED));
+
+    }
     @PostMapping("/signup")
     public ResponseEntity<AuthResponse> signUpUserHandler(@RequestBody Map<String, Object> request) throws Exception {
         String role = (String) request.get("type");
