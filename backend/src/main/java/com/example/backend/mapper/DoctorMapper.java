@@ -50,7 +50,7 @@ public class DoctorMapper {
         return (doctor);
     }
 
-    public static DoctorDTO matToDoctorDTO(Doctor doctor) {
+    public static DoctorDTO mapToDoctorDTO(Doctor doctor) {
         DoctorDTO doctorDTO = new DoctorDTO();
         doctorDTO.setUsername(doctor.getUsername());
         doctorDTO.setPassword(doctor.getPassword());
@@ -63,7 +63,7 @@ public class DoctorMapper {
         doctorDTO.setOrganization(doctor.getOrganization());
         doctorDTO.setSpeciality(doctor.getSpeciality());
         doctorDTO.setGender(doctor.getGender());
-        doctorDTO.setRegistrationNo(doctor.getRegistrationNo());
+        doctorDTO.setRegistrationNo(doctor.getRegistrationNum());
         return (doctorDTO);
     }
 }
