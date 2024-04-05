@@ -20,7 +20,7 @@ import com.example.backend.entity.EHR;
 import com.example.backend.service.EHRService;
 import com.example.backend.response.CreateEHRResponse;
 import com.example.backend.response.DeleteEHRResponse;
-import com.example.backend.request.CreateEHRRequest;
+import com.example.backend.request.EHRMetadata;
 import com.example.backend.response.ListEHRsResponse;
 import com.example.backend.response.GetEHRResponse;
 
@@ -31,7 +31,7 @@ public class EHRController {
     private EHRService ehrService;
 
     @PostMapping("/")
-    public ResponseEntity<CreateEHRResponse> createEHR(@RequestPart("ehrMetadata") CreateEHRRequest ehrMetadata, @RequestPart("document") MultipartFile document) throws Exception {
+    public ResponseEntity<CreateEHRResponse> createEHR(@RequestPart("ehrMetadata") EHRMetadata ehrMetadata, @RequestPart("document") MultipartFile document) throws Exception {
         CreateEHRResponse createEHRResponse = new CreateEHRResponse();
         HttpStatus httpStatus;
         Long createdEHRId = ehrService.create(ehrMetadata, document);
@@ -41,7 +41,7 @@ public class EHRController {
             httpStatus = HttpStatus.CREATED;
         } else {
             createEHRResponse.setMessage("EHR creation failed");
-            httpStatus = HttpStatus.INTERNAL_SERVER_ERROR;
+            httpStatus = HttpStatus.BAD_REQUEST;
         }
         return (new ResponseEntity<>(createEHRResponse, httpStatus));
     }
@@ -50,12 +50,12 @@ public class EHRController {
     public ResponseEntity<ListEHRsResponse> listEHRs(@PathVariable(name = "userid") String userIDStr, @RequestParam(required = false) String typeStr, @RequestParam(required = false) String diagnosisIDStr, @RequestParam(required = false) String fromDateStr, @RequestParam(required = false) String toDateStr) throws Exception {
         ListEHRsResponse listEHRsResponse = new ListEHRsResponse();
         HttpStatus httpStatus;
-        List<EHR> ehrs = new ArrayList<EHR>(ehrService.list(userIDStr, typeStr, diagnosisIDStr, fromDateStr, toDateStr));
-        if (ehrs.isEmpty()) {
+        List<EHRMetadata> ehrsMetadata = new ArrayList<EHRMetadata>(ehrService.list(userIDStr, typeStr, diagnosisIDStr, fromDateStr, toDateStr));
+        if (ehrsMetadata.isEmpty()) {
             listEHRsResponse.setMessage("EHRs listing failed");
-            httpStatus = HttpStatus.INTERNAL_SERVER_ERROR;
+            httpStatus = HttpStatus.NOT_FOUND;
         } else {
-            listEHRsResponse.setEhrs(ehrs);
+            listEHRsResponse.setEhrsMetadata(ehrsMetadata);
             listEHRsResponse.setMessage("EHRs listed successfully");
             httpStatus = HttpStatus.OK;
         }
@@ -75,7 +75,7 @@ public class EHRController {
             httpStatus = HttpStatus.OK;
         } else {
             getEHRResponse.setMessage("EHR get failed");
-            httpStatus = HttpStatus.INTERNAL_SERVER_ERROR;
+            httpStatus = HttpStatus.NOT_FOUND;
         }
         return (new ResponseEntity<>(getEHRResponse, httpStatus));
     }
@@ -89,10 +89,10 @@ public class EHRController {
         Long deletedEHRId = ehrService.delete(userID, ehrID);
         if (deletedEHRId != null) {
             deleteEHRResponse.setMessage("EHR deleted successfully");
-            httpStatus = HttpStatus.OK;
+            httpStatus = HttpStatus.NO_CONTENT;
         } else {
             deleteEHRResponse.setMessage("EHR delete failed");
-            httpStatus = HttpStatus.INTERNAL_SERVER_ERROR;
+            httpStatus = HttpStatus.NOT_FOUND;
         }
         return (new ResponseEntity<>(deleteEHRResponse, httpStatus));
     }

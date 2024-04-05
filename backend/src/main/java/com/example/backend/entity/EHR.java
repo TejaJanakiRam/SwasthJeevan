@@ -2,6 +2,8 @@ package com.example.backend.entity;
 
 import java.util.Date;
 
+import com.example.backend.types.DIAGNOSIS_TYPE;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -26,18 +28,18 @@ public class EHR {
     private Long id;
     private Long userId;
     private EHR_TYPE type = EHR_TYPE.CONSULTATION;
-    private Long diagnosisId;
+    private DIAGNOSIS_TYPE diagnosisType;
     private Date issueDate;
     private Date endDate;
     @Lob
     @Column(name = "document", columnDefinition="BLOB")
     private byte[] document;
 
-    public EHR(Long userId, EHR_TYPE type, Long diagnosisId, Date issueDate, Date endDate, byte[] document)
+    public EHR(Long userId, EHR_TYPE type, DIAGNOSIS_TYPE diagnosisType, Date issueDate, Date endDate, byte[] document)
     {
         this.userId = userId;
         this.type = type;
-        this.diagnosisId = diagnosisId;
+        this.diagnosisType = diagnosisType;
         this.issueDate = issueDate;
         this.endDate = endDate;
         this.document = document;

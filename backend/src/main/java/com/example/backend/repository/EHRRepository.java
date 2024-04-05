@@ -9,11 +9,13 @@ import org.springframework.data.jpa.repository.Query;
 
 import com.example.backend.entity.EHR;
 import com.example.backend.entity.EHR_TYPE;
+import com.example.backend.request.EHRMetadata;
+import com.example.backend.types.DIAGNOSIS_TYPE;
 
 public interface EHRRepository extends JpaRepository<EHR, Long> {
-    @Query("SELECT e FROM EHR e WHERE (:userId is null or e.userId = :userId) and"
-    + "(:type is null or e.type = :type) and (:diagnosisId is null or e.diagnosisId = :diagnosisId) and"
+    @Query("SELECT new com.example.backend.request.EHRMetadata(e.id, e.userId, e.type, e.diagnosisType, e.issueDate, e.endDate) FROM EHR e WHERE (:userId is null or e.userId = :userId) and"
+    + "(:type is null or e.type = :type) and (:diagnosisType is null or e.diagnosisType = :diagnosisType) and"
     + "(:fromDate is null or e.issueDate > :fromDate) and (:toDate is null or e.issueDate < :toDate)")
-    public List<EHR> findByUserIdAndTypeAndDiagnosisIdAndIssueDateGreaterThanEqualAndIssueDateLessThanEqual(Long userId, EHR_TYPE type, Long diagnosisId, Date fromDate, Date toDate) throws Exception;
-    public Optional<EHR> findByUserIdAndTypeAndDiagnosisIdAndIssueDateAndEndDate(Long userId, EHR_TYPE type, Long diagnosisId, Date issueDate, Date endDate) throws Exception;
+    public List<EHRMetadata> findByUserIdAndTypeAndDiagnosisTypeAndIssueDateGreaterThanAndIssueDateLessThan(Long userId, EHR_TYPE type, DIAGNOSIS_TYPE diagnosisType, Date fromDate, Date toDate) throws Exception;
+    public Optional<EHR> findByUserIdAndTypeAndDiagnosisTypeAndIssueDateAndEndDate(Long userId, EHR_TYPE type, DIAGNOSIS_TYPE diagnosisType, Date issueDate, Date endDate) throws Exception;
 }

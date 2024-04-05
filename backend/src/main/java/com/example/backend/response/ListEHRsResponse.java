@@ -2,12 +2,12 @@ package com.example.backend.response;
 
 import java.util.List;
 
-import com.example.backend.entity.EHR;
+import com.example.backend.request.EHRMetadata;
 
 import lombok.Data;
 
 @Data
 public class ListEHRsResponse {
-    List<EHR> ehrs;
+    List<EHRMetadata> ehrsMetadata;
     String message;
 }

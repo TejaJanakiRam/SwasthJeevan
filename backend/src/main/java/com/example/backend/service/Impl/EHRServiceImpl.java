@@ -14,8 +14,9 @@ import org.springframework.web.multipart.MultipartFile;
 import com.example.backend.entity.EHR;
 import com.example.backend.entity.EHR_TYPE;
 import com.example.backend.repository.EHRRepository;
-import com.example.backend.request.CreateEHRRequest;
+import com.example.backend.request.EHRMetadata;
 import com.example.backend.service.EHRService;
+import com.example.backend.types.DIAGNOSIS_TYPE;
 
 @Service
 public class EHRServiceImpl implements EHRService {
@@ -24,9 +25,9 @@ public class EHRServiceImpl implements EHRService {
     private EHRRepository ehrRepository;
     
     @Override
-    public Long create(CreateEHRRequest ehrMetadata, MultipartFile document) throws Exception {
-        EHR ehr = new EHR(ehrMetadata.getUserId(), ehrMetadata.getType(), ehrMetadata.getDiagnosisId(), ehrMetadata.getIssueDate(), ehrMetadata.getEndDate(), document.getBytes());
-        Optional<EHR> ehrRec = ehrRepository.findByUserIdAndTypeAndDiagnosisIdAndIssueDateAndEndDate(ehr.getUserId(), ehr.getType(), ehr.getDiagnosisId(), ehr.getIssueDate(), ehr.getEndDate());
+    public Long create(EHRMetadata ehrMetadata, MultipartFile document) throws Exception {
+        EHR ehr = new EHR(ehrMetadata.getUserId(), ehrMetadata.getType(), ehrMetadata.getDiagnosisType(), ehrMetadata.getIssueDate(), ehrMetadata.getEndDate(), document.getBytes());
+        Optional<EHR> ehrRec = ehrRepository.findByUserIdAndTypeAndDiagnosisTypeAndIssueDateAndEndDate(ehr.getUserId(), ehr.getType(), ehr.getDiagnosisType(), ehr.getIssueDate(), ehr.getEndDate());
         if (ehrRec.isPresent()) {
             throw new Exception("EHR already exists");
         }
@@ -35,7 +36,7 @@ public class EHRServiceImpl implements EHRService {
     }
 
     @Override
-    public List<EHR> list(String userIDStr, String typeStr, String diagnosisIDStr, String fromDateStr, String toDateStr) throws Exception {
+    public List<EHRMetadata> list(String userIDStr, String typeStr, String diagnosisTypeStr, String fromDateStr, String toDateStr) throws Exception {
         Long userID = Long.valueOf(userIDStr);
         EHR_TYPE type;
         if (typeStr != null) {
@@ -47,15 +48,24 @@ public class EHRServiceImpl implements EHRService {
         } else {
             type = null;
         }
-        Long diagnosisID = (diagnosisIDStr != null) ? Long.valueOf(diagnosisIDStr) : null;
+        DIAGNOSIS_TYPE diagnosisType;
+        if (diagnosisTypeStr != null) {
+            try {
+                diagnosisType = DIAGNOSIS_TYPE.valueOf(diagnosisTypeStr);
+            } catch (Exception e) {
+                diagnosisType = null;
+            }
+        } else {
+            diagnosisType = null;
+        }
         SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH);
         Date fromDate = (fromDateStr != null) ? formatter.parse(fromDateStr) : null;
         Date toDate = (toDateStr != null) ? formatter.parse(toDateStr) : null;
-        List<EHR> ehrs = new ArrayList<EHR>(ehrRepository.findByUserIdAndTypeAndDiagnosisIdAndIssueDateGreaterThanEqualAndIssueDateLessThanEqual(userID, type, diagnosisID, fromDate, toDate));
-        if (ehrs.isEmpty()) {
+        List<EHRMetadata> ehrsMetadata = new ArrayList<EHRMetadata>(ehrRepository.findByUserIdAndTypeAndDiagnosisTypeAndIssueDateGreaterThanAndIssueDateLessThan(userID, type, diagnosisType, fromDate, toDate));
+        if (ehrsMetadata.isEmpty()) {
             throw new Exception("EHR(s) not found");
         }
-        return ehrs;
+        return ehrsMetadata;
     }
 
     @Override
