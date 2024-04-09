@@ -15,10 +15,9 @@ import lombok.Setter;
 @Getter
 @Setter
 public class OrganizationAdmin extends User{
-//    private Long orgid;
-    
+  
    @OneToOne
    @JoinColumn(name="org_ID",referencedColumnName = "id")
-   private Organization orgid;
+   private Organization organization;
 }
 

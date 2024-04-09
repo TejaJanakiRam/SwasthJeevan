@@ -38,7 +38,6 @@ public class DoctorMapper {
         if (organization == null) {
             throw new Exception("Organization not there");
         }
-        System.out.println(organization.getName());
         doctor.setOrganization(organization);
         Speciality speciality = specialityRepository.findBySpecialityCode((String) requestBody.get("speciality_code"));
         if (speciality == null) {

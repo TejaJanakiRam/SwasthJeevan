@@ -20,7 +20,7 @@ public class OrganizationMapper {
     public Organization mapToOrganization(Map<String, Object> requestBody) {
         Organization organization = new Organization();
         organization.setName((String) requestBody.get("name"));
-        organization.setRegistrationNum((String) requestBody.get("registrationNum"));
+        organization.setRegistrationNum((String) requestBody.get("registration_num"));
         organization.setPhone((String) requestBody.get("phone"));
         organization.setEmail((String) requestBody.get("email"));
         organization.setAddress((String) requestBody.get("address"));

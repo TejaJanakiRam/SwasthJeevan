@@ -7,6 +7,7 @@ import Booking from "./Patient-UI/Booking.js";
 import Appointments from "./Patient-UI/Appointments.js";
 import DoctorDashboard from "./Doctor-UI/DoctorDashboard.js";
 import PatientList from "./Doctor-UI/PatientList.js";
+import OrgAdminDashboard from "./OrgAdmin-UI/OrgAdminDashboard.js";
 import VideoRoom from "./Common-UI/VideoRoom/VideoRoom.js";
 
 function App() {
@@ -36,6 +37,7 @@ function App() {
     setToken(jwtToken);
     if (role === 'patient') { setIsLoggedIn(1) }
     else if (role === 'doctor') { setIsLoggedIn(2) }
+    else if(role === 'org_admin'){setIsLoggedIn(3)}
   };
 
   const handleLogout = () => {
@@ -46,6 +48,7 @@ function App() {
   const roleDashboardPaths = {
     1: '/patient/dashboard',
     2: '/doctor/dashboard',
+    3: '/org_admin/dashboard'
   };
   return (
     <div className="App">
@@ -58,6 +61,7 @@ function App() {
           <Route path="/doctor/dashboard" element={isLoggedIn === 2 ? <DoctorDashboard token={token} onLogout={handleLogout} /> : <Navigate to="/" />} />
           <Route path="/doctor/patients" element={isLoggedIn === 2 ? <PatientList token={token} onLogout={handleLogout} /> : <Navigate to="/" />} />
           <Route path="/doctor/room/:roomId" element={isLoggedIn === 2 ? <VideoRoom /> : <Navigate to="/" />} />
+          <Route path="/org_admin/dashboard" element={isLoggedIn === 3 ? <OrgAdminDashboard token={token} onLogout={handleLogout} /> : <Navigate to="/" />} />
 
         </Routes>
       </BrowserRouter>

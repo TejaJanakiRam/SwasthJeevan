@@ -27,14 +27,17 @@ import com.example.backend.dto.PatientDTO;
 import com.example.backend.dto.UserDTO;
 import com.example.backend.entity.Doctor;
 import com.example.backend.entity.Organization;
+import com.example.backend.entity.OrganizationAdmin;
 import com.example.backend.entity.Patient;
 import com.example.backend.entity.USER_TYPE;
 import com.example.backend.entity.User;
 import com.example.backend.mapper.DoctorMapper;
+import com.example.backend.mapper.OrganizationAdminMapper;
 import com.example.backend.mapper.OrganizationMapper;
 import com.example.backend.mapper.PatientMapper;
 import com.example.backend.mapper.UserMapper;
 import com.example.backend.repository.DoctorRepository;
+import com.example.backend.repository.OrganizationAdminRepository;
 import com.example.backend.repository.OrganizationRepository;
 import com.example.backend.repository.PatientRepository;
 import com.example.backend.repository.UserRepository;
@@ -45,26 +48,27 @@ import com.example.backend.service.CustomUserDetailsService;
 @RestController
 @RequestMapping("/auth")
 public class Authcontroller {
-    @Autowired
-    private UserRepository userRepository;
-
-    @Autowired
-    private PatientRepository patientRepository;
-
-    @Autowired
-    private DoctorRepository doctorRepository;
 
     @Autowired
     private OrganizationRepository organizationRepository;
-
     @Autowired
     private PatientMapper patientMapper;
-
     @Autowired
     private DoctorMapper doctorMapper;
-
     @Autowired
     private OrganizationMapper organizationMapper;
+    @Autowired
+    private OrganizationAdminMapper organizationAdminMapper;
+
+    @Autowired
+    private UserRepository userRepository;
+    @Autowired
+    private PatientRepository patientRepository;
+    @Autowired
+    private DoctorRepository doctorRepository;
+    @Autowired
+    private OrganizationAdminRepository organizationAdminRepository;
+
     @Autowired
     private PasswordEncoder passwordEncoder;
     @Autowired
@@ -74,14 +78,14 @@ public class Authcontroller {
 
 
     @PostMapping("/add_org")
-    public ResponseEntity<AuthResponse> addOrganization(@RequestBody Map<String,Object> request) throws Exception {
+    public ResponseEntity<Organization> addOrganization(@RequestBody Map<String,Object> request) throws Exception {
         Organization organization = organizationMapper.mapToOrganization(request);
         Organization organizationexist = organizationRepository.findByRegistrationNum(organization.getRegistrationNum());
         if(organizationexist != null){
             throw new Exception("Organization exits");
         }
         Organization savedOrganization = organizationRepository.save(organization);
-        return (new ResponseEntity<>(HttpStatus.CREATED));
+        return (new ResponseEntity<>(savedOrganization, HttpStatus.CREATED));
 
     }
     @PostMapping("/signup")
@@ -112,6 +116,16 @@ public class Authcontroller {
             doctor.setPassword(passwordEncoder.encode(doctor.getPassword()));
             Doctor savedDoctor = doctorRepository.save(doctor);
             userDetails = customUserDetailsService.loadUserByUsername(savedDoctor.getUsername());
+        }
+        else if(type == USER_TYPE.ORG_ADMIN) {
+            OrganizationAdmin organizationAdmin = organizationAdminMapper.mapToOrganization(request);
+            OrganizationAdmin organizationAdminExist = organizationAdminRepository.findByUsername(organizationAdmin.getUsername());
+            if(organizationAdminExist != null) {
+                throw new Exception("organization admin exists");
+            }
+            organizationAdmin.setPassword(passwordEncoder.encode(organizationAdmin.getPassword()));
+            OrganizationAdmin savedOrganizationAdmin = organizationAdminRepository.save(organizationAdmin);
+            userDetails = customUserDetailsService.loadUserByUsername(savedOrganizationAdmin.getUsername());
         }
         Authentication authentication = new UsernamePasswordAuthenticationToken(userDetails.getUsername(),
                 userDetails.getPassword(), userDetails.getAuthorities());
