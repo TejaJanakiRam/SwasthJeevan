@@ -6,21 +6,7 @@ import FAQ from './FAQ-Section/FAQ.js';
 import BookNow from './BookNow-Section/BookNow.js';
 import Footer from './Footer/Footer.js';
 
-const user = {
-  name: 'Tom Cook',
-  email: 'tom@example.com',
-  imageUrl:
-    'https://th.bing.com/th/id/OIP.tvaMwK3QuFxhTYg4PSNNVAHaHa?w=217&h=218&c=7&r=0&o=5&dpr=1.3&pid=1.7'
-}
-const navigation = [
-  { name: 'Home', href: '#', current: true },
-  { name: 'Appointments', href: '#', current: false },
-  { name: 'EHR', href: '#', current: false },
-]
-const userNavigation = [
-  { name: 'Your Profile', href: '#' },
-  { name: 'Sign out', href: '/' },
-]
+
 
 const faqs = [
   {
@@ -116,6 +102,7 @@ export default function PatientDashboard(props) {
       console.error("Failed to fetch user details:", error);
     }
   };
+
   useEffect(() => {
     getDetails();
   }, []);
