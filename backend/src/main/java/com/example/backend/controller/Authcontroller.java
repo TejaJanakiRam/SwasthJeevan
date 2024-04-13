@@ -29,17 +29,20 @@ import com.example.backend.entity.Doctor;
 import com.example.backend.entity.Organization;
 import com.example.backend.entity.OrganizationAdmin;
 import com.example.backend.entity.Patient;
+import com.example.backend.entity.SystemAdmin;
 import com.example.backend.entity.USER_TYPE;
 import com.example.backend.entity.User;
 import com.example.backend.mapper.DoctorMapper;
 import com.example.backend.mapper.OrganizationAdminMapper;
 import com.example.backend.mapper.OrganizationMapper;
 import com.example.backend.mapper.PatientMapper;
+import com.example.backend.mapper.SystemAdminMapper;
 import com.example.backend.mapper.UserMapper;
 import com.example.backend.repository.DoctorRepository;
 import com.example.backend.repository.OrganizationAdminRepository;
 import com.example.backend.repository.OrganizationRepository;
 import com.example.backend.repository.PatientRepository;
+import com.example.backend.repository.SystemAdminRepository;
 import com.example.backend.repository.UserRepository;
 import com.example.backend.request.LoginRequest;
 import com.example.backend.response.AuthResponse;
@@ -59,6 +62,8 @@ public class Authcontroller {
     private OrganizationMapper organizationMapper;
     @Autowired
     private OrganizationAdminMapper organizationAdminMapper;
+    @Autowired
+    private SystemAdminMapper systemAdminMapper;
 
     @Autowired
     private UserRepository userRepository;
@@ -68,6 +73,8 @@ public class Authcontroller {
     private DoctorRepository doctorRepository;
     @Autowired
     private OrganizationAdminRepository organizationAdminRepository;
+    @Autowired
+    private SystemAdminRepository systemAdminRepository;
 
     @Autowired
     private PasswordEncoder passwordEncoder;
@@ -127,6 +134,18 @@ public class Authcontroller {
             OrganizationAdmin savedOrganizationAdmin = organizationAdminRepository.save(organizationAdmin);
             userDetails = customUserDetailsService.loadUserByUsername(savedOrganizationAdmin.getUsername());
         }
+
+        else if(type == USER_TYPE.SYS_ADMIN){
+            SystemAdmin systemAdmin = systemAdminMapper.mapToSystemAdmin(request);
+            SystemAdmin systemAdminExist = systemAdminRepository.findByUsername(systemAdmin.getUsername());
+            if(systemAdminExist!= null) {
+                throw new Exception("system admin exists");
+            }
+            systemAdmin.setPassword(passwordEncoder.encode(systemAdmin.getPassword()));
+            SystemAdmin savedSystemAdmin  = systemAdminRepository.save(systemAdmin);
+            userDetails = customUserDetailsService.loadUserByUsername(savedSystemAdmin.getUsername());
+        }
+        
         Authentication authentication = new UsernamePasswordAuthenticationToken(userDetails.getUsername(),
                 userDetails.getPassword(), userDetails.getAuthorities());
         SecurityContextHolder.getContext().setAuthentication(authentication);
