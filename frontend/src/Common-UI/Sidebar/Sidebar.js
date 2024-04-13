@@ -21,6 +21,13 @@ export default function Sidebar(props) {
                 link: "/org_admin/organization"
             }
 
+        ],
+        "sys_admin":[
+            {   
+                id:1,
+                text: "Home",
+                link: "/sys_admin/dashboard"
+            }
         ]
     };
     const [isActivated, setIsActivated] = useState(true);

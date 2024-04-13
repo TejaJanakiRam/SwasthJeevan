@@ -42,6 +42,23 @@ export default function Navbar(props) {
       link: "/doctor/dashboard"
     }
   ], 
+  "sys_admin": [
+    {
+      id:1 ,
+      text: "Home",
+      link: "/sys_admin/dashboard"
+    },
+    {
+      id :2 ,
+      text : "Organization",
+      link: "/sys_admin/organization"
+    },
+    {
+      id:3,
+      text: "Profile",
+      link: "sys_admin/dashboard"
+    }
+  ]
 
 }
   const [isActivated, setIsActivated] = useState(true);
