@@ -8,6 +8,7 @@ import Appointments from "./Patient-UI/Appointments.js";
 import DoctorDashboard from "./Doctor-UI/DoctorDashboard.js";
 import PatientList from "./Doctor-UI/PatientList.js";
 import OrgAdminDashboard from "./OrgAdmin-UI/OrgAdminDashboard.js";
+import DoctorsList from "./OrgAdmin-UI/DoctorsList.js";
 import SystemAdminDashboard from "./SystemAdmin-UI/SystemAdminDashboard.js";
 import VideoRoom from "./Common-UI/VideoRoom/VideoRoom.js";
 
@@ -65,6 +66,7 @@ function App() {
           <Route path="/doctor/patients" element={isLoggedIn === 2 ? <PatientList token={token} onLogout={handleLogout} /> : <Navigate to="/" />} />
           <Route path="/doctor/room/:roomId" element={isLoggedIn === 2 ? <VideoRoom /> : <Navigate to="/" />} />
           <Route path="/org_admin/dashboard" element={isLoggedIn === 3 ? <OrgAdminDashboard token={token} onLogout={handleLogout} /> : <Navigate to="/" />} />
+          <Route path="/org_admin/manage_doctors" element={isLoggedIn === 3 ? <DoctorsList token={token} onLogout={handleLogout} /> : <Navigate to="/" />} />
           <Route path="/sys_admin/dashboard" element={isLoggedIn === 4 ? <SystemAdminDashboard token={token} onLogout={handleLogout} /> : <Navigate to="/" />} />
         </Routes>
       </BrowserRouter>

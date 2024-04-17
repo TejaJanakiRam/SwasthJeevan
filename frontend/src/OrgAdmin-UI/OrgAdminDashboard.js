@@ -27,7 +27,7 @@ export default function OrgAdminDashboard(props) {
   return (
     <div>
       <Sidebar role={"org_admin"} onLogout={props.onLogout} />
-      <div className='bg-blue-400 w-1000px h-screen'></div>
+      <div className='bg-blue-400 h-[2000px]'></div>
     </div>
   )
 

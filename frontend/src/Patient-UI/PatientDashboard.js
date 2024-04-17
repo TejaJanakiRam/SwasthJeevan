@@ -31,58 +31,7 @@ const faqs = [
   },
 
 ]
-const specialities = [
-  {
-    id: 1,
-    name: 'Pulmonology',
-    imageUrl: '../../img/pulmonology.jpeg'
-  },
-  {
-    id: 2,
-    name: 'Gastroentrology',
-    imageUrl: '../../img/gastroentrology.jpeg'
-  },
-  {
-    id: 3,
-    name: 'Cardiology',
-    imageUrl: '../../img/cardiology.jpeg'
-  },
-  {
-    id: 4,
-    name: 'Opthalmology',
-    imageUrl: '../../img/opthalmology.jpeg'
-  },
-  {
-    id: 5,
-    name: 'Orthopedics',
-    imageUrl: '../../img/orthopedics.jpeg'
-  },
-  {
-    id: 6,
-    name: 'Urology',
-    imageUrl: '../../img/urology.jpeg'
-  },
-  {
-    id: 7,
-    name: 'Hepatology',
-    imageUrl: '../../img/hepatology.jpeg'
-  },
-  {
-    id: 8,
-    name: 'Rhinology',
-    imageUrl: '../../img/rhinology.jpeg'
-  },
-  {
-    id: 9,
-    name: 'Otology',
-    imageUrl: '../../img/otology.jpeg'
-  },
-  {
-    id: 10,
-    name: 'Neurology',
-    imageUrl: '../../img/neurology.jpeg'
-  }
-]
+
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(' ')
@@ -111,7 +60,7 @@ export default function PatientDashboard(props) {
     <div>
       <Navbar role={"patient"} onLogout={props.onLogout} />
       <BookNow username={username} />
-      <Specialities username={username} data={specialities} />
+      <Specialities token={props.token} />
       <FAQ username={username} data={faqs} />
       <Footer />
     </div>

@@ -13,7 +13,7 @@ export default function Sidebar(props) {
             {
                 id: 2,
                 text: "Manage Doctors",
-                link: "/org_admin/doctors"
+                link: "/org_admin/manage_doctors"
             },
             {
                 id: 3,
@@ -22,16 +22,16 @@ export default function Sidebar(props) {
             }
 
         ],
-        "sys_admin":[
-            {   
-                id:1,
+        "sys_admin": [
+            {
+                id: 1,
                 text: "Home",
                 link: "/sys_admin/dashboard"
             }
         ]
     };
     const [isActivated, setIsActivated] = useState(true);
-    return (<aside className={`h-screen absolute bg-white rounded-tr-3xl rounded-br-3xl`}>
+    return (<aside className={`h-screen fixed bg-white rounded-tr-3xl rounded-br-3xl`}>
         <nav className={`h-full flex flex-col shadow-lg shadow-slate-800 w-fit rounded-tr-3xl rounded-br-3xl p-2`}>
             <div className="flex flex-col justify-between h-1/2">
                 <div>
