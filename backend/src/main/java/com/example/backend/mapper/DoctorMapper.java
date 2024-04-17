@@ -6,9 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.example.backend.dto.DoctorDTO;
-// import com.example.backend.dto.doctorDTO;
 
-// import org.hibernate.mapping.Map;
 
 import com.example.backend.entity.Doctor;
 import com.example.backend.entity.Organization;

@@ -84,17 +84,7 @@ public class Authcontroller {
     private CustomUserDetailsService customUserDetailsService;
 
 
-    @PostMapping("/add_org")
-    public ResponseEntity<Organization> addOrganization(@RequestBody Map<String,Object> request) throws Exception {
-        Organization organization = organizationMapper.mapToOrganization(request);
-        Organization organizationexist = organizationRepository.findByRegistrationNum(organization.getRegistrationNum());
-        if(organizationexist != null){
-            throw new Exception("Organization exits");
-        }
-        Organization savedOrganization = organizationRepository.save(organization);
-        return (new ResponseEntity<>(savedOrganization, HttpStatus.CREATED));
-
-    }
+    
     @PostMapping("/signup")
     public ResponseEntity<AuthResponse> signUpUserHandler(@RequestBody Map<String, Object> request) throws Exception {
         String role = (String) request.get("type");

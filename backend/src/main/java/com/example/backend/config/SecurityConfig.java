@@ -32,9 +32,10 @@ public class SecurityConfig {
                 .authorizeHttpRequests(authorise -> authorise
                         .requestMatchers("/api/patient/**").hasAnyAuthority("PATIENT")
                         .requestMatchers("/api/doctor/**").hasAnyAuthority("DOCTOR")
+                        .requestMatchers("/api/sys_admin/**").hasAnyAuthority("SYS_ADMIN")
                         .requestMatchers(HttpMethod.GET, "/api/ehr/**").hasAnyAuthority("PATIENT","DOCTOR")
                         .requestMatchers("/api/ehr/**").hasAnyAuthority("PATIENT")
-                        .requestMatchers("/api/**").authenticated()
+                        .requestMatchers(HttpMethod.GET,"/api/**").authenticated()
                         .anyRequest().permitAll())
                 .addFilterBefore(jwtTokenValidator, BasicAuthenticationFilter.class)
                 .cors(cors -> cors.configurationSource(corsConfigurationSource()));
