@@ -13,7 +13,10 @@ public class PatientService {
     public final Map<String,  Queue<Long>> patientqueue = new HashMap<>();
     public final Map<Long, Long> sechdule = new HashMap<>();
     public void addtoqueue(String spec_code, Long patient_id){
-        patientqueue.computeIfAbsent(spec_code, k -> new LinkedList<>()).offer(patient_id);
+        Queue<Long> queue = patientqueue.computeIfAbsent(spec_code, k -> new LinkedList<>());
+        if(!queue.contains(patient_id)){
+           queue.offer(patient_id);
+        }
     }
 
     public Long removeFromQueue(String spec_code, Long patient_id) {

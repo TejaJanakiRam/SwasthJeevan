@@ -15,7 +15,10 @@ public class DoctorService {
     // public List<Doctor> getDoctors() throws Exception ;
     public final Map<String,  Queue<Long>> doctorqueues = new HashMap<>();
     public void addtoqueue(String spec_code, Long doctor_id){
-        doctorqueues.computeIfAbsent(spec_code, k -> new LinkedList<>()).offer(doctor_id);
+        Queue<Long> queue = doctorqueues.computeIfAbsent(spec_code, k -> new LinkedList<>());
+        if (!queue.contains(doctor_id)) {
+            queue.offer(doctor_id);
+        }
            
     }
     public Long removeFromQueue(String spec_code, Long doctorId) {
