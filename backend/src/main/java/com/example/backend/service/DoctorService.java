@@ -31,4 +31,8 @@ public class DoctorService {
     public Queue<Long> getQueue(String spec_code){
         return doctorqueues.getOrDefault(spec_code, new LinkedList<>());
     } 
+    public Long gettopdoc(String spec_code){
+        Queue<Long> queue = doctorqueues.get(spec_code);
+        return queue.peek();
+    }
 }

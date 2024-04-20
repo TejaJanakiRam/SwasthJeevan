@@ -11,7 +11,7 @@ import org.springframework.stereotype.Service;
 public class PatientService {
     // HashMap
     public final Map<String,  Queue<Long>> patientqueue = new HashMap<>();
-
+    public final Map<Long, Long> sechdule = new HashMap<>();
     public void addtoqueue(String spec_code, Long patient_id){
         patientqueue.computeIfAbsent(spec_code, k -> new LinkedList<>()).offer(patient_id);
     }
@@ -29,6 +29,19 @@ public class PatientService {
     public Queue<Long> getQueue(String spec_code){
         return patientqueue.getOrDefault(spec_code, new LinkedList<>());
     } 
+
+    public Long getTopPatient(String spec_code){
+        return patientqueue.get(spec_code).peek();
+    }
+
+    public void assigntoPatient(Long patient_id, Long doctorId){
+        sechdule.put(patient_id,doctorId);
+    }
+
+    public Long isdoctorassigned(Long patient_id){
+        return sechdule.get(patient_id);
+    }
+
 
     
 }
