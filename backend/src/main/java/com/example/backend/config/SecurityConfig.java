@@ -35,6 +35,8 @@ public class SecurityConfig {
                         .requestMatchers("/api/sys_admin/**").hasAnyAuthority("SYS_ADMIN")
                         .requestMatchers(HttpMethod.GET, "/api/ehr/**").hasAnyAuthority("PATIENT","DOCTOR")
                         .requestMatchers("/api/ehr/**").hasAnyAuthority("PATIENT")
+                        .requestMatchers(HttpMethod.GET, "/api/consultation_request/**").hasAnyAuthority("PATIENT","DOCTOR")
+                        .requestMatchers("/api/consultation_request/**").hasAnyAuthority("PATIENT")
                         .requestMatchers(HttpMethod.GET,"/api/**").authenticated()
                         .anyRequest().permitAll())
                 .addFilterBefore(jwtTokenValidator, BasicAuthenticationFilter.class)
