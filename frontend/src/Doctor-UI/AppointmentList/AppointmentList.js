@@ -62,6 +62,8 @@ const AppointmentList = ({ doctorProfile, token }) => {
             : 'No Patient Available'}
         </button>
       </div>
+      <Link to="/videocall"><button type="submit" className=" font-semibold border-2 border-blue-400 bg-blue-400 text-white rounded-xl px-10 py-2 my-8  hover:bg-blue-500 hover:border-blue-500 transition-all duration-300 shadow shadow-slate-900">Start</button></Link>
+
     </div>
   );
 };
