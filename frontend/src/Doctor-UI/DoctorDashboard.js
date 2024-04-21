@@ -26,7 +26,7 @@ const DoctorDashboard = (props) => {
   return (
     <div >
       <Navbar role="doctor" onLogout={props.onLogout} />
-      <AppointmentList doctorProfile={doctorProfile} token={props.token} />
+      {doctorProfile && doctorProfile.id && <AppointmentList doctorProfile={doctorProfile} token={props.token} />}
     </div>
   );
 };

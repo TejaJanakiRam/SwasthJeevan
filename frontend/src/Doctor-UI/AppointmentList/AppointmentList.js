@@ -1,34 +1,13 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 
 const AppointmentList = ({ doctorProfile, token }) => {
-  const [isMarkedAvailable, setIsMarkedAvailable] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+  const [isPatientAvailable, setIsPatientAvailable] = useState(
+    localStorage.getItem(`isPatientAvailable_${doctorProfile.id}`) === 'true'
+  );
 
   const handleMarkAvailable = async () => {
-    try {
-      setIsLoading(true);
-      const response = await axios.get('http://localhost:4000/api/queue/add_doc', {
-        params: {
-          spec_code: doctorProfile.speciality.specialityCode,
-          doctor_id: doctorProfile.id
-        },
-        headers: {
-          Authorization: `Bearer ${token}`
-        }
-      });
-      // Handle success response here if needed
-      console.log(response.data);
-      setIsMarkedAvailable(true);
-    } catch (error) {
-      // Handle error here
-      console.error('Failed to mark doctor as available:', error);
-    } finally {
-      setIsLoading(false);
-    }
-  };
-
-  const handleassignPatient = async () => {
     try {
       setIsLoading(true);
       const response = await axios.get('http://localhost:4000/api/queue/assign_patient', {
@@ -40,38 +19,51 @@ const AppointmentList = ({ doctorProfile, token }) => {
           Authorization: `Bearer ${token}`
         }
       });
-      // Handle success response here if needed
-      console.log(response.data);
-      setIsMarkedAvailable(true);
+
+      if (response.data) {
+        setIsPatientAvailable(true);
+        localStorage.setItem(`isPatientAvailable_${doctorProfile.id}`, 'true');
+      } else {
+        setIsPatientAvailable(false);
+        localStorage.setItem(`isPatientAvailable_${doctorProfile.id}`, 'false');
+      }
     } catch (error) {
-      // Handle error here
-      console.error('Failed to mark doctor as available:', error);
+      console.error('Failed to assign patient to doctor:', error);
     } finally {
       setIsLoading(false);
     }
   };
 
+  useEffect(() => {
+    const intervalId = setInterval(() => {
+      if (!isPatientAvailable) {
+        handleMarkAvailable();
+      }
+    }, 2000);
+
+    return () => clearInterval(intervalId);
+  }, [doctorProfile, token, isPatientAvailable]);
+
   return (
     <div className="min-h-screen flex flex-col items-center bg-gradient-to-r from-blue-100 to-blue-500">
-    <div className="absolute top-20 left-9 mt-4 ml-4">
+      <div className="absolute top-20 left-9 mt-4 ml-4">
         <button
-        onClick={handleMarkAvailable}
-        className={`py-2 px-4 rounded ${
-            isMarkedAvailable
-            ? 'bg-red-500 hover:bg-red-700'
-            : 'bg-green-500 hover:bg-green-700'
-        } text-white font-bold border border-transparent shadow ${
+          className={`py-2 px-4 rounded ${
+            isPatientAvailable ? 'bg-green-500' : 'bg-red-500'
+          } hover:bg-green-700 text-white font-bold border border-transparent shadow ${
             isLoading ? 'cursor-not-allowed opacity-50' : ''
-        }`}
-        disabled={isMarkedAvailable || isLoading}
+          }`}
+          disabled={isLoading}
         >
-        {isLoading ? 'Processing...' : (isMarkedAvailable ? 'Already Marked Available' : 'Mark as Available')}
+          {isLoading
+            ? 'Processing...'
+            : isPatientAvailable
+            ? 'Patient Available'
+            : 'No Patient Available'}
         </button>
+      </div>
     </div>
-  </div>
   );
 };
 
 export default AppointmentList;
-
-
