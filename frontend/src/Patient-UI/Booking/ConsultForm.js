@@ -1,6 +1,7 @@
 import DropdownSelect from "./DropdownSelect.js";
 import { useState } from "react";
 import axios from "axios";
+import { Link } from "react-router-dom";
 
 
 export default function ConsultForm({ token, user }) {
@@ -85,5 +86,6 @@ export default function ConsultForm({ token, user }) {
 
         </div>
         <button type="submit" className=" font-semibold border-2 border-blue-400 bg-blue-400 text-white rounded-xl px-10 py-2 my-8  hover:bg-blue-500 hover:border-blue-500 transition-all duration-300 shadow shadow-slate-900">Book Appointment</button>
+        <Link to="/videocall"><button type="submit" className=" font-semibold border-2 border-blue-400 bg-blue-400 text-white rounded-xl px-10 py-2 my-8  hover:bg-blue-500 hover:border-blue-500 transition-all duration-300 shadow shadow-slate-900">Start</button></Link>
     </form>)
 }

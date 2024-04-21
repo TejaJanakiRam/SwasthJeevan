@@ -14,9 +14,10 @@ export default function BookNow({ user }) {
         </div>
         <Link to="/patient/booking">
             <button className="text-xl sm:text-2xl  px-4 py-3 sm:px-8 sm:py-6 rounded-2xl border-2 border-white text-blue-500 bg-white hover:text-blue-600 hover:bg-gray-100 hover:border-gray-50 transition-all duration-300 font-semibold tracking-wide sm:tracking-widest shadow shadow-slate-800">
-                Book Appointment / Consult Now
+                Consult Now
             </button>
         </Link>
+
 
     </div>)
 }
