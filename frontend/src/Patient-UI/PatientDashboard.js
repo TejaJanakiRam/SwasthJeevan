@@ -38,7 +38,8 @@ function classNames(...classes) {
 }
 
 export default function PatientDashboard(props) {
-  const [username, setUsername] = useState('');
+
+  const [user, setUser] = useState(null);
   const getDetails = async () => {
     try {
       const response = await axios.get('http://localhost:4000/api/patient/profile', {
@@ -46,7 +47,7 @@ export default function PatientDashboard(props) {
           Authorization: `Bearer ${props.token}` // Assuming props.token contains the JWT token
         }
       });
-      setUsername(response.data.username)
+      setUser((response.data))
     } catch (error) {
       console.error("Failed to fetch user details:", error);
     }
@@ -55,14 +56,14 @@ export default function PatientDashboard(props) {
   useEffect(() => {
     getDetails();
   }, []);
-
+  
   return (
     <div>
       <Navbar role={"patient"} onLogout={props.onLogout} />
-      <BookNow username={username} />
-      <Specialities token={props.token} />
-      <FAQ username={username} data={faqs} />
-      <Footer />
+      {user && <BookNow user={user} />}
+      {user && <Specialities token={props.token} />}
+      {user && <FAQ data={faqs} />}
+      {user && <Footer />}
     </div>
   )
 

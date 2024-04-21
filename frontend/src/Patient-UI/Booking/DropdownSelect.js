@@ -2,10 +2,9 @@
 import { IoMdArrowDropdown } from "react-icons/io";
 import { useState } from "react";
 import { FaSearch } from "react-icons/fa";
-export default function DropdownSelect({ data, displayFieldName }) {
+export default function DropdownSelect({ data, displayFieldName, selectedItem, setSelectedItem }) {
     const [isActivated, setIsActivated] = useState(false);
     const [inputValue, setInputValue] = useState("");
-    const [selectedItem, setSelectedItem] = useState("");
     return (<div className="w-full p-3 relative">
         <div className="w-full block text-lg font-semibold text-blue-500">
             {`Select ${displayFieldName}`}

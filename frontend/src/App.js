@@ -20,7 +20,6 @@ function App() {
 
   const runEffect = useRef(false);
   useEffect(() => {
-    console.log("mounted");
     if (runEffect.current === false) {
       const data = JSON.parse(window.localStorage.getItem('loggedInState'));
       if (data) {
@@ -35,14 +34,14 @@ function App() {
     window.localStorage.setItem('loggedInState', JSON.stringify({ "token": token, "isLoggedIn": isLoggedIn }));
   }, [isLoggedIn]);
 
-  
+
 
   const handleLogin = (jwtToken, role) => {
     setToken(jwtToken);
     if (role === 'patient') { setIsLoggedIn(1) }
     else if (role === 'doctor') { setIsLoggedIn(2) }
-    else if(role === 'org_admin'){setIsLoggedIn(3)}
-    else if(role === 'sys_admin'){setIsLoggedIn(4)}
+    else if (role === 'org_admin') { setIsLoggedIn(3) }
+    else if (role === 'sys_admin') { setIsLoggedIn(4) }
   };
 
   const handleLogout = () => {

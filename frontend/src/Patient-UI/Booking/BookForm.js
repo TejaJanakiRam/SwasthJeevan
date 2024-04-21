@@ -38,20 +38,14 @@ export default function BookForm() {
     const specialtyData = [
         {
             id: 1,
-            name: "Cardiology"
+            name: "Cardiology",
+            spec_code: "SPEC001"
         },
         {
             id: 2,
-            name: "Orthopedics"
-        },
-        {
-            id: 3,
-            name: "Neurology"
-        },
-        {
-            id: 4,
-            name: "Oncology"
-        },
+            name: "Orthopedics",
+            spec_code: "SPEC005"
+        }
 
     ]
     return (<form className='flex flex-col items-center w-full min-h-3/4 justify-center p-16'>
@@ -66,8 +60,7 @@ export default function BookForm() {
             </div>
         </div>
         <div className="w-full flex justify-between">
-            <DropdownSelect data={hospitalData} displayFieldName={"Hospital"} />
-            <DropdownSelect data={specialtyData} displayFieldName={"Speciality"} />
+            
         </div>
         <button type="submit" className=" font-semibold border-2 border-blue-400 bg-blue-400 text-white rounded-xl px-10 py-2 my-8  hover:bg-blue-500 hover:border-blue-500 transition-all duration-300 shadow shadow-slate-900">Find Doctors</button>
     </form>)
