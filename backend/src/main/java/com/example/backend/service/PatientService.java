@@ -34,7 +34,9 @@ public class PatientService {
     } 
 
     public Long getTopPatient(String spec_code){
-        return patientqueue.get(spec_code).peek();
+        if(patientqueue.get(spec_code)!=null)
+            return patientqueue.get(spec_code).peek();
+        return null;
     }
 
     public void assigntoPatient(Long patient_id, Long doctorId){

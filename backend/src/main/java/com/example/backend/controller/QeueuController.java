@@ -7,6 +7,7 @@ import java.util.Queue;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -83,14 +84,14 @@ public class QeueuController {
 
 
     //Add the patient to the queue for a particular spec_code
-    @GetMapping("/api/queue/add_patient")
+    @PostMapping("/api/queue/add_patient")
     public ResponseEntity<Queue<Long>> add_patient_to_queue(@RequestParam("spec_code") String specCode, @RequestParam("patient_id") Long patientId) throws Exception{
         patientService.addtoqueue(specCode, patientId);
         return ResponseEntity.ok(patientService.getQueue(specCode));
     }
 
     //Delete the patient from the queue for a particular spec_code
-    @GetMapping("/api/queue/delete_patient")
+    @PostMapping("/api/queue/delete_patient")
     public ResponseEntity<Queue<Long>> remove_patient_to_queue(@RequestParam("spec_code") String specCode, @RequestParam("patient_id") Long patientId) throws Exception{
         patientService.removeFromQueue(specCode, patientId);
         return ResponseEntity.ok(patientService.getQueue(specCode));
@@ -105,12 +106,13 @@ public class QeueuController {
 
     //Assign the top patient to doctor and store it in map in patient service
     @GetMapping("/api/queue/assign_patient")
-    public ResponseEntity<String> getPateintForDoc(@RequestParam("spec_code") String specCode) throws Exception{
+    public ResponseEntity<String> getPateintForDoc(@RequestParam("spec_code") String specCode , @RequestParam("doctor_id") Long doc_id) throws Exception{
         Long patient_id  = patientService.getTopPatient(specCode);
-        Long doc_id  = doctorService.gettopdoc(specCode);
+        // Long doc_id  = doctorService.gettopdoc(specCode);
         if(patient_id != null && doc_id != null){
             // return ResponseEntity.ok("paitient mateched : " + patient_id + " doctor matched " + doc_id );
             patientService.assigntoPatient(patient_id, doc_id);
+            patientService.removeFromQueue(specCode, patient_id);
             return ResponseEntity.ok("Patient assigned to doctor " + doc_id + " is "  + patient_id);
         }
         return null;
@@ -132,8 +134,6 @@ public class QeueuController {
     public ResponseEntity<String> getDocForPatient(@RequestParam("spec_code") String specCode, @RequestParam("patient_id") Long patientId) throws Exception{
         Long doc_id = patientService.isdoctorassigned(patientId);
         if(doc_id != null ){
-            patientService.removeFromQueue(specCode, patientId);
-            doctorService.removeFromQueue(specCode, doc_id);
             return ResponseEntity.ok("Patient assigned to doctor " + doc_id + " is "  + patientId);
         }
         return null;
