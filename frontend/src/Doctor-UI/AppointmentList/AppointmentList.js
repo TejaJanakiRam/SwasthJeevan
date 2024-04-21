@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import { Link } from "react-router-dom";
 
 const AppointmentList = ({ doctorProfile, token }) => {
   const [isLoading, setIsLoading] = useState(false);
@@ -34,6 +35,11 @@ const AppointmentList = ({ doctorProfile, token }) => {
     }
   };
 
+  const handleResetAvailability = () => {
+    setIsPatientAvailable(false);
+    localStorage.setItem(`isPatientAvailable_${doctorProfile.id}`, 'false');
+  };
+
   useEffect(() => {
     const intervalId = setInterval(() => {
       if (!isPatientAvailable) {
@@ -62,8 +68,21 @@ const AppointmentList = ({ doctorProfile, token }) => {
             : 'No Patient Available'}
         </button>
       </div>
-      <Link to="/videocall"><button type="submit" className=" font-semibold border-2 border-blue-400 bg-blue-400 text-white rounded-xl px-10 py-2 my-8  hover:bg-blue-500 hover:border-blue-500 transition-all duration-300 shadow shadow-slate-900">Start</button></Link>
+      <div>
+            <Link to="/videocall">
+          <button 
+            type="submit" 
+            className={`font-semibold border-2 border-blue-400 bg-blue-400 text-white rounded-xl px-10 py-2 my-8 hover:bg-blue-500 hover:border-blue-500 transition-all duration-300 shadow shadow-slate-900 ${!isPatientAvailable && 'cursor-not-allowed opacity-50'}`} 
+            disabled={!isPatientAvailable}
+          >
+            Start Consultation
+          </button>
+        </Link>
+      </div>
 
+      <div>
+        <button onClick={handleResetAvailability} className="font-semibold border-2 border-red-400 bg-red-400 text-white rounded-xl px-10 py-2 my-8 hover:bg-red-500 hover:border-red-500 transition-all duration-300 shadow shadow-slate-900">End Consultation</button>
+      </div>
     </div>
   );
 };
