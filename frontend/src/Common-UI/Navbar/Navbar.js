@@ -22,7 +22,7 @@ export default function Navbar(props) {
     {
       id: 4,
       text: "Profile",
-      link: "/patient/dashboard"
+      link: "/patient/profile"
     },
   ],
   "doctor": [
@@ -39,7 +39,7 @@ export default function Navbar(props) {
     {
       id: 3,
       text: "Profile",
-      link: "/doctor/dashboard"
+      link: "/doctor/profile"
     }
   ], 
   "sys_admin": [

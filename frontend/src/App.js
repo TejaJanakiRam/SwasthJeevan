@@ -11,6 +11,8 @@ import OrgAdminDashboard from "./OrgAdmin-UI/OrgAdminDashboard.js";
 import DoctorsList from "./OrgAdmin-UI/DoctorsList.js";
 import SystemAdminDashboard from "./SystemAdmin-UI/SystemAdminDashboard.js";
 import VideoRoom from "./Common-UI/VideoRoom/VideoRoom.js";
+import Profile from "./Doctor-UI/Profile.js";
+import Pprofile from "./Patient-UI/Profile.js";
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(0);
@@ -61,9 +63,11 @@ function App() {
           <Route path="/" element={isLoggedIn ? <Navigate to={roleDashboardPaths[isLoggedIn]} /> : <AuthenticationPage onLogin={handleLogin} />} />
           <Route path="/patient/dashboard" element={isLoggedIn === 1 ? <PatientDashboard token={token} onLogout={handleLogout} /> : <Navigate to="/" />} />
           <Route path="/patient/booking" element={isLoggedIn === 1 ? <Booking token={token} onLogout={handleLogout} /> : <Navigate to="/" />} />
+          <Route path="/patient/profile" element={isLoggedIn === 1 ? <Pprofile token={token} onLogout={handleLogout} /> : <Navigate to="/" />} />
           <Route path="/patient/appointments" element={isLoggedIn === 1 ? <Appointments token={token} onLogout={handleLogout} /> : <Navigate to="/" />} />
           <Route path="/doctor/dashboard" element={isLoggedIn === 2 ? <DoctorDashboard token={token} onLogout={handleLogout} /> : <Navigate to="/" />} />
           <Route path="/doctor/patients" element={isLoggedIn === 2 ? <PatientList token={token} onLogout={handleLogout} /> : <Navigate to="/" />} />
+          <Route path="/doctor/profile" element={isLoggedIn === 2 ? <Profile token={token} onLogout={handleLogout} /> : <Navigate to="/" />} />
           <Route path="/doctor/room/:roomId" element={isLoggedIn === 2 ? <VideoRoom /> : <Navigate to="/" />} />
           <Route path="/org_admin/dashboard" element={isLoggedIn === 3 ? <OrgAdminDashboard token={token} onLogout={handleLogout} /> : <Navigate to="/" />} />
           <Route path="/org_admin/manage_doctors" element={isLoggedIn === 3 ? <DoctorsList token={token} onLogout={handleLogout} /> : <Navigate to="/" />} />
