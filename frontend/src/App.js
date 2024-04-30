@@ -14,6 +14,7 @@ import VideoRoom from "./Common-UI/VideoRoom/VideoRoom.js";
 import Profile from "./Doctor-UI/Profile.js";
 import Pprofile from "./Patient-UI/Profile.js";
 import VideoCall from "./Video/VideoCall.js";
+import DoctorSignUp from "./OrgAdmin-UI/DoctorSignUp.js";
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(0);
@@ -71,8 +72,9 @@ function App() {
           <Route path="/doctor/room/:roomId" element={isLoggedIn === 2 ? <VideoRoom /> : <Navigate to="/" />} />
           <Route path="/org_admin/dashboard" element={isLoggedIn === 3 ? <OrgAdminDashboard token={token} onLogout={handleLogout} /> : <Navigate to="/" />} />
           <Route path="/org_admin/manage_doctors" element={isLoggedIn === 3 ? <DoctorsList token={token} onLogout={handleLogout} /> : <Navigate to="/" />} />
+          <Route path="/org_admin/manage_doctors/add" element={isLoggedIn === 3 ? <DoctorSignUp token={token} onLogout={handleLogout} /> : <Navigate to="/" />} />
           <Route path="/sys_admin/dashboard" element={isLoggedIn === 4 ? <SystemAdminDashboard token={token} onLogout={handleLogout} /> : <Navigate to="/" />} />
-          <Route path="/videocall" element = {<VideoCall/>} />
+          <Route path="/videocall" element={<VideoCall />} />
         </Routes>
       </BrowserRouter>
 

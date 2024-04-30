@@ -5,6 +5,8 @@ import Specialities from './Specialities-Section/Specialities.js';
 import FAQ from './FAQ-Section/FAQ.js';
 import BookNow from './BookNow-Section/BookNow.js';
 import Footer from './Footer/Footer.js';
+import Loading from '../Common-UI/Loading/Loading.js';
+
 
 
 
@@ -56,10 +58,11 @@ export default function PatientDashboard(props) {
   useEffect(() => {
     getDetails();
   }, []);
-  
+
   return (
     <div>
       <Navbar role={"patient"} onLogout={props.onLogout} />
+      {!user && <div className='h-screen'><Loading /></div>}
       {user && <BookNow user={user} />}
       {user && <Specialities token={props.token} />}
       {user && <FAQ data={faqs} />}

@@ -39,7 +39,7 @@ export default function ConsultForm({ token, user }) {
             name: "AIIMS"
         }
     ];
-    const specialtyData = [
+    const specialityData = [
         {
             id: 1,
             name: "Cardiology",
@@ -57,7 +57,7 @@ export default function ConsultForm({ token, user }) {
 
     const addToQueue = async (evt) => {
         evt.preventDefault();
-        const specialty = specialtyData.find(speciality => speciality.name === selectedItem);
+        const specialty = specialityData.find(speciality => speciality.name === selectedItem);
         const spec_code = specialty.spec_code;
         const body = {
             spec_code: spec_code,
@@ -85,7 +85,7 @@ export default function ConsultForm({ token, user }) {
                 // const spec_code = specialty.spec_code;
                 const response = await axios.get('http://localhost:4000/api/queue/assign_doctor', {
                     params: {
-                        spec_code: "PED001",
+                        spec_code: "SPEC005",
                         patient_id: user.id
                     },
                     headers: {
@@ -114,7 +114,7 @@ export default function ConsultForm({ token, user }) {
 
             <div className="w-full flex justify-between">
                 {/* <DropdownSelect data={hospitalData} displayFieldName={"Hospital"} />  */}
-                <DropdownSelect data={specialtyData} displayFieldName={"Speciality"} selectedItem={selectedItem} setSelectedItem={setSelectedItem} />
+                <DropdownSelect data={specialityData} displayFieldName={"Speciality"} selectedItem={selectedItem} setSelectedItem={setSelectedItem} />
             </div>
 
         </div>

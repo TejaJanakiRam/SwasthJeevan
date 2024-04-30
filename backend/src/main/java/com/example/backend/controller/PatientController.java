@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.example.backend.entity.Patient;
 import com.example.backend.entity.User;
 import com.example.backend.repository.PatientRepository;
+import com.example.backend.service.PatientService;
 import com.example.backend.service.UserService;
 
 @RestController
@@ -20,12 +21,12 @@ public class PatientController {
     private UserService userService;
 
     @Autowired
-    private PatientRepository patientRepository;
+    private PatientService patientService;
 
     @GetMapping("/profile")
     public ResponseEntity<Patient> findUserByJwtToken(@RequestHeader("Authorization") String jwt) throws Exception {
         User user = userService.findUserByJwtToken(jwt);
-        Patient patient = patientRepository.findByUsername(user.getUsername());
+        Patient patient = patientService.getPatientByUsername(user.getUsername());
         return (new ResponseEntity<>(patient, HttpStatus.OK));
     }
     

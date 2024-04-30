@@ -2,13 +2,21 @@ package com.example.backend.service;
 
 import java.util.HashMap;
 import java.util.LinkedList;
+import java.util.List;
 import java.util.Map;
 import java.util.Queue;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import com.example.backend.entity.Patient;
+import com.example.backend.repository.PatientRepository;
 
 @Service
 public class PatientService {
+
+    @Autowired
+    private PatientRepository patientRepository;
     // HashMap
     public final Map<String,  Queue<Long>> patientqueue = new HashMap<>();
     public final Map<Long, Long> sechdule = new HashMap<>();
@@ -46,6 +54,12 @@ public class PatientService {
     public Long isdoctorassigned(Long patient_id){
         return sechdule.get(patient_id);
     }
+
+    public Patient getPatientByUsername(String username){
+        return(patientRepository.findByUsername(username));
+    }
+
+
 
 
     

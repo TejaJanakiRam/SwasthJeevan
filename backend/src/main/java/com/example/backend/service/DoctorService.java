@@ -6,12 +6,17 @@ import java.util.List;
 import java.util.Map;
 import java.util.Queue;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.example.backend.entity.Doctor;
+import com.example.backend.repository.DoctorRepository;
 
 @Service
 public class DoctorService {
+
+    @Autowired
+    private DoctorRepository doctorRepository;
     // public List<Doctor> getDoctors() throws Exception ;
     public final Map<String,  Queue<Long>> doctorqueues = new HashMap<>();
     public void addtoqueue(String spec_code, Long doctor_id){
@@ -37,5 +42,13 @@ public class DoctorService {
     public Long gettopdoc(String spec_code){
         Queue<Long> queue = doctorqueues.get(spec_code);
         return queue.peek();
+    }
+
+    public Doctor getDoctorbyUsername(String username){
+        return(doctorRepository.findByUsername(username));
+    }
+
+    public List<Doctor> getAllDoctors(){
+        return(doctorRepository.findAll());
     }
 }

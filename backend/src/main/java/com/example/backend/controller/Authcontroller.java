@@ -3,6 +3,7 @@ package com.example.backend.controller;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.Map;
+import java.util.Random;
 import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -93,6 +94,7 @@ public class Authcontroller {
         }
         USER_TYPE type = USER_TYPE.valueOf(role);
         UserDetails userDetails = null;
+        AuthResponse authResponse = new AuthResponse();
         if (type == USER_TYPE.PATIENT) {
             Patient patient = patientMapper.mapToPatient(request);
             Patient patientExist = patientRepository.findByUsername(patient.getUsername());
@@ -110,9 +112,11 @@ public class Authcontroller {
             if(doctorExist != null) {
                 throw new Exception("Doctor exists");
             }
-            doctor.setPassword(passwordEncoder.encode(doctor.getPassword()));
+            String randomPassword = generateRandomString(5);
+            doctor.setPassword(passwordEncoder.encode(randomPassword));
             Doctor savedDoctor = doctorRepository.save(doctor);
             userDetails = customUserDetailsService.loadUserByUsername(savedDoctor.getUsername());
+            authResponse.setPassword(randomPassword);
         }
         else if(type == USER_TYPE.ORG_ADMIN) {
             OrganizationAdmin organizationAdmin = organizationAdminMapper.mapToOrganization(request);
@@ -140,13 +144,12 @@ public class Authcontroller {
                 userDetails.getPassword(), userDetails.getAuthorities());
         SecurityContextHolder.getContext().setAuthentication(authentication);
         String jwt = jwtService.generateToken(authentication);
-        AuthResponse authResponse = new AuthResponse();
+        
         authResponse.setJwt(jwt);
         authResponse.setMessage("Register Success");
         String savedRole = userDetails.getAuthorities().isEmpty() ? ""
                 : userDetails.getAuthorities().iterator().next().getAuthority();
         authResponse.setType(USER_TYPE.valueOf(savedRole));
-
         return (new ResponseEntity<>(authResponse, HttpStatus.CREATED));
     }
 
@@ -187,5 +190,15 @@ public class Authcontroller {
             auth.add(authority.getAuthority());
         }
         return (String.join(",", auth));
+    }
+
+    public static String generateRandomString(int length) {
+        String characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
+        Random random = new Random();
+        StringBuilder sb = new StringBuilder(length);
+        for (int i = 0; i < length; i++) {
+            sb.append(characters.charAt(random.nextInt(characters.length())));
+        }
+        return sb.toString();
     }
 }

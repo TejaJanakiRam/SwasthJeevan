@@ -35,7 +35,7 @@ export default function BookForm() {
             name: "AIIMS"
         }
     ];
-    const specialtyData = [
+    const specialityData = [
         {
             id: 1,
             name: "Cardiology",
