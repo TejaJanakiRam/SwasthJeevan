@@ -28,12 +28,10 @@ public class OrganizationAdminMapper {
         organizationAdmin.setName((String) requestBody.get("name"));
         Organization organization = organizationRepository
                 .findByRegistrationNum((String) requestBody.get("org_registration_num"));
-        System.out.println();
         if (organization == null) {
             throw new Exception("Organization not there");
         }
         organizationAdmin.setOrganization(organization);
-
 
         return (organizationAdmin);
     }

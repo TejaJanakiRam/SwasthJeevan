@@ -25,7 +25,8 @@ public class DoctorMapper {
 
     public Doctor mapToDoctor(Map<String, Object> requestBody) throws Exception {
         Doctor doctor = new Doctor();
-        doctor.setUsername((String) requestBody.get("username"));
+        doctor.setRegistrationNum((String) requestBody.get("registration_num"));
+        doctor.setUsername(doctor.getRegistrationNum().toLowerCase());
         doctor.setPassword((String) requestBody.get("password"));
         doctor.setType(USER_TYPE.valueOf((String) requestBody.get("type")));
         doctor.setEmail((String) requestBody.get("email"));
@@ -43,7 +44,6 @@ public class DoctorMapper {
         }
         doctor.setSpeciality(speciality);
         doctor.setGender(USER_GENDER.valueOf((String) requestBody.get("gender")));
-        doctor.setRegistrationNum((String) requestBody.get("registration_num"));
         return (doctor);
     }
 

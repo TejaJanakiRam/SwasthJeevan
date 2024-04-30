@@ -116,6 +116,7 @@ public class Authcontroller {
             doctor.setPassword(passwordEncoder.encode(randomPassword));
             Doctor savedDoctor = doctorRepository.save(doctor);
             userDetails = customUserDetailsService.loadUserByUsername(savedDoctor.getUsername());
+            authResponse.setUsername(userDetails.getUsername());
             authResponse.setPassword(randomPassword);
         }
         else if(type == USER_TYPE.ORG_ADMIN) {
@@ -167,7 +168,6 @@ public class Authcontroller {
         authResponse.setMessage("Login Success");
         authResponse.setType(USER_TYPE.valueOf(actualType));
         return (new ResponseEntity<>(authResponse, HttpStatus.OK));
-
     }
 
     private Authentication authenticate(String username, String password, String type) throws Exception {

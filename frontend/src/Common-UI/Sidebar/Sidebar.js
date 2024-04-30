@@ -30,7 +30,7 @@ export default function Sidebar(props) {
             }
         ]
     };
-    const [isActivated, setIsActivated] = useState(true);
+    const [isActivated, setIsActivated] = useState(false);
     return (<aside className={`h-screen fixed bg-white rounded-tr-3xl rounded-br-3xl z-10`}>
         <nav className={`h-full flex flex-col shadow-lg shadow-slate-800 w-fit rounded-tr-3xl rounded-br-3xl p-2`}>
             <div className="flex flex-col justify-between h-1/2">

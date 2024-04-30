@@ -11,4 +11,5 @@ public class AuthResponse {
     private String message;
     private USER_TYPE type;
     private String password = "";
+    private String username = "";
 }
