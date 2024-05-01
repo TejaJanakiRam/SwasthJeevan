@@ -1,5 +1,6 @@
 package com.example.backend.service;
 
+import java.lang.reflect.Field;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
@@ -8,8 +9,10 @@ import java.util.Queue;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.ReflectionUtils;
 
 import com.example.backend.entity.Doctor;
+import com.example.backend.entity.Patient;
 import com.example.backend.repository.DoctorRepository;
 
 @Service
@@ -50,5 +53,19 @@ public class DoctorService {
 
     public List<Doctor> getAllDoctors(){
         return(doctorRepository.findAll());
+    }
+
+    public Doctor updateDoctor(Doctor doctor,Map<String, Object>newData){
+        newData.forEach((key,value)->{
+            Field field = ReflectionUtils.findField(Patient.class, key);
+            field.setAccessible(true);
+            ReflectionUtils.setField(field, doctor, value);
+        });
+        doctorRepository.save(doctor);
+        return doctor;
+    }
+
+    public void deleteDoctorById(Long doctor_id){
+        doctorRepository.deleteById(doctor_id);
     }
 }
