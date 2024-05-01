@@ -1,11 +1,15 @@
 package com.example.backend.controller;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -37,4 +41,17 @@ public class OrganizationAdminController {
         return(new ResponseEntity<>(organizationAdminsList, HttpStatus.OK));
     }
 
+    @PatchMapping("/update")
+    public ResponseEntity<OrganizationAdmin> updateOrgAdmDetails(@RequestHeader("Authorization") String jwt, @RequestBody Map<String, Object> updatedData) throws Exception{
+        User user = userService.findUserByJwtToken(jwt);
+        OrganizationAdmin orgadm = organizationAdminService.getOrgAdminByUsername(user.getUsername());  
+        return (new ResponseEntity<>(organizationAdminService.updateOrgAdm(orgadm, updatedData), HttpStatus.OK));
+    }
+
+    @DeleteMapping("/delete")
+    public ResponseEntity<OrganizationAdmin> deleteOrgAdm(@RequestHeader("Authorization") String jwt) throws Exception{
+        User user = userService.findUserByJwtToken(jwt);
+        organizationAdminService.deleteOrgAdmById(user.getId());  
+        return (new ResponseEntity<>(null,HttpStatus.OK));
+    }
 }
