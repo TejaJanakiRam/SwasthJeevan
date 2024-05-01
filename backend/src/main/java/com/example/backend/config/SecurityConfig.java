@@ -31,8 +31,9 @@ public class SecurityConfig {
                 .sessionManagement(management -> management.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(authorise -> authorise
                         .requestMatchers("/api/patient/**").hasAnyAuthority("PATIENT")
-                        .requestMatchers(HttpMethod.GET, "/api/doctor/**").hasAnyAuthority("DOCTOR", "ORG_ADMIN")
+                        .requestMatchers(HttpMethod.GET, "/api/doctor/**").hasAnyAuthority("DOCTOR", "ORG_ADMIN", "SYS_ADMIN")
                         .requestMatchers(HttpMethod.POST, "/api/doctor/**").hasAnyAuthority("DOCTOR")
+                        .requestMatchers(HttpMethod.GET, "/api/org_admin/**").hasAnyAuthority("ORG_ADMIN", "SYS_ADMIN")
                         .requestMatchers("/api/sys_admin/**").hasAnyAuthority("SYS_ADMIN")
                         .requestMatchers(HttpMethod.GET, "/api/ehr/**").hasAnyAuthority("PATIENT","DOCTOR")
                         .requestMatchers("/api/ehr/**").hasAnyAuthority("PATIENT")

@@ -125,9 +125,12 @@ public class Authcontroller {
             if(organizationAdminExist != null) {
                 throw new Exception("organization admin exists");
             }
-            organizationAdmin.setPassword(passwordEncoder.encode(organizationAdmin.getPassword()));
+            String randomPassword = generateRandomString(5);
+            organizationAdmin.setPassword(passwordEncoder.encode(randomPassword));
             OrganizationAdmin savedOrganizationAdmin = organizationAdminRepository.save(organizationAdmin);
             userDetails = customUserDetailsService.loadUserByUsername(savedOrganizationAdmin.getUsername());
+            authResponse.setUsername(userDetails.getUsername());
+            authResponse.setPassword(randomPassword);
         }
 
         else if(type == USER_TYPE.SYS_ADMIN){

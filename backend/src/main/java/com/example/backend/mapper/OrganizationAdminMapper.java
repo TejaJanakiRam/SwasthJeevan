@@ -20,18 +20,18 @@ public class OrganizationAdminMapper {
 
     public OrganizationAdmin mapToOrganization(Map<String, Object> requestBody) throws Exception {
         OrganizationAdmin organizationAdmin = new OrganizationAdmin();
-        organizationAdmin.setUsername((String) requestBody.get("username"));
-        organizationAdmin.setPassword((String) requestBody.get("password"));
-        organizationAdmin.setType(USER_TYPE.valueOf((String) requestBody.get("type")));
-        organizationAdmin.setEmail((String) requestBody.get("email"));
-        organizationAdmin.setPhone((String) requestBody.get("phone"));
-        organizationAdmin.setName((String) requestBody.get("name"));
         Organization organization = organizationRepository
                 .findByRegistrationNum((String) requestBody.get("org_registration_num"));
         if (organization == null) {
             throw new Exception("Organization not there");
         }
         organizationAdmin.setOrganization(organization);
+        organizationAdmin.setUsername((organizationAdmin.getOrganization().getRegistrationNum()).toLowerCase());
+        organizationAdmin.setPassword((String) requestBody.get("password"));
+        organizationAdmin.setType(USER_TYPE.valueOf((String) requestBody.get("type")));
+        organizationAdmin.setEmail((String) requestBody.get("email"));
+        organizationAdmin.setPhone((String) requestBody.get("phone"));
+        organizationAdmin.setName((String) requestBody.get("name"));
 
         return (organizationAdmin);
     }

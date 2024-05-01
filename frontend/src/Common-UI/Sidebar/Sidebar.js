@@ -32,6 +32,11 @@ export default function Sidebar(props) {
                 id: 2,
                 text: "Manage Organizations",
                 link: "/sys_admin/manage_organizations"
+            },
+            {
+                id: 3,
+                text: "Manage Organization Admins",
+                link: "/sys_admin/manage_organization_admins"
             }
         ]
     };

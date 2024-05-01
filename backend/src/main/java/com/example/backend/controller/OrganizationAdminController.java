@@ -31,4 +31,10 @@ public class OrganizationAdminController {
         return (new ResponseEntity<>(organizationAdmin, HttpStatus.OK));
     }
 
+    @GetMapping("/all")
+    public ResponseEntity<List<OrganizationAdmin>> getAlOrgAdmins(@RequestHeader("Authorization") String jwt) throws Exception {
+        List<OrganizationAdmin> organizationAdminsList = organizationAdminService.getAllOrgAdmins();
+        return(new ResponseEntity<>(organizationAdminsList, HttpStatus.OK));
+    }
+
 }

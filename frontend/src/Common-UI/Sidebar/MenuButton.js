@@ -1,6 +1,6 @@
 
 import { Link } from 'react-router-dom'
-import { FaUserDoctor, FaHospital, FaH } from "react-icons/fa6";
+import { FaUserDoctor, FaHospital, FaUserGear } from "react-icons/fa6";
 import { FaHome } from "react-icons/fa";
 
 
@@ -10,6 +10,7 @@ export default function MenuButton({ text, link, isActivated }) {
         'Home': FaHome,
         'Manage Organization': FaHospital,
         'Manage Organizations': FaHospital,
+        'Manage Organization Admins': FaUserGear,
         'Manage Doctors': FaUserDoctor,
     };
     const MenuIcon = menuIcons[text] || FaHome;

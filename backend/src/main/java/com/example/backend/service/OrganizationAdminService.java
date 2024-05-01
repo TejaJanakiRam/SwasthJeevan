@@ -1,5 +1,7 @@
 package com.example.backend.service;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -14,4 +16,10 @@ public class OrganizationAdminService {
     public OrganizationAdmin getOrgAdminByUsername(String username){
         return(organizationAdminRepository.findByUsername(username));
     }
+
+    public List<OrganizationAdmin> getAllOrgAdmins(){
+        return(organizationAdminRepository.findAll());
+    }
+
+
 }

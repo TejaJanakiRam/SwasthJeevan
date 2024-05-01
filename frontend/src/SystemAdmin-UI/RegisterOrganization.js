@@ -50,7 +50,7 @@ export default function RegisterOrganization(props) {
 
 
     return (<div>
-        <Sidebar role={"org_admin"} onLogout={props.onLogout} />
+        <Sidebar role={"sys_admin"} onLogout={props.onLogout} />
         <div className="bg-blue-400 h-screen flex justify-center items-center">
             {!signedUp ?
                 <form onSubmit={handleSignUp} className='flex flex-col items-center justify-center p-4 bg-white w-7/12 h-1/2 rounded-2xl shadow-lg shadow-slate-800 text-blue-500'>

@@ -9,14 +9,16 @@ import DoctorDashboard from "./Doctor-UI/DoctorDashboard.js";
 import PatientList from "./Doctor-UI/PatientList.js";
 import OrgAdminDashboard from "./OrgAdmin-UI/OrgAdminDashboard.js";
 import ManageDoctors from "./OrgAdmin-UI/ManageDoctors.js";
+import DoctorSignUp from "./OrgAdmin-UI/DoctorSignUp.js";
 import SystemAdminDashboard from "./SystemAdmin-UI/SystemAdminDashboard.js";
 import ManageOrganizations from "./SystemAdmin-UI/ManageOrganizations.js";
 import RegisterOrganization from "./SystemAdmin-UI/RegisterOrganization.js";
+import OrganizationAdminSignUp from "./SystemAdmin-UI/OrganizationAdminSignUp.js";
 import VideoRoom from "./Common-UI/VideoRoom/VideoRoom.js";
 import Profile from "./Doctor-UI/Profile.js";
 import Pprofile from "./Patient-UI/Profile.js";
 import VideoCall from "./Video/VideoCall.js";
-import DoctorSignUp from "./OrgAdmin-UI/DoctorSignUp.js";
+import ManageOrganizationAdmins from "./SystemAdmin-UI/ManageOrganizationAdmins.js";
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(0);
@@ -78,6 +80,8 @@ function App() {
           <Route path="/sys_admin/dashboard" element={isLoggedIn === 4 ? <SystemAdminDashboard token={token} onLogout={handleLogout} /> : <Navigate to="/" />} />
           <Route path="/sys_admin/manage_organizations" element={isLoggedIn === 4 ? <ManageOrganizations token={token} onLogout={handleLogout} /> : <Navigate to="/" />} />
           <Route path="/sys_admin/manage_organizations/add" element={isLoggedIn === 4 ? <RegisterOrganization token={token} onLogout={handleLogout} /> : <Navigate to="/" />} />
+          <Route path="/sys_admin/manage_organization_admins" element={isLoggedIn === 4 ? <ManageOrganizationAdmins token={token} onLogout={handleLogout} /> : <Navigate to="/" />} />
+          <Route path="/sys_admin/manage_organization_admins/add" element={isLoggedIn === 4 ? <OrganizationAdminSignUp token={token} onLogout={handleLogout} /> : <Navigate to="/" />} />
           <Route path="/videocall" element={<VideoCall />} />
         </Routes>
       </BrowserRouter>
