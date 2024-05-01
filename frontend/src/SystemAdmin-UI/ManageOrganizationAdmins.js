@@ -51,7 +51,7 @@ export default function ManageOrganizationAdmins(props) {
                         </div>
                     </Link>
                 </div>
-                {organizationAdminsList ? organizationAdminsList.length > 0 ? <OrganizationAdminsList data={organizationAdminsList} /> : <div>No Organization Admins Available</div> : <Loading />}
+                {organizationAdminsList && organizationsList ? organizationAdminsList.length > 0 ? <OrganizationAdminsList data={organizationAdminsList} organizationsList={organizationsList}/> : <div>No Organization Admins Available</div> : <Loading />}
 
 
             </div>
