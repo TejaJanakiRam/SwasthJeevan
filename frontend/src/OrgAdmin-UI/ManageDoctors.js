@@ -44,7 +44,7 @@ export default function ManageDoctors(props) {
         <div>
             <Sidebar role={"org_admin"} onLogout={props.onLogout} />
             <div className="bg-blue-400 h-screen flex justify-center items-center">
-                <div className=" w-4/6 h-5/6 bg-white rounded-2xl shadow-lg shadow-slate-800 p-8">
+                <div className=" w-4/6 h-5/6 bg-white rounded-2xl shadow-lg shadow-slate-800 p-16">
                     <div className="flex justify-end mb-4">
                         <Link to="/org_admin/manage_doctors/add">
                             <div className=" flex items-center bg-blue-500 p-4 text-white text-xl rounded-2xl hover:bg-blue-600 transition-all duration-300">

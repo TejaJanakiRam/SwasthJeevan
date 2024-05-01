@@ -10,6 +10,8 @@ import PatientList from "./Doctor-UI/PatientList.js";
 import OrgAdminDashboard from "./OrgAdmin-UI/OrgAdminDashboard.js";
 import ManageDoctors from "./OrgAdmin-UI/ManageDoctors.js";
 import SystemAdminDashboard from "./SystemAdmin-UI/SystemAdminDashboard.js";
+import ManageOrganizations from "./SystemAdmin-UI/ManageOrganizations.js";
+import RegisterOrganization from "./SystemAdmin-UI/RegisterOrganization.js";
 import VideoRoom from "./Common-UI/VideoRoom/VideoRoom.js";
 import Profile from "./Doctor-UI/Profile.js";
 import Pprofile from "./Patient-UI/Profile.js";
@@ -74,6 +76,8 @@ function App() {
           <Route path="/org_admin/manage_doctors" element={isLoggedIn === 3 ? <ManageDoctors token={token} onLogout={handleLogout} /> : <Navigate to="/" />} />
           <Route path="/org_admin/manage_doctors/add" element={isLoggedIn === 3 ? <DoctorSignUp token={token} onLogout={handleLogout} /> : <Navigate to="/" />} />
           <Route path="/sys_admin/dashboard" element={isLoggedIn === 4 ? <SystemAdminDashboard token={token} onLogout={handleLogout} /> : <Navigate to="/" />} />
+          <Route path="/sys_admin/manage_organizations" element={isLoggedIn === 4 ? <ManageOrganizations token={token} onLogout={handleLogout} /> : <Navigate to="/" />} />
+          <Route path="/sys_admin/manage_organizations/add" element={isLoggedIn === 4 ? <RegisterOrganization token={token} onLogout={handleLogout} /> : <Navigate to="/" />} />
           <Route path="/videocall" element={<VideoCall />} />
         </Routes>
       </BrowserRouter>
