@@ -60,13 +60,12 @@ export default function AuthenticationPage(props) {
                 </div>
             </div>
             <div className="hidden lg:shadow-xl lg:shadow-slate-600 lg:col-span-8  lg:flex flex-col justify-center items-center bg-gradient-to-r from-blue-200  to-blue-500">
-                <div className={`${showSignup ? "w-[800px]" : "w-[450px]"} min-h-128 bg-white text-blue-500 px-10 py-8 xl:p-8 rounded-xl shadow-2xl shadow-slate-800`}>
-                    <h1 className="text-3xl sm:text-4xl lg:text-3xl xl:text-4xl font-bold mb-10 w-full text-center">{showSignup ? `Patient Signup` : `${getRoleString(role)} Login`}</h1>
-                    {showSignup ? (
+                <div className={`${showSignup && role === 'patient' ? "w-[800px]" : "w-[450px]"} min-h-128 bg-white text-blue-500 px-10 py-8 xl:p-8 rounded-xl shadow-2xl shadow-slate-800`}>
+                    <h1 className="text-3xl sm:text-4xl lg:text-3xl xl:text-4xl font-bold mb-10 w-full text-center">{showSignup && role === 'patient' ? `Patient Signup` : `${getRoleString(role)} Login`}</h1>
+                    {(showSignup && role === 'patient') ? (
                         <SignupPage {...authFormProps} />
 
                     ) : (
-
                         <LoginPage {...authFormProps} />
                     )}
                 </div>
