@@ -48,7 +48,7 @@ public class ConsultationRequestController {
 
     @GetMapping("/")
     public ResponseEntity<ListConsultationRequestsResponse> listConsultationRequests(
-            @PathVariable(required = false) String statusStr,
+            @RequestParam(required = false) String statusStr,
             @RequestParam(required = false) String typeStr,
             @RequestParam(required = false) String specialityStr,
             @RequestParam(required = false) String patientIdStr,

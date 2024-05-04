@@ -19,5 +19,5 @@ public class ConsultationRequestDTO {
     private Long doctorId;
     private Long referringOrganizationId;
     private Long referringDoctorId;
-    private CONSULTATION_REQUEST_STATUS status = CONSULTATION_REQUEST_STATUS.OPEN;
+    private CONSULTATION_REQUEST_STATUS status = CONSULTATION_REQUEST_STATUS.CREATED;
 }
