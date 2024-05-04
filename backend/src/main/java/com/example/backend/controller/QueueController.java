@@ -108,7 +108,7 @@ public class QueueController {
 
     // Assign the top patient to doctor and store it in map in patient service
     @GetMapping("/api/queue/assign_patient")
-    public ResponseEntity<String> getPateintForDoc(@RequestParam("spec_code") String specCode,
+    public ResponseEntity<Long> getPateintForDoc(@RequestParam("spec_code") String specCode,
             @RequestParam("doctor_id") Long doc_id) throws Exception {
         Long patient_id = patientService.getTopPatient(specCode);
         // Long doc_id = doctorService.gettopdoc(specCode);
@@ -117,7 +117,7 @@ public class QueueController {
             // matched " + doc_id );
             patientService.assigntoPatient(patient_id, doc_id);
             patientService.removeFromQueue(specCode, patient_id);
-            return ResponseEntity.ok("Patient assigned to doctor " + doc_id + " is " + patient_id);
+            return ResponseEntity.ok(patient_id);
         }
         return null;
     }
@@ -146,6 +146,20 @@ public class QueueController {
         Long doc_id = patientService.isdoctorassigned(patientId);
         if (doc_id != null) {
             return ResponseEntity.ok("Patient assigned to doctor " + doc_id + " is " + patientId);
+        }
+        return null;
+    }
+
+    @PostMapping("/api/queue/endconsultation")
+    public ResponseEntity<String> endConsultation( 
+        @RequestBody Map<String, Object> requestBody) throws Exception {
+        System.out.println(requestBody);
+        Long patientId = ((Integer) requestBody.get("patient_id")).longValue();
+        Long doc_id  = ((Integer) requestBody.get("doctor_id")).longValue();
+        Long temp = patientService.isdoctorassigned(patientId);
+        if(temp!=null && temp == doc_id) {
+            patientService.removefrommap(patientId);
+            return ResponseEntity.ok("Patiend removed from map");
         }
         return null;
     }

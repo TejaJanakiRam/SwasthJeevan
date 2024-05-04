@@ -95,11 +95,14 @@ export default function ConsultForm({ token, user }) {
                 if(response.data ){
                     setIsDoctorAssigned(true);
                 }
+                else{
+                    setIsDoctorAssigned(false);
+                }
                 console.log(response.data)
                 console.log("isDoctorAss1: " + isDoctorAssigned);
-                if (response.data) {
-                    clearInterval(intervalId);
-                }
+                // if (response.data) {
+                //     clearInterval(intervalId);
+                // }
             } catch (error) {
                 console.error("Failed to fetch doctor assignment:", error);
             }

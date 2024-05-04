@@ -56,6 +56,9 @@ public class PatientService {
         return sechdule.get(patient_id);
     }
 
+    public void removefrommap(Long patient_id){
+        sechdule.remove(patient_id);
+    }
     public Patient getPatientByUsername(String username){
         return(patientRepository.findByUsername(username));
     }
