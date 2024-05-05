@@ -1,6 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
 import SimplePeer from "simple-peer";
-// import "./VideoCall.css";
 
 const ConnectionStatus = {
   OFFERING: 0,
@@ -54,15 +53,46 @@ export const VideoCall = () => {
   };
 
   return (
-    <div className="web-rtc-page">
+    <div className="py-24 px-2 h-screen w-screen">
       {connectionStatus === null && <button onClick={() => sendOrAcceptInvitation(true)}>CALL</button>}
       {connectionStatus === ConnectionStatus.OFFERING && <div className="loader"></div>}
       {connectionStatus === ConnectionStatus.RECEIVING && (
         <button onClick={() => sendOrAcceptInvitation(false, offerSignal)}>ANSWER CALL</button>
       )}
-      <div className="video-container">
-        <video ref={videoSelf} className="video-block" />
-        <video ref={videoCaller} className="video-block" />
+      <div className="video-container h-auto flex items-center w-auto">
+        <div class=" rounded overflow-hidden shadow-lg h-auto">
+          <div class="px-6 py-4 h-auto">
+            <div class="font-bold text-xl mb-2">The Coldest Sunset</div>
+            <div>
+              <video ref={videoCaller} className="h-max w-auto p-2" />
+              
+            </div>
+            
+          </div>
+          <div class="px-6 pt-4 pb-2 h-auto flex justify-center items-center">
+            <button class="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2 mb-2" onclick="muteAudio()">
+                Mute Audio
+            </button>
+            <button class="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2 mb-2" onclick="muteVideo()">
+                Mute Video
+            </button>
+            <button class="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2 mb-2" onclick="endCall()">
+                End Call
+            </button>
+        </div>
+
+        </div>
+        
+        <div class="max-w-sm rounded overflow-hidden shadow-lg">
+          <div class="px-6 py-1">
+            <div class="font-bold text-l mb-2">The Coldest Sunset</div>
+            <div>
+              <video ref={videoSelf} className="w-52 h-52" />
+            </div>
+            
+          </div>
+        </div>
+
       </div>
     </div>
   );
