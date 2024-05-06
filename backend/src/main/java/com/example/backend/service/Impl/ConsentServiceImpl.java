@@ -72,7 +72,7 @@ public class ConsentServiceImpl implements ConsentService {
         LocalDateTime fromDate = (fromDateStr != null) ? LocalDateTime.parse(fromDateStr, DateTimeFormatter.ISO_LOCAL_DATE_TIME) : null;
         LocalDateTime toDate = (toDateStr != null) ? LocalDateTime.parse(toDateStr, DateTimeFormatter.ISO_LOCAL_DATE_TIME) : null;
         List<Consent> consents = new ArrayList<Consent>(
-            consentRepository.findByTypeAndPatientIdAndDoctorIdAndEhrIdAndStatusAndStartTimeGreaterThanAndEndTimeLessThan(
+            consentRepository.findByTypeAndPatientIdAndDoctorIdAndEhrIdAndStatusAndStartDateGreaterThanAndEndDateLessThan(
                 type, userID, doctorID, ehrID, status, fromDate, toDate));
         if (consents.isEmpty()) {
             throw new Exception("Consent(s) not found");
