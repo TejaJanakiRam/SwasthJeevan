@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.backend.entity.Doctor;
+import com.example.backend.entity.Patient;
 import com.example.backend.entity.Speciality;
 import com.example.backend.repository.DoctorRepository;
 import com.example.backend.repository.PatientRepository;
@@ -171,6 +172,17 @@ public class QueueController {
             patientService.removefrommap(patientId);
             return ResponseEntity.ok("Patiend removed from map");
         }
+        return null;
+    }
+
+    @GetMapping("/api/queue/get_patient_name")
+    public ResponseEntity<String> getname(
+        @RequestParam("patient_id") Long patientId ) throws Exception {
+            Optional <Patient> optp = patientRepository.findById(patientId);
+            Patient patient = optp.get();
+            if(patient != null){
+                return ResponseEntity.ok(patient.getName());
+            }
         return null;
     }
 

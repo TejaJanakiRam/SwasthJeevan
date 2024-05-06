@@ -14,6 +14,8 @@ const AppointmentList = ({ doctorProfile, token }) => {
   const [isAssignPatient, setAssignPatient] = useState(
     localStorage.getItem(`isAssignPatient_${doctorProfile.id}`) === 'true'
   );
+  const [see_patient, setSeePatient] = useState();
+
 
   
   const handleSeePatient = async () => {
@@ -31,6 +33,17 @@ const AppointmentList = ({ doctorProfile, token }) => {
       if (response.data) {
         setIsPatientAvailable(true);
         localStorage.setItem(`isPatientAvailable_${doctorProfile.id}`, 'true');
+        const response1 = await axios.get('http://localhost:4000/api/queue/get_patient_name', {
+          params: {
+            patient_id : response.data
+          },
+          headers :{
+            Authorization: `Bearer ${token}`
+          }
+        });
+        if(response1.data){ 
+          setSeePatient(response1.data); 
+        }
       } else {
         setIsPatientAvailable(false);
         localStorage.setItem(`isPatientAvailable_${doctorProfile.id}`, 'false');
@@ -125,7 +138,7 @@ const AppointmentList = ({ doctorProfile, token }) => {
           {isLoading
             ? 'Processing...'
             : isPatientAvailable
-            ? 'Patient Available'
+            ? `Patient Available  ${see_patient}`
             : 'No Patient Available'}
         </button>
       </div>
@@ -142,7 +155,7 @@ const AppointmentList = ({ doctorProfile, token }) => {
           {isLoading
             ? 'Processing...'
             : isPatientAvailable
-            ? 'Assign Patient'
+            ? `Assign Patient ${see_patient}`
             : 'Cannot Assign Patient'}
         </button>
       </div>
