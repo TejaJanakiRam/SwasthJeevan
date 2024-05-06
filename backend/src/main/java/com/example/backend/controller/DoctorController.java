@@ -7,6 +7,7 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
@@ -29,6 +30,9 @@ public class DoctorController {
 
     @Autowired 
     private DoctorService doctorService;
+
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 
     @GetMapping("/profile")
     public ResponseEntity<Doctor> findUserByJwtToken(@RequestHeader("Authorization") String jwt) throws Exception {
@@ -67,6 +71,13 @@ public class DoctorController {
             }
             updatedData.put("gender", genderEnum);
         }
+        if(updatedData.containsKey("password")){
+            String password = (String)updatedData.get("password");
+            updatedData.put("password",passwordEncoder.encode(password));
+            // System.out.println("Changed password of doctor");
+        }
+        // System.out.println("Updated doctor");
+
         return (new ResponseEntity<>(doctorService.updateDoctor(doctor, updatedData), HttpStatus.OK));
     }
 

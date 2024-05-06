@@ -13,7 +13,6 @@ import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -23,29 +22,20 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.backend.config.JwtService;
-import com.example.backend.dto.OrganizationDTO;
-import com.example.backend.dto.PatientDTO;
 import com.example.backend.dto.UserDTO;
 import com.example.backend.entity.Doctor;
-import com.example.backend.entity.Organization;
 import com.example.backend.entity.OrganizationAdmin;
 import com.example.backend.entity.Patient;
 import com.example.backend.entity.SystemAdmin;
 import com.example.backend.entity.USER_TYPE;
-import com.example.backend.entity.User;
 import com.example.backend.mapper.DoctorMapper;
 import com.example.backend.mapper.OrganizationAdminMapper;
-import com.example.backend.mapper.OrganizationMapper;
 import com.example.backend.mapper.PatientMapper;
 import com.example.backend.mapper.SystemAdminMapper;
-import com.example.backend.mapper.UserMapper;
 import com.example.backend.repository.DoctorRepository;
 import com.example.backend.repository.OrganizationAdminRepository;
-import com.example.backend.repository.OrganizationRepository;
 import com.example.backend.repository.PatientRepository;
 import com.example.backend.repository.SystemAdminRepository;
-import com.example.backend.repository.UserRepository;
-import com.example.backend.request.LoginRequest;
 import com.example.backend.response.AuthResponse;
 import com.example.backend.service.CustomUserDetailsService;
 
@@ -54,20 +44,13 @@ import com.example.backend.service.CustomUserDetailsService;
 public class Authcontroller {
 
     @Autowired
-    private OrganizationRepository organizationRepository;
-    @Autowired
     private PatientMapper patientMapper;
     @Autowired
     private DoctorMapper doctorMapper;
     @Autowired
-    private OrganizationMapper organizationMapper;
-    @Autowired
     private OrganizationAdminMapper organizationAdminMapper;
     @Autowired
     private SystemAdminMapper systemAdminMapper;
-
-    @Autowired
-    private UserRepository userRepository;
     @Autowired
     private PatientRepository patientRepository;
     @Autowired

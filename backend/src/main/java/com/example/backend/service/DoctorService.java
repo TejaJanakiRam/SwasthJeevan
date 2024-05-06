@@ -60,6 +60,7 @@ public class DoctorService {
             field.setAccessible(true);
             ReflectionUtils.setField(field, doctor, value);
         });
+        // System.out.println(doctor.getPassword());
         doctorRepository.save(doctor);
         return doctor;
     }

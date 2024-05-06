@@ -1,8 +1,6 @@
 import React, { useState } from 'react';
 import axios from "axios";
 import InputField from './InputField.js';
-import DropdownSelect from '../Patient-UI/Booking/DropdownSelect.js';
-
 
 function SignupPage(props) {
     const [firstName, setFirstName] = useState('');

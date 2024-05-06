@@ -6,7 +6,7 @@ export default function UpdateDoctorProfile(props) {
     const navigate = useNavigate();
     const [formData, setFormData] = useState({
         "name": "",
-        // password:"",
+        "password":"",
         "email": "",
         "phone": "",
         "gender": ""
@@ -22,7 +22,7 @@ export default function UpdateDoctorProfile(props) {
             // Populate form data with the existing profile data
             setFormData({
                 "name": response.data.name,
-                // password: response.data.password,
+                "password": response.data.password,
                 "email": response.data.email,
                 "phone": response.data.phone,
                 "gender": response.data.gender
@@ -50,7 +50,7 @@ export default function UpdateDoctorProfile(props) {
         e.preventDefault();
         try {
             const response = await axios.patch('http://localhost:4000/api/doctor/update',formData, {
-                // data: formData,
+
                 headers: {
                     Authorization: `Bearer ${props.token}`
                 },
@@ -76,16 +76,16 @@ export default function UpdateDoctorProfile(props) {
                         className="border rounded px-3 py-2 w-full"
                     />
                 </div>
-                {/* <div className="mb-4">
-                    <label className="block text-lg mb-2">Password</label>
+                <div className="mb-4">
+                    <label className="block text-lg mb-2">New Password</label>
                     <input
                         type="text"
-                        name="name"
+                        name="password"
                         value={formData.password}
                         onChange={handleChange}
                         className="border rounded px-3 py-2 w-full"
                     />
-                </div> */}
+                </div>
                 <div className="mb-4">
                     <label className="block text-lg mb-2">Email</label>
                     <input
