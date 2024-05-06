@@ -19,7 +19,7 @@ export default function ManageDoctors(props) {
                 }
             });
             setDoctorsList((response.data));
-            console.log(response.data);
+            // console.log(response.data);
         } catch (error) {
             console.error("Failed to fetch doctors:", error);
         }
@@ -33,6 +33,22 @@ export default function ManageDoctors(props) {
         setSpecialitiesList(response.data);
 
     }
+    
+    const onDeleteDoctor = async (doctorId) => {
+        try {
+            await axios.delete(`http://localhost:4000/api/doctor/delete`, {
+                data: {"doctorId": doctorId},
+                headers: {
+                    Authorization: `Bearer ${props.token}`
+                }
+            });
+            // Remove the deleted doctor from the list
+            // setDoctorsList((prevList) => prevList.filter(doctor => doctor.id !== doctorId));
+            getAllDoctors();
+        } catch (error) {
+            console.error(`Failed to delete doctor with ID ${doctorId}:`, error);
+        }
+    };
 
     useEffect(() => {
         getAllSpecialties();
@@ -52,7 +68,7 @@ export default function ManageDoctors(props) {
                             </div>
                         </Link>
                     </div>
-                    {doctorsList && specialitiesList ? doctorsList.length > 0 ? <DoctorsList data={doctorsList} specialitiesList={specialitiesList} /> : <div>No Doctors Available</div> : <Loading />}
+                    {doctorsList && specialitiesList ? doctorsList.length > 0 ? <DoctorsList data={doctorsList} specialitiesList={specialitiesList} onDeleteDoctor={onDeleteDoctor} /> : <div>No Doctors Available</div> : <Loading />}
 
 
                 </div>
