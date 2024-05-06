@@ -50,8 +50,6 @@ public class DoctorController {
 
     @DeleteMapping("/delete")
     public ResponseEntity<Doctor> deleteDoctor(@RequestHeader("Authorization") String jwt, @RequestBody Map<String, Long> requestBody) throws Exception{
-        // User user = userService.findUserByJwtToken(jwt);
-
         doctorService.deleteDoctorById(requestBody.get("doctorId"));
         System.out.println("Deleted doctor with ID:"+requestBody.get("doctorId"));  
         return (new ResponseEntity<>(null,HttpStatus.OK));

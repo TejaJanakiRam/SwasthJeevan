@@ -46,6 +46,7 @@ public class PatientController {
     public ResponseEntity<Patient> deletePatient(@RequestHeader("Authorization") String jwt) throws Exception{
         User user = userService.findUserByJwtToken(jwt);
         patientService.deletePatientByID(user.getId());
+        System.out.println("Deleted patient with ID: "+user.getId());
         return (new ResponseEntity<>(null,HttpStatus.OK));
     }
 

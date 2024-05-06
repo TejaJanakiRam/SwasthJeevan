@@ -18,6 +18,20 @@ export default function Profile(props) {
         }
     };
 
+    const deleteProfile = async () => {
+        try {
+            await axios.delete('http://localhost:4000/api/patient/delete', {
+                headers: {
+                    Authorization: `Bearer ${props.token}`
+                }
+            });
+            // Log out the user after deletion
+            props.onLogout();
+        } catch (error) {
+            console.error("Failed to delete profile:", error);
+        }
+    };
+
     useEffect(() => {
         getDetails();
     }, []);
@@ -44,6 +58,14 @@ export default function Profile(props) {
                             <div>{patientProfile.dob}</div>
                             <div className="font-semibold">Address:</div>
                             <div>{patientProfile.address}</div>
+                        </div>
+                        <div className="mt-10">
+                            <button
+                                className="bg-red-500 text-white px-4 py-2 rounded-lg hover:bg-red-600"
+                                onClick={deleteProfile}
+                            >
+                                Delete Profile
+                            </button>
                         </div>
                     </div>
                 </div>
