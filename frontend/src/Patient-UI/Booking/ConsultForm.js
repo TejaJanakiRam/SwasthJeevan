@@ -5,60 +5,81 @@ import { Link } from "react-router-dom";
 
 
 export default function ConsultForm({ token, user }) {
-    const hospitalData = [
-        {
-            id: 1,
-            name: "Apollo Delhi"
-        },
-        {
-            id: 2,
-            name: "Sarvodaya-8"
-        },
-        {
-            id: 3,
-            name: "Sarvodaya-19"
-        },
-        {
-            id: 4,
-            name: "Apollo Faridabad"
-        },
-        {
-            id: 5,
-            name: "Medanta"
-        },
-        {
-            id: 6,
-            name: "QRG"
-        },
-        {
-            id: 7,
-            name: "Fortis"
-        },
-        {
-            id: 8,
-            name: "AIIMS"
-        }
-    ];
-    const specialityData = [
-        {
-            id: 1,
-            name: "Cardiology",
-            spec_code: "CARD001"
-        },
-        {
-            id: 2,
-            name: "Orthopedics",
-            spec_code: "PED001"
-        }
+    // const hospitalData = [
+    //     {
+    //         id: 1,
+    //         name: "Apollo Delhi"
+    //     },
+    //     {
+    //         id: 2,
+    //         name: "Sarvodaya-8"
+    //     },
+    //     {
+    //         id: 3,
+    //         name: "Sarvodaya-19"
+    //     },
+    //     {
+    //         id: 4,
+    //         name: "Apollo Faridabad"
+    //     },
+    //     {
+    //         id: 5,
+    //         name: "Medanta"
+    //     },
+    //     {
+    //         id: 6,
+    //         name: "QRG"
+    //     },
+    //     {
+    //         id: 7,
+    //         name: "Fortis"
+    //     },
+    //     {
+    //         id: 8,
+    //         name: "AIIMS"
+    //     }
+    // ];
+    // const specialityData = [
+    //     {
+    //         id: 1,
+    //         name: "Cardiology",
+    //         spec_code: "CARD001"
+    //     },
+    //     {
+    //         id: 2,
+    //         name: "Orthopedics",
+    //         spec_code: "PED001"
+    //     }
 
-    ]
-    const [selectedItem, setSelectedItem] = useState("");
+    // ]
+    // const [selectedItem, setSelectedItem] = useState("");
     const [isDoctorAssigned, setIsDoctorAssigned] = useState(false);
+    const [specialitiesList, setSpecialitiesList] = useState(null);
+    const [speciality, setSpeciality] = useState('');
 
+
+    const getAllSpecialties = async () => {
+        const response = await axios.get('http://localhost:4000/api/specialities', {
+            headers: {
+                Authorization: `Bearer ${token}` // Assuming props.token contains the JWT token
+            }
+        });
+        setSpecialitiesList(response.data);
+
+    }
+
+    useEffect(() => {
+        getAllSpecialties();
+    }, []);
+
+
+
+    
     const addToQueue = async (evt) => {
         evt.preventDefault();
-        const specialty = specialityData.find(speciality => speciality.name === selectedItem);
-        const spec_code = specialty.spec_code;
+        // const specialty = specialitiesList.find(speciality => speciality.name === selectedItem);
+        // const spec_code = specialty.spec_code;
+        const spec_code  = specialitiesList.find(spec => spec.name === speciality).specialityCode;
         const body = {
             spec_code: spec_code,
             patient_id: user.id
@@ -117,7 +138,7 @@ export default function ConsultForm({ token, user }) {
 
             <div className="w-full flex justify-between">
                 {/* <DropdownSelect data={hospitalData} displayFieldName={"Hospital"} />  */}
-                <DropdownSelect data={specialityData} displayFieldName={"Speciality"} selectedItem={selectedItem} setSelectedItem={setSelectedItem} />
+                {specialitiesList && <DropdownSelect data={specialitiesList} displayFieldName={"Speciality"} selectedItem={speciality} setSelectedItem={setSpeciality} />}
             </div>
 
         </div>

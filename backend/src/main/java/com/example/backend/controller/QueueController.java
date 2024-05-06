@@ -122,6 +122,16 @@ public class QueueController {
         return null;
     }
 
+    @GetMapping("/api/queue/see_patient")
+    public ResponseEntity<Long> seePateintForDoc(@RequestParam("spec_code") String specCode,
+            @RequestParam("doctor_id") Long doc_id) throws Exception {
+        Long patient_id = patientService.getTopPatient(specCode);
+        if (patient_id != null && doc_id != null) {
+            return ResponseEntity.ok(patient_id);
+        }
+        return null;
+    }
+
     // Tell the patient it's assigned doctor and if not null remove both pateint and
     // doctor from the queue;
 
