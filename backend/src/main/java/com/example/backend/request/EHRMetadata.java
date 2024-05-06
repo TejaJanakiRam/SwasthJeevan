@@ -1,6 +1,6 @@
 package com.example.backend.request;
 
-import java.util.Date;
+import java.time.LocalDateTime;
 
 import com.example.backend.entity.EHR_TYPE;
 import com.example.backend.types.DIAGNOSIS_TYPE;
@@ -15,6 +15,6 @@ public class EHRMetadata {
     private Long userId;
     private EHR_TYPE type;
     private DIAGNOSIS_TYPE diagnosisType;
-    private Date issueDate;
-    private Date endDate;
+    private LocalDateTime issueDate;
+    private LocalDateTime endDate;
 }
