@@ -1,5 +1,6 @@
 package com.example.backend.controller;
 
+import java.sql.Date;
 import java.util.Map;
 
 
@@ -15,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.backend.entity.Patient;
+import com.example.backend.entity.USER_GENDER;
 import com.example.backend.entity.User;
 import com.example.backend.service.PatientService;
 import com.example.backend.service.UserService;
@@ -37,8 +39,35 @@ public class PatientController {
 
     @PatchMapping("/update")
     public ResponseEntity<Patient> updatePatientDetails(@RequestHeader("Authorization") String jwt, @RequestBody Map<String, Object> updatedData) throws Exception{
+        System.out.println("Checkpoint 1");
         User user = userService.findUserByJwtToken(jwt);
         Patient patient = patientService.getPatientByUsername(user.getUsername());  
+        System.out.println("Updated patient with ID: "+user.getId());
+        if (updatedData.containsKey("dob")) {
+            // Convert the dob from String to java.sql.Date
+            String dobString = (String) updatedData.get("dob");
+            Date dob = Date.valueOf(dobString);
+            updatedData.put("dob", dob);
+        }
+        if (updatedData.containsKey("gender")) {
+            String genderString = (String) updatedData.get("gender");
+            // Convert the string value to USER_GENDER enum type
+            USER_GENDER genderEnum;
+            switch (genderString.toUpperCase()) {
+                case "MALE":
+                    genderEnum = USER_GENDER.MALE; 
+                    break;
+                case "FEMALE":
+                    genderEnum = USER_GENDER.FEMALE;
+                    break;
+                case "OTHER":
+                    genderEnum = USER_GENDER.OTHER;
+                    break;
+                default:
+                    throw new IllegalArgumentException("Unknown gender: " + genderString);
+            }
+            updatedData.put("gender", genderEnum);
+        }
         return (new ResponseEntity<>(patientService.updatePatient(patient, updatedData), HttpStatus.OK));
     }
 

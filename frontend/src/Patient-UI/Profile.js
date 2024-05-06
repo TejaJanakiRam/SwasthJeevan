@@ -1,9 +1,11 @@
 import axios from "axios";
 import Navbar from "../Common-UI/Navbar/Navbar.js"
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 export default function Profile(props) {
     const [patientProfile, setpatientProfile] = useState(null);
+    const navigate = useNavigate();
 
     const getDetails = async () => {
         try {
@@ -31,7 +33,13 @@ export default function Profile(props) {
             console.error("Failed to delete profile:", error);
         }
     };
-
+    const handleUpdateProfile = async()=>{
+        try {
+            navigate('/patient/profile/update');
+        } catch (error) {
+            console.error("Failed to update profile:", error);
+        }
+    }
     useEffect(() => {
         getDetails();
     }, []);
@@ -59,7 +67,14 @@ export default function Profile(props) {
                             <div className="font-semibold">Address:</div>
                             <div>{patientProfile.address}</div>
                         </div>
-                        <div className="mt-10">
+                
+                        <div className="mt-10 flex justify-center">
+                            <button
+                                className="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600 mr-4"
+                                onClick={handleUpdateProfile}
+                            >
+                                Update Profile
+                            </button>
                             <button
                                 className="bg-red-500 text-white px-4 py-2 rounded-lg hover:bg-red-600"
                                 onClick={deleteProfile}
