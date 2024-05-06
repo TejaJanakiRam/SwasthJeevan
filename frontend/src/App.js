@@ -20,7 +20,7 @@ import Pprofile from "./Patient-UI/Profile.js";
 import UpdateProfile from "./Patient-UI/UpdateProfile.js";
 import VideoCall from "./Video/VideoCall.js";
 import ManageOrganizationAdmins from "./SystemAdmin-UI/ManageOrganizationAdmins.js";
-
+import UpdateDoctorProfile from "./Doctor-UI/UpdateDoctorProfile.js";
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(0);
@@ -76,6 +76,7 @@ function App() {
           <Route path="/doctor/dashboard" element={isLoggedIn === 2 ? <DoctorDashboard token={token} onLogout={handleLogout} /> : <Navigate to="/" />} />
           <Route path="/doctor/patients" element={isLoggedIn === 2 ? <PatientList token={token} onLogout={handleLogout} /> : <Navigate to="/" />} />
           <Route path="/doctor/profile" element={isLoggedIn === 2 ? <Profile token={token} onLogout={handleLogout} /> : <Navigate to="/" />} />
+          <Route path="/doctor/profile/update" element={isLoggedIn === 2 ? <UpdateDoctorProfile token={token} onLogout={handleLogout} /> : <Navigate to="/" />} />
           <Route path="/doctor/room/:roomId" element={isLoggedIn === 2 ? <VideoRoom /> : <Navigate to="/" />} />
           <Route path="/org_admin/dashboard" element={isLoggedIn === 3 ? <OrgAdminDashboard token={token} onLogout={handleLogout} /> : <Navigate to="/" />} />
           <Route path="/org_admin/manage_doctors" element={isLoggedIn === 3 ? <ManageDoctors token={token} onLogout={handleLogout} /> : <Navigate to="/" />} />

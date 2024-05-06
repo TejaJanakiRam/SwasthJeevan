@@ -39,10 +39,10 @@ public class PatientController {
 
     @PatchMapping("/update")
     public ResponseEntity<Patient> updatePatientDetails(@RequestHeader("Authorization") String jwt, @RequestBody Map<String, Object> updatedData) throws Exception{
-        System.out.println("Checkpoint 1");
+        // System.out.println("Checkpoint 1");
         User user = userService.findUserByJwtToken(jwt);
         Patient patient = patientService.getPatientByUsername(user.getUsername());  
-        System.out.println("Updated patient with ID: "+user.getId());
+        // System.out.println("Updated patient with ID: "+user.getId());
         if (updatedData.containsKey("dob")) {
             // Convert the dob from String to java.sql.Date
             String dobString = (String) updatedData.get("dob");

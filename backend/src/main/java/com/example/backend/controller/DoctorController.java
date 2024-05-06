@@ -1,5 +1,6 @@
 package com.example.backend.controller;
 
+import java.sql.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -15,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.backend.entity.Doctor;
+import com.example.backend.entity.USER_GENDER;
 import com.example.backend.entity.User;
 import com.example.backend.service.DoctorService;
 import com.example.backend.service.UserService;
@@ -45,6 +47,26 @@ public class DoctorController {
     public ResponseEntity<Doctor> updateDoctorDetails(@RequestHeader("Authorization") String jwt, @RequestBody Map<String, Object> updatedData) throws Exception{
         User user = userService.findUserByJwtToken(jwt);
         Doctor doctor = doctorService.getDoctorbyUsername(user.getUsername());  
+    
+        if (updatedData.containsKey("gender")) {
+            String genderString = (String) updatedData.get("gender");
+            // Convert the string value to USER_GENDER enum type
+            USER_GENDER genderEnum;
+            switch (genderString.toUpperCase()) {
+                case "MALE":
+                    genderEnum = USER_GENDER.MALE; 
+                    break;
+                case "FEMALE":
+                    genderEnum = USER_GENDER.FEMALE;
+                    break;
+                case "OTHER":
+                    genderEnum = USER_GENDER.OTHER;
+                    break;
+                default:
+                    throw new IllegalArgumentException("Unknown gender: " + genderString);
+            }
+            updatedData.put("gender", genderEnum);
+        }
         return (new ResponseEntity<>(doctorService.updateDoctor(doctor, updatedData), HttpStatus.OK));
     }
 

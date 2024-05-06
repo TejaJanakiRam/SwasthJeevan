@@ -1,9 +1,7 @@
 package com.example.backend.entity;
 
-import java.sql.Date;
 
 import jakarta.persistence.Column;
-import jakarta.persistence.DiscriminatorColumn;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;

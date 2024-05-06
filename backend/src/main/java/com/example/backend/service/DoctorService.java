@@ -12,7 +12,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.ReflectionUtils;
 
 import com.example.backend.entity.Doctor;
-import com.example.backend.entity.Patient;
 import com.example.backend.repository.DoctorRepository;
 
 @Service
@@ -57,7 +56,7 @@ public class DoctorService {
 
     public Doctor updateDoctor(Doctor doctor,Map<String, Object>newData){
         newData.forEach((key,value)->{
-            Field field = ReflectionUtils.findField(Patient.class, key);
+            Field field = ReflectionUtils.findField(Doctor.class, key);
             field.setAccessible(true);
             ReflectionUtils.setField(field, doctor, value);
         });

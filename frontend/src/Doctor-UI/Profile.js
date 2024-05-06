@@ -1,9 +1,11 @@
 import axios from "axios";
 import Navbar from "../Common-UI/Navbar/Navbar.js"
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 export default function Profile(props) {
     const [doctorProfile, setDoctorProfile] = useState(null);
+    const navigate = useNavigate();
 
     const getDetails = async () => {
         try {
@@ -15,6 +17,13 @@ export default function Profile(props) {
             setDoctorProfile(response.data);
         } catch (error) {
             console.error("Failed to fetch user details:", error);
+        }
+    };
+    const handleUpdateProfile = async () => {
+        try {
+            navigate('/doctor/profile/update');
+        } catch (error) {
+            console.error("Failed to update profile:", error);
         }
     };
 
@@ -48,6 +57,15 @@ export default function Profile(props) {
                             <div>{doctorProfile.registrationNum}</div>
                             <div className="font-semibold">Gender:</div>
                             <div>{doctorProfile.gender}</div>
+                        </div>
+                        <div className="mt-10 flex justify-center">
+                            <button
+                                className="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600 mr-4"
+                                onClick={handleUpdateProfile}
+                            >
+                                Update Profile
+                            </button>
+
                         </div>
                     </div>
                 </div>
