@@ -11,6 +11,39 @@ const AppointmentList = ({ doctorProfile, token }) => {
     parseInt(localStorage.getItem(`patientId_${doctorProfile.id}`),10)
   );
 
+  const [isAssignPatient, setAssignPatient] = useState(
+    localStorage.getItem(`isAssignPatient_${doctorProfile.id}`) === 'true'
+  );
+
+  
+  const handleSeePatient = async () => {
+    try{
+      setIsLoading(true);
+      const response = await axios.get('http://localhost:4000/api/queue/see_patient', {
+        params: {
+          spec_code: doctorProfile.speciality.specialityCode,
+          doctor_id: doctorProfile.id
+        },
+        headers :{
+          Authorization: `Bearer ${token}`
+        }
+      });
+      if (response.data) {
+        setIsPatientAvailable(true);
+        localStorage.setItem(`isPatientAvailable_${doctorProfile.id}`, 'true');
+      } else {
+        setIsPatientAvailable(false);
+        localStorage.setItem(`isPatientAvailable_${doctorProfile.id}`, 'false');
+      }
+    }
+    catch (error) {
+      console.error("Cannot fetch the patient", error);
+    }
+    finally {
+      setIsLoading(false);
+    }
+  };
+
   const handleMarkAvailable = async () => {
     try {
       setIsLoading(true);
@@ -25,13 +58,13 @@ const AppointmentList = ({ doctorProfile, token }) => {
       });
 
       if (response.data) {
-        setIsPatientAvailable(true);
-        localStorage.setItem(`isPatientAvailable_${doctorProfile.id}`, 'true');
+        setAssignPatient(true);
+        localStorage.setItem(`isAssignPatient_${doctorProfile.id}`, 'true');
         setPatientId(response.data);
         localStorage.setItem(`patientId_${doctorProfile.id}`, response.data); // Store patientId in local storage
       } else {
-        setIsPatientAvailable(false);
-        localStorage.setItem(`isPatientAvailable_${doctorProfile.id}`, 'false');
+        setAssignPatient(false);
+        localStorage.setItem(`isAssignPatient_${doctorProfile.id}}`, 'false');
         setPatientId(null);
         localStorage.removeItem(`patientId_${doctorProfile.id}`); // Remove patientId from local storage
       }
@@ -54,8 +87,8 @@ const AppointmentList = ({ doctorProfile, token }) => {
       const response = await axios.post('http://localhost:4000/api/queue/endconsultation',body, {});
       console.log(response.data);
       if (response.data) {
-        setIsPatientAvailable(false);
-        localStorage.setItem(`isPatientAvailable_${doctorProfile.id}`, 'false');
+        setAssignPatient(false);
+        localStorage.setItem(`isAssignPatient_${doctorProfile.id}}`, 'false');
         setPatientId(null);
         localStorage.removeItem(`patientId_${doctorProfile.id}`);
       } else {
@@ -70,13 +103,13 @@ const AppointmentList = ({ doctorProfile, token }) => {
 
   useEffect(() => {
     const intervalId = setInterval(() => {
-      if (!isPatientAvailable) {
-        handleMarkAvailable();
+      if (!isAssignPatient) {
+        handleSeePatient();
       }
     }, 2000);
 
     return () => clearInterval(intervalId);
-  }, [doctorProfile, token, isPatientAvailable]);
+  }, [doctorProfile, token, isAssignPatient]);
 
   return (
     <div className="min-h-screen flex flex-col items-center bg-gradient-to-r from-blue-100 to-blue-500">
@@ -96,12 +129,29 @@ const AppointmentList = ({ doctorProfile, token }) => {
             : 'No Patient Available'}
         </button>
       </div>
+      <div className="absolute top-20 right-9 mt-4 mr-4">
+        <button
+          onClick={handleMarkAvailable}
+          className={`py-2 px-4 rounded transition-all duration-300 shadow shadow-slate-900 ${
+            isPatientAvailable ? 'bg-green-500' : 'bg-red-500'
+          } hover:bg-green-700 text-white font-bold border border-transparent shadow ${
+            !isPatientAvailable ? 'cursor-not-allowed opacity-50' : ''
+          }`}
+          disabled={!isPatientAvailable}
+        >
+          {isLoading
+            ? 'Processing...'
+            : isPatientAvailable
+            ? 'Assign Patient'
+            : 'Cannot Assign Patient'}
+        </button>
+      </div>
       <div>
         <Link to="/videocall">
           <button 
             type="submit" 
-            className={`font-semibold border-2 border-blue-400 bg-blue-400 text-white rounded-xl px-10 py-2 my-8 hover:bg-blue-500 hover:border-blue-500 transition-all duration-300 shadow shadow-slate-900 ${!isPatientAvailable && 'cursor-not-allowed opacity-50'}`} 
-            disabled={!isPatientAvailable}
+            className={`font-semibold border-2 border-blue-400 bg-blue-400 text-white rounded-xl px-10 py-2 my-8 hover:bg-blue-500 hover:border-blue-500 transition-all duration-300 shadow shadow-slate-900 ${!isAssignPatient && 'cursor-not-allowed opacity-50'}`} 
+            disabled={!isAssignPatient}
           >
             Start Consultation
           </button>
