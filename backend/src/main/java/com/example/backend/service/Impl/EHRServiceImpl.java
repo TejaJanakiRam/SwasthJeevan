@@ -36,26 +36,33 @@ public class EHRServiceImpl implements EHRService {
     @Autowired
     private ConsentRepository consentRepository;
     
-    private boolean isAuthorized(String username, Long userID, CONSENT_TYPE type)
+    private boolean isAuthorized(String username, Long userID,
+                                 CONSENT_TYPE type, Long ehrID) throws Exception
     {
         boolean userIsAuthorized = true;
         User user = userRepository.findByUsername(username);
         if (user.getId() != userID)
         {
             USER_TYPE usertype = user.getType();
-            Optional<Consent> consentOpt =
-                consentRepository.findByPatientIdAndDoctorIdAndTypeAndEhrId(
-                    userID, user.getId(), type, null);
-            if ((usertype != USER_TYPE.DOCTOR) || (consentOpt.isEmpty())) {
+            if (usertype != USER_TYPE.DOCTOR) {
                 userIsAuthorized = false;
             }
-            Consent consent = null;
-            consent = consentOpt.get();
-            LocalDateTime nowdt = LocalDateTime.now();
-            if (nowdt.isBefore(consent.getStartDate()) ||
-                nowdt.isAfter(consent.getEndDate()) ||
-                (consent.getStatus() != CONSENT_STATUS.PROVIDED)) {
+            else {
+                Optional<Consent> consentOpt =
+                    consentRepository.findByPatientIdAndDoctorIdAndTypeAndEhrId(
+                        userID, user.getId(), type, ehrID);
+                if (consentOpt.isEmpty()) {
                     userIsAuthorized = false;
+                }
+                else {
+                    Consent consent = consentOpt.get();
+                    LocalDateTime nowdt = LocalDateTime.now();
+                    if (nowdt.isBefore(consent.getStartDate()) ||
+                        nowdt.isAfter(consent.getEndDate()) ||
+                        (consent.getStatus() != CONSENT_STATUS.PROVIDED)) {
+                            userIsAuthorized = false;
+                    }
+                }
             }
         }
         return userIsAuthorized;
@@ -83,10 +90,6 @@ public class EHRServiceImpl implements EHRService {
         String diagnosisTypeStr, String fromDateStr, String toDateStr) throws Exception {
         
         Long userID = Long.valueOf(userIDStr);
-        if (!isAuthorized(username, userID, CONSENT_TYPE.LIST_ALL_EHR))
-        {
-            throw new Exception("EHR(s) can only be listed by EHR owner or consulting doctor with consent");
-        }
         EHR_TYPE type;
         if (typeStr != null) {
             try {
@@ -96,6 +99,10 @@ public class EHRServiceImpl implements EHRService {
             }
         } else {
             type = null;
+        }
+        if (!isAuthorized(username, userID, CONSENT_TYPE.LIST_ALL_EHR, null))
+        {
+            throw new Exception("EHR(s) can only be listed by EHR owner or consulting doctor with consent");
         }
         DIAGNOSIS_TYPE diagnosisType;
         if (diagnosisTypeStr != null) {
@@ -118,7 +125,7 @@ public class EHRServiceImpl implements EHRService {
 
     @Override
     public EHR get(String username, Long userID, Long ehrID) throws Exception {
-        if (!isAuthorized(username, userID, CONSENT_TYPE.LIST_ALL_EHR))
+        if (!isAuthorized(username, userID, CONSENT_TYPE.VIEW_SPECIFIC_EHR, ehrID))
         {
             throw new Exception("EHR can only be viewed by EHR owner or consulting doctor with consent");
         }
