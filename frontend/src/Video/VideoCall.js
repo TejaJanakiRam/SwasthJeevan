@@ -71,6 +71,13 @@ export const VideoCall = () => {
     });
     setVideoEnabled(!videoEnabled);
   };
+
+  const endCall = () => {
+    webSocketConnection.close();
+    mediaStream.getTracks().forEach(track => track.stop());
+    window.close();
+  };
+
   return (
     <div className=" h-screen w-screen text-blue-500">
       <h2 className='p-4 text-center text-4xl mb-4 font-semibold text-blue-500'>Video Call</h2>
@@ -105,7 +112,7 @@ export const VideoCall = () => {
         <button className="m-4 text-xl sm:text-2xl  px-4 py-3 sm:px-8 sm:py-6 rounded-2xl border-2 border-white text-blue-500 bg-white hover:text-blue-600 hover:bg-gray-100 hover:border-gray-50 transition-all duration-300 font-semibold tracking-wide sm:tracking-widest shadow shadow-slate-800" onClick={toggleVideo}>
           {videoEnabled ? "Stop Video" : "Start Video"}
         </button>
-        <button className="m-4 text-xl sm:text-2xl  px-4 py-3 sm:px-8 sm:py-6 rounded-2xl border-2 border-white text-blue-500 bg-white hover:text-blue-600 hover:bg-gray-100 hover:border-gray-50 transition-all duration-300 font-semibold tracking-wide sm:tracking-widest shadow shadow-slate-800">
+        <button className="m-4 text-xl sm:text-2xl  px-4 py-3 sm:px-8 sm:py-6 rounded-2xl border-2 border-white text-blue-500 bg-white hover:text-blue-600 hover:bg-gray-100 hover:border-gray-50 transition-all duration-300 font-semibold tracking-wide sm:tracking-widest shadow shadow-slate-800" onClick={endCall}>
           {"End Call"}
         </button>
       </div>
