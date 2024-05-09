@@ -5,7 +5,17 @@ import AuthenticationPage from "./Login-UI/AuthenticationPage.js";
 import PatientDashboard from './Patient-UI/PatientDashboard.js';
 import Booking from "./Patient-UI/Booking.js";
 import Appointments from "./Patient-UI/Appointments.js";
+import EHR from "./Patient-UI/EHR.js";
+import AddEHR from "./Patient-UI/AddEHR.js";
+import ManageEHR from "./Patient-UI/ManageEHR.js";
+import Consent from "./Patient-UI/Consent.js";
+import ProvideConsent from "./Patient-UI/ProvideConsent.js";
+import RevokeConsent from "./Patient-UI/RevokeConsent.js";
 import DoctorDashboard from "./Doctor-UI/DoctorDashboard.js";
+import ListViewPatientEHR from "./Doctor-UI/ListViewPatientEHR.js";
+import EHRConsent from "./Doctor-UI/EHRConsent.js";
+import RequestConsent from "./Doctor-UI/RequestConsent.js";
+import ViewConsents from "./Doctor-UI/ViewConsents.js";
 import PatientList from "./Doctor-UI/PatientList.js";
 import OrgAdminDashboard from "./OrgAdmin-UI/OrgAdminDashboard.js";
 import ManageDoctors from "./OrgAdmin-UI/ManageDoctors.js";
@@ -73,11 +83,21 @@ function App() {
           <Route path="/patient/profile" element={isLoggedIn === 1 ? <Pprofile token={token} onLogout={handleLogout} /> : <Navigate to="/" />} />
           <Route path="/patient/profile/update" element={isLoggedIn === 1 ? <UpdateProfile token={token} onLogout={handleLogout} /> : <Navigate to="/" />} />
           <Route path="/patient/appointments" element={isLoggedIn === 1 ? <Appointments token={token} onLogout={handleLogout} /> : <Navigate to="/" />} />
+          <Route path="/patient/ehr" element={isLoggedIn === 1 ? <EHR token={token} onLogout={handleLogout} /> : <Navigate to="/" />} />
+          <Route path="/patient/ehr/add" element={isLoggedIn === 1 ? <AddEHR token={token} onLogout={handleLogout} /> : <Navigate to="/" />} />
+          <Route path="/patient/ehr/manage" element={isLoggedIn === 1 ? <ManageEHR token={token} onLogout={handleLogout} /> : <Navigate to="/" />} />
+          <Route path="/patient/consent" element={isLoggedIn === 1 ? <Consent token={token} onLogout={handleLogout} /> : <Navigate to="/" />} />
+          <Route path="/patient/consent/provide" element={isLoggedIn === 1 ? <ProvideConsent token={token} onLogout={handleLogout} /> : <Navigate to="/" />} />
+          <Route path="/patient/consent/revoke" element={isLoggedIn === 1 ? <RevokeConsent token={token} onLogout={handleLogout} /> : <Navigate to="/" />} />
           <Route path="/doctor/dashboard" element={isLoggedIn === 2 ? <DoctorDashboard token={token} onLogout={handleLogout} /> : <Navigate to="/" />} />
           <Route path="/doctor/patients" element={isLoggedIn === 2 ? <PatientList token={token} onLogout={handleLogout} /> : <Navigate to="/" />} />
           <Route path="/doctor/profile" element={isLoggedIn === 2 ? <Profile token={token} onLogout={handleLogout} /> : <Navigate to="/" />} />
           <Route path="/doctor/profile/update" element={isLoggedIn === 2 ? <UpdateDoctorProfile token={token} onLogout={handleLogout} /> : <Navigate to="/" />} />
           <Route path="/doctor/room/:roomId" element={isLoggedIn === 2 ? <VideoRoom /> : <Navigate to="/" />} />
+          <Route path="/doctor/patient_ehr" element={isLoggedIn === 2 ? <ListViewPatientEHR token={token} onLogout={handleLogout} /> : <Navigate to="/" />} />
+          <Route path="/doctor/ehr_consent" element={isLoggedIn === 2 ? <EHRConsent token={token} onLogout={handleLogout} /> : <Navigate to="/" />} />
+          <Route path="/doctor/request_consent" element={isLoggedIn === 2 ? <RequestConsent token={token} onLogout={handleLogout} /> : <Navigate to="/" />} />
+          <Route path="/doctor/view_consents" element={isLoggedIn === 2 ? <ViewConsents token={token} onLogout={handleLogout} /> : <Navigate to="/" />} />
           <Route path="/org_admin/dashboard" element={isLoggedIn === 3 ? <OrgAdminDashboard token={token} onLogout={handleLogout} /> : <Navigate to="/" />} />
           <Route path="/org_admin/manage_doctors" element={isLoggedIn === 3 ? <ManageDoctors token={token} onLogout={handleLogout} /> : <Navigate to="/" />} />
           <Route path="/org_admin/manage_doctors/add" element={isLoggedIn === 3 ? <DoctorSignUp token={token} onLogout={handleLogout} /> : <Navigate to="/" />} />

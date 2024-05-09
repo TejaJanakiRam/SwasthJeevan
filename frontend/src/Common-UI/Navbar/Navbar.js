@@ -17,12 +17,17 @@ export default function Navbar(props) {
     {
       id: 3,
       text: "EHR",
-      link: "/patient/dashboard"
+      link: "/patient/ehr"
     },
     {
       id: 4,
       text: "Profile",
       link: "/patient/profile"
+    },
+    {
+      id: 5,
+      text: "Consent",
+      link: "/patient/consent"
     },
   ],
   "doctor": [
@@ -40,6 +45,16 @@ export default function Navbar(props) {
       id: 3,
       text: "Profile",
       link: "/doctor/profile"
+    },
+    {
+      id: 4,
+      text: "Consents",
+      link: "/doctor/ehr_consent"
+    },
+    {
+      id: 5,
+      text: "Patient EHR",
+      link: "/doctor/patient_ehr"
     }
   ], 
   "sys_admin": [
