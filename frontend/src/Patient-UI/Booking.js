@@ -33,9 +33,9 @@ export default function Booking(props) {
 
             <div className="flex-grow flex justify-center items-center ">
                 <div className="tab-section  bg-white  w-[600px] lg:w-[1000px] h-[600px] rounded-2xl shadow-lg shadow-slate-800">
-                    <div className="tab-buttons text-lg border border-blue-600 bg-blue-500 inline-block rounded-tl-2xl rounded-br-2xl">
-                        <button className={`py-3 px-4 text-sm transition duration-300 shadow shadow-slate-800 ${currentTab === 'book' ? "text-white bg-blue-500 shadow-inner shadow-slate-600" : "text-white bg-blue-500"} rounded-tl-xl`} onClick={() => { setCurrentTab('book') }}>Book Appointment</button>
-                        <button className={`py-3 px-4 text-sm transition duration-300 shadow shadow-slate-800 ${currentTab === 'consult' ? "text-white bg-blue-500 shadow-inner shadow-slate-800" : "text-white bg-blue-500  "} rounded-br-2xl`} onClick={() => { setCurrentTab('consult') }}>Consult Now</button>
+                    <div className="tab-buttons text-lg border border-blue-600 bg-blue-500 inline-block rounded-tl-2xl  ">
+                        {/* <button className={`py-3 px-4 text-sm transition duration-300 shadow shadow-slate-800 ${currentTab === 'book' ? "text-white bg-blue-500 shadow-inner shadow-slate-600" : "text-white bg-blue-500"} rounded-tl-xl`} onClick={() => { setCurrentTab('book') }}>Book Appointment</button> */}
+                        <button className={`py-3 px-4 text-sm transition duration-300 shadow shadow-slate-800 ${currentTab === 'consult' ? "text-white bg-blue-500 shadow-inner shadow-slate-600" : "text-white bg-blue-500"} rounded-tl-xl`} onClick={() => { setCurrentTab('consult') }}>Consult Now</button>
                     </div>
                     <div className="tab-content h-full">
                         <ConsultForm user={user} token={props.token} />

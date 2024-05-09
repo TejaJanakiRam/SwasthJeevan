@@ -60,8 +60,8 @@ function App() {
   const roleDashboardPaths = {
     1: '/patient/dashboard',
     2: '/doctor/dashboard',
-    3: '/org_admin/dashboard',
-    4: '/sys_admin/dashboard'
+    3: '/org_admin/manage_doctors',
+    4: '/sys_admin/manage_organizations'
   };
   return (
     <div className="App">

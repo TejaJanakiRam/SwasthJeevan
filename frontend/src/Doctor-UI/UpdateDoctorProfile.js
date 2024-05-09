@@ -22,7 +22,7 @@ export default function UpdateDoctorProfile(props) {
             // Populate form data with the existing profile data
             setFormData({
                 "name": response.data.name,
-                "password": response.data.password,
+                "password": "",
                 "email": response.data.email,
                 "phone": response.data.phone,
                 "gender": response.data.gender

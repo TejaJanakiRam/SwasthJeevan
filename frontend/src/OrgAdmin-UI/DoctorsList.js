@@ -17,7 +17,7 @@ export default function DoctorsList(props) {
 
                     {item.name}
                     <button
-                        className="ml-4 bg-red-500 text-white px-2 py-1 rounded hover:bg-red-600"
+                        className="ml-4 bg-blue-700 text-white px-4 py-3 rounded-xl hover:bg-blue-800 trasition-all duration-300"
                         onClick={() => props.onDeleteDoctor(item.id)}
                     >
                     Delete

@@ -5,11 +5,11 @@ import MenuButton from "./MenuButton.js";
 export default function Sidebar(props) {
     const navOptions = {
         "org_admin": [
-            {
-                id: 1,
-                text: "Home",
-                link: "/org_admin/dashboard"
-            },
+            // {
+            //     id: 1,
+            //     text: "Home",
+            //     link: "/org_admin/dashboard"
+            // },
             {
                 id: 2,
                 text: "Manage Doctors",
@@ -23,11 +23,11 @@ export default function Sidebar(props) {
 
         ],
         "sys_admin": [
-            {
-                id: 1,
-                text: "Home",
-                link: "/sys_admin/dashboard"
-            },
+            // {
+            //     id: 1,
+            //     text: "Home",
+            //     link: "/sys_admin/dashboard"
+            // },
             {
                 id: 2,
                 text: "Manage Organizations",

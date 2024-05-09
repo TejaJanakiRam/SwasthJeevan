@@ -12,9 +12,11 @@ const AppointmentList = ({ doctorProfile, token }) => {
   );
 
   const [isAssignPatient, setAssignPatient] = useState(
-    localStorage.getItem(`isAssignPatient_${doctorProfile.id}`) === 'true'
+    localStorage.getItem(`isAssignPatient_${doctorProfile.id}` === 'true') 
   );
-  const [see_patient, setSeePatient] = useState();
+  const [see_patient, setSeePatient] = useState(
+    localStorage.getItem(`see_patient_${doctorProfile.id}`, "")
+  );
 
 
   
@@ -43,6 +45,7 @@ const AppointmentList = ({ doctorProfile, token }) => {
         });
         if(response1.data){ 
           setSeePatient(response1.data); 
+          localStorage.setItem(`see_patient_${doctorProfile.id}`,response1.data);
         }
       } else {
         setIsPatientAvailable(false);
@@ -100,10 +103,12 @@ const AppointmentList = ({ doctorProfile, token }) => {
       const response = await axios.post('http://localhost:4000/api/queue/endconsultation',body, {});
       console.log(response.data);
       if (response.data) {
-        setAssignPatient(false);
-        localStorage.setItem(`isAssignPatient_${doctorProfile.id}}`, 'false');
+        setAssignPatient(null);
+        localStorage.removeItem(`isAssignPatient_${doctorProfile.id}`);
         setPatientId(null);
         localStorage.removeItem(`patientId_${doctorProfile.id}`);
+        setSeePatient(null);
+        localStorage.removeItem(`see_patient_${doctorProfile.id}`);
       } else {
         console.error('Failed to end consultation:', response);
       }
