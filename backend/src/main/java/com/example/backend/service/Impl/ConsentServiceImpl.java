@@ -31,7 +31,7 @@ public class ConsentServiceImpl implements ConsentService {
     public Long create(ConsentDTO consentDTO) throws Exception {
         Consent consent = new Consent(consentDTO.getType(), consentDTO.getPatientId(),
             consentDTO.getDoctorId(), consentDTO.getEhrId(), consentDTO.getStatus(),
-            consentDTO.getStartDate(), null);
+            consentDTO.getStartDate(), consentDTO.getEndDate());
         Optional<Consent> consentRec =
             consentRepository.findByPatientIdAndDoctorIdAndTypeAndEhrId(
                 consent.getPatientId(), consent.getDoctorId(),

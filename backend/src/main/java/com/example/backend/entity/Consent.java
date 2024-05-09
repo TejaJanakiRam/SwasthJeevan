@@ -64,6 +64,6 @@ public class Consent {
         this.ehrId = ehrId;
         this.status = status;
         this.startDate = startDate;
-        this.startDate = startDate;
+        this.endDate = endDate;
     }
 }
