@@ -74,12 +74,12 @@ export default function ConsultForm({ token, user }) {
 
 
 
-    
+
     const addToQueue = async (evt) => {
         evt.preventDefault();
         // const specialty = specialitiesList.find(speciality => speciality.name === selectedItem);
         // const spec_code = specialty.spec_code;
-        const spec_code  = specialitiesList.find(spec => spec.name === speciality).specialityCode;
+        const spec_code = specialitiesList.find(spec => spec.name === speciality).specialityCode;
         const body = {
             spec_code: spec_code,
             patient_id: user.id
@@ -88,7 +88,7 @@ export default function ConsultForm({ token, user }) {
         try {
             const response = await axios.post('http://localhost:4000/api/queue/add_patient', body, {
                 headers: {
-                    Authorization: `Bearer ${token}` 
+                    Authorization: `Bearer ${token}`
                 }
             });
             console.log(response);
@@ -110,13 +110,13 @@ export default function ConsultForm({ token, user }) {
                         patient_id: user.id
                     },
                     headers: {
-                        Authorization: `Bearer ${token}` 
+                        Authorization: `Bearer ${token}`
                     }
                 });
-                if(response.data ){
+                if (response.data) {
                     setIsDoctorAssigned(true);
                 }
-                else{
+                else {
                     setIsDoctorAssigned(false);
                 }
                 console.log(response.data)
@@ -143,14 +143,16 @@ export default function ConsultForm({ token, user }) {
 
         </div>
         <button type="submit" className=" font-semibold border-2 border-blue-400 bg-blue-400 text-white rounded-xl px-10 py-2 my-8  hover:bg-blue-500 hover:border-blue-500 transition-all duration-300 shadow shadow-slate-900">Book Appointment</button>
-        <Link to="/videocall">
-                <button 
-                    type="submit" 
-                    className={`font-semibold border-2 border-blue-400 bg-blue-400 text-white rounded-xl px-10 py-2 my-8  hover:bg-blue-500 hover:border-blue-500 transition-all duration-300 shadow shadow-slate-900 ${!isDoctorAssigned && 'cursor-not-allowed opacity-50'}`}
+        <div>
+            <a href="/videocall" target="_blank" rel="noopener noreferrer">
+                <button
+                    type="button" // Change type to "button" since it's not a form submit button
+                    className={`font-semibold border-2 border-blue-400 bg-blue-400 text-white rounded-xl px-10 py-2 my-8 hover:bg-blue-500 hover:border-blue-500 transition-all duration-300 shadow shadow-slate-900 ${!isDoctorAssigned && 'cursor-not-allowed opacity-50'}`}
                     disabled={!isDoctorAssigned}
                 >
                     Start
                 </button>
-            </Link>
+            </a>
+        </div>
     </form>)
 }

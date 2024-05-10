@@ -3,79 +3,75 @@ import MenuButton from './MenuButton.js';
 
 
 export default function Navbar(props) {
-  const navOptions = {"patient":[
-    {
-      id: 1,
-      text: "Home",
-      link: "/patient/dashboard"
-    },
-    {
-      id: 2,
-      text: "Appointments",
-      link: "/patient/appointments"
-    },
-    {
-      id: 3,
-      text: "EHR",
-      link: "/patient/ehr"
-    },
-    {
-      id: 4,
-      text: "Profile",
-      link: "/patient/profile"
-    },
-    {
-      id: 5,
-      text: "Consent",
-      link: "/patient/consent"
-    },
-  ],
-  "doctor": [
-    {
-      id: 1,
-      text: "Home",
-      link: "/doctor/dashboard"
-    },
-    {
-      id: 2,
-      text: "Patients",
-      link: "/doctor/patients"
-    },
-    {
-      id: 3,
-      text: "Profile",
-      link: "/doctor/profile"
-    },
-    {
-      id: 4,
-      text: "Consents",
-      link: "/doctor/ehr_consent"
-    },
-    {
-      id: 5,
-      text: "Patient EHR",
-      link: "/doctor/patient_ehr"
-    }
-  ], 
-  "sys_admin": [
-    {
-      id:1 ,
-      text: "Home",
-      link: "/sys_admin/dashboard"
-    },
-    {
-      id :2 ,
-      text : "Organization",
-      link: "/sys_admin/organization"
-    },
-    {
-      id:3,
-      text: "Profile",
-      link: "sys_admin/dashboard"
-    }
-  ]
+  const navOptions = {
+    "patient": [
+      {
+        id: 1,
+        text: "Home",
+        link: "/patient/dashboard"
+      },
+      {
+        id: 3,
+        text: "EHR",
+        link: "/patient/ehr"
+      },
+      {
+        id: 4,
+        text: "Profile",
+        link: "/patient/profile"
+      },
+      {
+        id: 5,
+        text: "Consent",
+        link: "/patient/consent"
+      },
+    ],
+    "doctor": [
+      {
+        id: 1,
+        text: "Home",
+        link: "/doctor/dashboard"
+      },
+      {
+        id: 2,
+        text: "Patients",
+        link: "/doctor/patients"
+      },
+      {
+        id: 3,
+        text: "Profile",
+        link: "/doctor/profile"
+      },
+      {
+        id: 4,
+        text: "Consents",
+        link: "/doctor/ehr_consent"
+      },
+      {
+        id: 5,
+        text: "Patient EHR",
+        link: "/doctor/patient_ehr"
+      }
+    ],
+    "sys_admin": [
+      {
+        id: 1,
+        text: "Home",
+        link: "/sys_admin/dashboard"
+      },
+      {
+        id: 2,
+        text: "Organization",
+        link: "/sys_admin/organization"
+      },
+      {
+        id: 3,
+        text: "Profile",
+        link: "sys_admin/dashboard"
+      }
+    ]
 
-}
+  }
   const [isActivated, setIsActivated] = useState(true);
   return (<header className='z-10 sticky top-0'>
     <nav className='w-full sm:flex justify-between items-center bg-white sm:shadow sm:shadow-slate-800'>
