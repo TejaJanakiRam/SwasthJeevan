@@ -2,6 +2,8 @@ package com.example.backend.entity;
 
 import java.time.LocalDateTime;
 
+import org.hibernate.annotations.ColumnTransformer;
+
 import com.example.backend.types.DIAGNOSIS_TYPE;
 
 import jakarta.persistence.Column;
@@ -43,6 +45,10 @@ public class EHR {
     private LocalDateTime issueDate;
     private LocalDateTime endDate;
     @Lob
+    @ColumnTransformer(
+        read = "AES_DECRYPT(document, 'mySecretKey')",
+        write = "AES_ENCRYPT(?, 'mySecretKey')"
+    )
     @Column(name = "document", columnDefinition="BLOB")
     private byte[] document;
 
