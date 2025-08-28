@@ -1,0 +1,51 @@
+services:
+  mysql:
+    container_name: mysqldb
+    image: jaguar14/custom-mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: mysql_pass
+      MYSQL_DATABASE: app_db
+    volumes:
+      - mysql_data:/var/lib/mysql 
+    restart: always
+    networks:
+      - swasthjeevan-network
+    healthcheck:
+      test: ["CMD", "mysqladmin" ,"ping", "-h", "localhost", "-pmysql_pass"]
+      interval: 5s
+      timeout: 10s
+      retries: 5
+      start_period: 20s
+
+
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    image: jaguar14/swasthjeevan-backend
+    ports:
+      - "4000:4000"
+    depends_on:
+      mysql:
+        condition: service_healthy
+    networks:
+      - swasthjeevan-network
+
+  frontend:
+    build:
+      context: ./frontend 
+      dockerfile: Dockerfile
+    image: jaguar14/swasthjeevan-frontend
+    ports:
+      - "3000:80"
+    depends_on:
+      - backend
+    networks:
+      - swasthjeevan-network
+
+networks:
+  swasthjeevan-network:
+    driver: bridge
+
+volumes:
+  mysql_data: {}

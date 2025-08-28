@@ -1,0 +1,7 @@
+FROM mysql:lts
+# Set environment variables
+ENV MYSQL_DATABASE=app_db
+ENV MYSQL_ROOT_PASSWORD=mysql_pass
+
+
+COPY init.sql /docker-entrypoint-initdb.d/
